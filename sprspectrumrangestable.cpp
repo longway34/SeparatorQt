@@ -35,9 +35,11 @@ void SPRSpectrumRangesTable::widgetsShow()
     if(model){
         for(int i=0; i< model->items.size(); i++){
             if(i < model->getThreads()->getData()){
-                cellWidget(1, i)->setVisible(true);
+                cellWidget(0, i)->setVisible(true);
+                ((SPRSpectrumRanges*)(cellWidget(0,i)))->widgetsShow();
+
             } else {
-                cellWidget(1, i)->setVisible(false);
+                cellWidget(0, i)->setVisible(false);
             }
         }
     }
@@ -58,5 +60,5 @@ ISPRModelData *SPRSpectrumRangesTable::getModel()
 
 void SPRSpectrumRangesTable::viewChange(QTableWidget *table, int row, int col)
 {
-    emit tableChange(table, row, col);
+    emit this->tableChange(table, row, col);
 }

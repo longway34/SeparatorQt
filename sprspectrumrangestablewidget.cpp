@@ -1,3 +1,6 @@
+#include <QMessageBox>
+#include <QWidget>
+
 #include "sprspectrumrangestablewidget.h"
 #include "sprspectrumranges.h"
 
@@ -6,7 +9,10 @@ SPRSpectrumRangesTableWidget::SPRSpectrumRangesTableWidget(QWidget *parent) :
 {
     ui.setupUi(this);
 
-    connect(SIGNAL(doShow()), ui.wSpectrumTable, SLOT(widgetsShow()));
+    QFont font = parentWidget()->font();
+    setFont(font);
+
+    connect(this, SIGNAL(doShow()), ui.wSpectrumTable, SLOT(widgetsShow()));
     connect(ui.bEquialent, SIGNAL(clicked(bool)), this, SLOT(viewChange(bool)));
 }
 
@@ -21,11 +27,10 @@ ISPRModelData *SPRSpectrumRangesTableWidget::getModel()
     return ui.wSpectrumTable->getModel();
 }
 
-void SPRSpectrumRangesTableWidget::setModel(ISPRModelData *data)
+ISPRModelData *SPRSpectrumRangesTableWidget::setModel(ISPRModelData *data)
 {
-    ui.wSpectrumTable->setModel(data);
-
-
+    ui.wSpectrumTable->setModel((SPRSpectrumRangesTableModel*)data);
+    return data;
 }
 
 void SPRSpectrumRangesTableWidget::viewChange(QTableWidget *, int, int)
@@ -35,8 +40,30 @@ void SPRSpectrumRangesTableWidget::viewChange(QTableWidget *, int, int)
 
 void SPRSpectrumRangesTableWidget::viewChange(bool)
 {
-    QPoint point(ui.wSpectrumTable->getSelectedPosition());
-    EnumElements el = ui.wSpectrumTable->getSelectedElement();
+    QLineEdit *focusedLe = (QLineEdit*)ui.wSpectrumTable->focusWidget();
+    if(!focusedLe){
+        QMessageBox msg(QMessageBox::Icon::Critical, tr("Нет выбранного элемента..."), tr("Нет выбранного элемента..."), QMessageBox::Ok);
+        msg.exec();
+        return;
+    }
+    if(!focusedLe->objectName().startsWith("le")){
+        QMessageBox msg(QMessageBox::Icon::Critical, tr("Нет выбранного элемента..."), tr("Нет выбранного элемента..."), QMessageBox::Ok);
+        msg.exec();
+        return;
+    }
 
+    int column = QVariant(focusedLe->property("column")).toInt();
+    uint val = focusedLe->text().toUInt();
+    EnumElements el = static_cast<EnumElements>(QVariant(focusedLe->property("element")).toInt());
+    SPRSpectrumRangesTableModel *mod = (SPRSpectrumRangesTableModel*)ui.wSpectrumTable->getModel();
+    uint th = mod->getThreads()->getData();
 
+    for(int i=0; i<th; i++){
+        if(column == 0){
+            ((SPRSpectrumRangesModel*)mod->items[i])->elements[el].min->setData(val);
+        } else {
+            ((SPRSpectrumRangesModel*)mod->items[i])->elements[el].max->setData(val);
+        }
+    }
+    ui.wSpectrumTable->widgetsShow();
 }

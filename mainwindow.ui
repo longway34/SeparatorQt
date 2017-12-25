@@ -72,7 +72,7 @@
          <enum>QTabWidget::Rounded</enum>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>0</number>
         </property>
         <property name="iconSize">
          <size>
@@ -207,7 +207,7 @@
          </attribute>
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item>
-           <widget class="SPRSpectrumRangesTableWidget" name="widget_7" native="true"/>
+           <widget class="SPRSpectrumRangesTableWidget" name="tSpectrumPorogs" native="true"/>
           </item>
          </layout>
         </widget>

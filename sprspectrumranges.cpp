@@ -1,7 +1,11 @@
 //#include "algorithm"
 #include <QSize>
-#include "QLineEdit"
-#include "QHeaderView"
+
+#include <QLineEdit>
+#include <QHeaderView>
+#include <QFocusEvent>
+#include <QFont>
+
 #include "sprspectrumranges.h"
 
 void SPRSpectrumRanges::setModel(SPRSpectrumRangesModel *value)
@@ -21,17 +25,24 @@ void SPRSpectrumRanges::setModel(SPRSpectrumRangesModel *value)
         QString tt = tr("Минимальное значение канала для елемента'") +
                 QString::number(model->tIndex)+tr(" елемента '") + DEF_SPR_FORMULA_ELEMENTS_PROPERTY[el].sname +"'";
         QLineEdit *cell = setNumberCell(this, count, 0, model->elements[el].min->getData(), 0, MAX_SPR_SPECTOR_CHANNELS,tt);
+        cell->setObjectName("le");
         cell->setProperty("element", QVariant(el));
+        cell->setProperty("thread", model->tIndex);
+        cell->setProperty("column", 0);
         cell->setMaximumSize(std::max(fontMetrics().width("9999999"),fontMetrics().width(horizontalHeaderItem(0)->text())), 16777215);
         cell->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
         connect(cell, SIGNAL(editingFinished()), this, SLOT(changeCellLe()));
         tt = tr("Максимальное значение канала ")+
                 QString::number(model->tIndex)+tr(" елемента '") + DEF_SPR_FORMULA_ELEMENTS_PROPERTY[el].sname +"'";
         cell = setNumberCell(this, count, 1, model->elements[el].max->getData(), 0, MAX_SPR_SPECTOR_CHANNELS,tt);
+        cell->setObjectName("le");
         cell->setProperty("element", QVariant(el));
+        cell->setProperty("thread", model->tIndex);
+        cell->setProperty("column", 1);
         cell->setMaximumSize(std::max(fontMetrics().width("9999999"),fontMetrics().width(horizontalHeaderItem(1)->text())), 16777215);
         cell->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
         connect(cell, SIGNAL(editingFinished()), this, SLOT(changeCellLe()));
+//        connect(cell, QWidget::focusInEvent(QFocusEvent * event), this, SLOT(onFocus(QFocusEvent*)));
         actualSize.setHeight(actualSize.height()+rowHeight(count));
         if(count == 0){
             actualSize.setWidth(columnWidth(0) * 2);
@@ -57,9 +68,10 @@ QPoint SPRSpectrumRanges::getSelectedPosition()
     if(!focusWidget()){
         return QPoint(-1, -1);
     } else {
-        QLineEdit le = (QLineEdit*)focusWidget();
-        EnumElements el = static_cast<EnumElements>(le.property("element"));
+        QLineEdit *le = (QLineEdit*)focusWidget();
+        EnumElements el = static_cast<EnumElements>(QVariant(le->property("element")).toInt());
         int row = DEF_SPR_FORMULA_ELEMENTS_PROPERTY[el].index;
+        QWidget *wid = cellWidget(row, 0);
         int col = focusWidget() == cellWidget(row, 0) ? 0 : 1;
         return QPoint(row, col);
     }
@@ -67,10 +79,10 @@ QPoint SPRSpectrumRanges::getSelectedPosition()
 
 EnumElements SPRSpectrumRanges::getSelectedElement(){
     if(!focusWidget()){
-        return QPoint(-1, -1);
+        return Ns;
     } else {
-        QLineEdit le = (QLineEdit*)focusWidget();
-        EnumElements el = static_cast<EnumElements>(le.property("element"));
+        QLineEdit *le = (QLineEdit*)focusWidget();
+        EnumElements el = static_cast<EnumElements>(QVariant(le->property("element")).toInt());
         return el;
     }
 }
@@ -92,7 +104,7 @@ void SPRSpectrumRanges::viewChange(QTableWidget *table, int row, int col)
     if(col == 0){ // изиенили минимум для канала
        model->elements[element].min->setData(value);
     } else if(col == 1){ // изиенили максимум для канала
-       model->elements[element].min->setData(value);
+       model->elements[element].max->setData(value);
     }
     emit tableChange(this, row, col);
     return;
@@ -103,10 +115,22 @@ SPRSpectrumRanges::SPRSpectrumRanges(QWidget *parent) :
 {
     model = nullptr;
 
+//    QFont font;
+//    font.setFamily(QStringLiteral("Tahoma"));
+//    font.setPointSize(12);
+
+//    setFont(font);
 }
 
 void SPRSpectrumRanges::widgetsShow()
 {
+    foreach(EnumElements el, model->elements.keys()){
+        int row = DEF_SPR_FORMULA_ELEMENTS_PROPERTY[el].index;
+        QLineEdit *le = (QLineEdit*)cellWidget(row, 0);
+        le->setText(model->elements[el].min->toString());
+        le = (QLineEdit*)cellWidget(row, 1);
+        le->setText(model->elements[el].max->toString());
+    }
 }
 
 ISPRModelData *SPRSpectrumRanges::getModel()
@@ -123,7 +147,7 @@ QSize SPRSpectrumRanges::sizeHint() const
         h += rowHeight(i);
     }
 
-.    int w = columnWidth(0) + columnWidth(1) + 2 * lineWidth();
+    int w = columnWidth(0) + columnWidth(1) + 3 * lineWidth();
 
     if(model->tIndex == 0){
         w += this->verticalHeader()->sizeHint().width() + lineWidth();

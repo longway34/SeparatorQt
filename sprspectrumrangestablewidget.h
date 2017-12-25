@@ -18,7 +18,7 @@ private:
 public:
     virtual ISPRModelData *getModel();
 
-    void setModel(ISPRModelData *data);
+    ISPRModelData *setModel(ISPRModelData *data);
 public slots:
     virtual void widgetsShow();
     virtual void viewChange(QTableWidget *, int, int);

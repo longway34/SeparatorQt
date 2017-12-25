@@ -69,7 +69,14 @@
     </widget>
    </item>
    <item>
-    <widget class="SPRSpectrumRangesTable" name="wSpectrumTable"/>
+    <widget class="SPRSpectrumRangesTable" name="wSpectrumTable">
+     <property name="font">
+      <font>
+       <family>Tahoma</family>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

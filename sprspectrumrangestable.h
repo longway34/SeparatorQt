@@ -5,6 +5,7 @@
 #include <QWidget>
 #include <QDomDocument>
 #include <QPoint>
+#include <QTableWidget>
 
 #include "isprwidget.h"
 #include "sprspectrumranges.h"
@@ -12,8 +13,10 @@
 
 class SPRSpectrumRangesTable : public QTableWidget, ISPRWidget
 {
+    Q_OBJECT
+
 public:
-    SPRSpectrumRangesTable(QWidget *parent = nullptr);
+    explicit SPRSpectrumRangesTable(QWidget *parent = nullptr);
 
     // ISPRWidget interface
 
@@ -31,7 +34,7 @@ public slots:
         return ((SPRSpectrumRanges*)focusWidget())->getSelectedElement();
     }
 signals:
-    tableChange(QTableWidget *table, int row, int col);
+    void tableChange(QTableWidget *table, int row, int col);
 };
 
 #endif // SPRSTTINGSSPECTRUMRANGESTABLE_H

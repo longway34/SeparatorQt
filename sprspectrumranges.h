@@ -32,6 +32,7 @@ public slots:
     virtual void changeCellLe();
     virtual void viewChange(QTableWidget *table, int row, int col);
 
+//    void onFocus(QFocusEvent *event);
 signals:
     void tableChange(QTableWidget*, int row, int col);
 };
