@@ -1,0 +1,46 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>icons/Logs_tab_icon.png</file>
+        <file>icons/Separate_tab_icon.png</file>
+        <file>icons/Spector_tab_icons.png</file>
+        <file>icons/Settings_tab_icon_1.png</file>
+        <file>icons/Test_tab_icons.png</file>
+        <file>icons/b_Cancel.png</file>
+        <file>icons/b_Ok_1.png</file>
+        <file>icons/b_Save.png</file>
+        <file>icons/b_Settings.png</file>
+        <file>icons/b_Equialent.png</file>
+    </qresource>
+    <qresource prefix="/icons/settings">
+        <file>icons/AlgoripmSerrings_tabs/Algoritm_Sittings_Porogs_tab.png</file>
+        <file>icons/AlgoripmSerrings_tabs/Alroritm_Settings_Formulas_tab_select.png</file>
+        <file>icons/AlgoripmSerrings_tabs/Alroritm_Settings_Ims_tab.png</file>
+        <file>icons/AlgoripmSerrings_tabs/Alroritm_Settings_Rentgen_Menu_tab.png</file>
+        <file>icons/AlgoripmSerrings_tabs/Alroritm_Settings_SeparationControl_tab.png</file>
+        <file>icons/AlgoripmSerrings_tabs/Alroritm_Settings_Spector_tab.png</file>
+        <file>icons/AlgoripmSerrings_tabs/Algoritm_Sittings_Porogs_tab_select.png</file>
+        <file>icons/AlgoripmSerrings_tabs/Alroritm_Settings_Formulas_tab.png</file>
+        <file>icons/AlgoripmSerrings_tabs/Alroritm_Settings_Ims_tab_select.png</file>
+        <file>icons/AlgoripmSerrings_tabs/Alroritm_Settings_SeparationControl_tab_select.png</file>
+        <file>icons/AlgoripmSerrings_tabs/Alroritm_Settings_Spector_tab_select.png</file>
+        <file>icons/AlgoripmSerrings_tabs/Algoritm_Sittings_Porogs_tab_1.png</file>
+        <file>icons/AlgoripmSerrings_tabs/Alroritm_Settings_Formulas_tab_1.png</file>
+        <file>icons/AlgoripmSerrings_tabs/Alroritm_Settings_Ims_tab_1.png</file>
+        <file>icons/AlgoripmSerrings_tabs/Alroritm_Settings_Rentgen_Menu_tab_1.png</file>
+        <file>icons/AlgoripmSerrings_tabs/Alroritm_Settings_SeparationControl_tab_1.png</file>
+        <file>icons/AlgoripmSerrings_tabs/Alroritm_Settings_Spector_tab_1.png</file>
+        <file>icons/AlgoripmSerrings_tabs/SettingsDevice.png</file>
+    </qresource>
+    <qresource prefix="/icons/algoritmSettings/rentgen">
+        <file>icons/AlgoripmSerrings_tabs/Rentgens/Rentgen_Settings_Auto.png</file>
+        <file>icons/AlgoripmSerrings_tabs/Rentgens/Rentgen_Settings_Auto_select.png</file>
+        <file>icons/AlgoripmSerrings_tabs/Rentgens/Rentgen_Settings_Controls.png</file>
+        <file>icons/AlgoripmSerrings_tabs/Rentgens/Rentgen_Settings_Controls_select.png</file>
+        <file>icons/AlgoripmSerrings_tabs/Rentgens/Rentgen_Settings_Main.png</file>
+        <file>icons/AlgoripmSerrings_tabs/Rentgens/Rentgen_Settings_Main_select.png</file>
+        <file>icons/AlgoripmSerrings_tabs/Rentgens/Rentgen_Settings_Auto_1.png</file>
+        <file>icons/AlgoripmSerrings_tabs/Rentgens/Rentgen_Settings_Controls_1.png</file>
+        <file>icons/AlgoripmSerrings_tabs/Rentgens/Rentgen_Settings_Main_1.png</file>
+    </qresource>
+    <qresource prefix="/"/>
+</RCC>

@@ -1,0 +1,28 @@
+#ifndef SEPCOLORVARIABLE_H
+#define SEPCOLORVARIABLE_H
+
+#include <QObject>
+#include <models/sepvariable.h>
+
+class SPRColorVariable : public SPRVariable<uint>
+{
+public:
+    SPRColorVariable();
+    explicit SPRColorVariable(QDomDocument *doc, QString xpath, QColor defValue, QObject *parent = nullptr):
+        SPRVariable<uint>(parent)
+    {
+        setRoot(doc, xpath, SPRVariable::toString(static_cast<uint>(defValue.rgba())), false);
+        SPRVariable<uint>::setData();
+    }
+    virtual void setData(QColor _data){
+        SPRVariable<uint>::setData(static_cast<uint>(_data.rgba()));
+    }
+    virtual QString toString(){
+        return SPRVariable<uint>::toString(data);
+    }
+    virtual QColor getData(){
+        return QColor(SPRVariable<uint>::getData());
+    }
+};
+
+#endif // SEPCOLORVARIABLE_H

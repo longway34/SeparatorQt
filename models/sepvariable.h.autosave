@@ -1,0 +1,88 @@
+#ifndef SEPVARIABLE_H
+#define SEPVARIABLE_H
+
+#include <QObject>
+#include <QVariant>
+#include <QColor>
+
+#include <models/isepvalue.h>
+#include <models/imodelvariable.h>
+
+template <class T>
+class SPRVariable : public ISPRVarialse, public IModelVariable
+{
+protected:
+    T data;
+public:
+
+    TypeVariable typeVariable;
+
+    explicit SPRVariable(QObject *parent = nullptr):ISPRVarialse(parent){}
+    explicit SPRVariable(QDomDocument *doc, QString xpath, T defValue, QObject *parent = nullptr):
+        ISPRVarialse(parent),
+        IModelVariable()
+    {
+        setRoot(doc, xpath, toString(defValue), false);
+        setData();
+    }
+
+    T getData() const
+    {
+        return data;
+    }
+    void setData(const T &value)
+    {
+        data = value;
+        setData();
+    }
+    virtual QString toString(){
+        return this->toString(data);
+    }
+    virtual QString toString(const T &value){
+        if(mTypeVariables[typeid(value).name()] == stringVariable) {
+            return QString(value);
+        }
+        if(mTypeVariables[typeid(value).name()] == digitVariable){
+            return QString::number(value);
+        }
+        if(mTypeVariables[typeid(value).name()] == enumVariable){
+            QString var = QVariant(static_cast<QVariant>(value)).toString();
+            return var;
+        }
+        if(typeid(value).name() == typeid(QColor).name()){
+            QString var = QVariant(static_cast<QVariant>(QColor(value).rgba())).toString();
+            return var;
+        }
+
+        QVariant ret = static_cast<QVariant>(value);
+        return ret.toString();
+    }
+public slots:
+    virtual void setData(){ // установить в xml елементе
+        if(mTypeVariables[typeid(data).name()] == stringVariable) {
+            IModelVariable::setData(QString(data));
+            return;
+        }
+        if(mTypeVariables[typeid(data).name()] == digitVariable){
+            IModelVariable::setData(QString::number(data));
+            return;
+        }
+        if(mTypeVariables[typeid(data).name()] == enumVariable){
+            QString var = QVariant(static_cast<QVariant>(data)).toString();
+            IModelVariable::setData(var);
+            return;
+        }
+        if(typeid(data).name() == typeid(QColor).name()){
+            QString var = QVariant(static_cast<QVariant>(QColor(data).rgba())).toString();
+            IModelVariable::setData(var);
+            return;
+        }
+
+        QVariant ret = static_cast<QVariant>(data);
+        IModelVariable::setData(ret.toString());
+        return;
+    }
+};
+
+
+#endif // SEPVARIABLE_H

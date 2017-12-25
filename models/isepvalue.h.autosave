@@ -1,0 +1,54 @@
+#ifndef ISEPVALUE_H
+#define ISEPVALUE_H
+
+#include <QObject>
+#include <QMap>
+#include "mainwindow.h"
+
+typedef enum :int {
+    stringVariable = 0,
+    digitVariable,
+    enumVariable,
+    qObjectVariable
+} TypeVariable;
+
+Q_DECLARE_METATYPE (TypeVariable)
+
+static const QMap<const char*, TypeVariable> mTypeVariables =
+{
+    {typeid(QString).name(), stringVariable},
+    {typeid(const char*).name(), stringVariable},
+    {typeid(std::string).name(), stringVariable},
+
+    {typeid(int).name(), digitVariable},
+    {typeid(uint).name(), digitVariable},
+    {typeid(qint16).name(), digitVariable},
+    {typeid(quint16).name(), digitVariable},
+    {typeid(qreal).name(), digitVariable},
+    {typeid(double).name(), digitVariable},
+
+    {typeid(TypeThermo).name(), enumVariable},
+    {typeid(TypePRAM).name(), enumVariable},
+
+    {typeid(QColor).name(), qObjectVariable}
+
+};
+
+class ISPRVarialse : public QObject
+{
+    Q_OBJECT
+protected:
+
+public:
+
+    explicit ISPRVarialse(QObject *parent = nullptr);
+
+    virtual QString toString()=0;
+signals:
+
+public slots:
+    virtual void setData(){}
+};
+
+
+#endif // ISEPVALUE_H

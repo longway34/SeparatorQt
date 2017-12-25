@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>842</width>
+    <height>648</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>Tahoma</family>
+    <pointsize>12</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Настройка оборудования и алгоритма</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="icons.qrc">
+    <normaloff>:/icons/icons/Settings_tab_icon_1.png</normaloff>:/icons/icons/Settings_tab_icon_1.png</iconset>
+  </property>
+  <property name="toolButtonStyle">
+   <enum>Qt::ToolButtonTextUnderIcon</enum>
+  </property>
+  <property name="tabShape">
+   <enum>QTabWidget::Rounded</enum>
+  </property>
+  <property name="unifiedTitleAndToolBarOnMac">
+   <bool>false</bool>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>2</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QTabWidget" name="tabWidget">
+        <property name="font">
+         <font>
+          <family>Tahoma</family>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="statusTip">
+         <string/>
+        </property>
+        <property name="tabPosition">
+         <enum>QTabWidget::North</enum>
+        </property>
+        <property name="tabShape">
+         <enum>QTabWidget::Rounded</enum>
+        </property>
+        <property name="currentIndex">
+         <number>2</number>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="elideMode">
+         <enum>Qt::ElideMiddle</enum>
+        </property>
+        <property name="usesScrollButtons">
+         <bool>true</bool>
+        </property>
+        <property name="documentMode">
+         <bool>false</bool>
+        </property>
+        <property name="tabsClosable">
+         <bool>false</bool>
+        </property>
+        <property name="movable">
+         <bool>true</bool>
+        </property>
+        <property name="tabBarAutoHide">
+         <bool>false</bool>
+        </property>
+        <widget class="QWidget" name="tab_10">
+         <attribute name="icon">
+          <iconset resource="icons.qrc">
+           <normaloff>:/icons/settings/icons/AlgoripmSerrings_tabs/SettingsDevice.png</normaloff>:/icons/settings/icons/AlgoripmSerrings_tabs/SettingsDevice.png</iconset>
+         </attribute>
+         <attribute name="title">
+          <string>Устройство</string>
+         </attribute>
+        </widget>
+        <widget class="QWidget" name="tab">
+         <attribute name="icon">
+          <iconset resource="icons.qrc">
+           <normaloff>:/icons/settings/icons/AlgoripmSerrings_tabs/Alroritm_Settings_Rentgen_Menu_tab_1.png</normaloff>:/icons/settings/icons/AlgoripmSerrings_tabs/Alroritm_Settings_Rentgen_Menu_tab_1.png</iconset>
+         </attribute>
+         <attribute name="title">
+          <string>Рентген</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>2</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QTabWidget" name="tabWidget_2">
+            <property name="statusTip">
+             <string/>
+            </property>
+            <property name="currentIndex">
+             <number>0</number>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="tabsClosable">
+             <bool>false</bool>
+            </property>
+            <property name="movable">
+             <bool>true</bool>
+            </property>
+            <property name="tabBarAutoHide">
+             <bool>false</bool>
+            </property>
+            <widget class="QWidget" name="tab_6">
+             <attribute name="icon">
+              <iconset resource="icons.qrc">
+               <normaloff>:/icons/algoritmSettings/rentgen/icons/AlgoripmSerrings_tabs/Rentgens/Rentgen_Settings_Main_1.png</normaloff>:/icons/algoritmSettings/rentgen/icons/AlgoripmSerrings_tabs/Rentgens/Rentgen_Settings_Main_1.png</iconset>
+             </attribute>
+             <attribute name="title">
+              <string>Основные параметры</string>
+             </attribute>
+             <layout class="QVBoxLayout" name="verticalLayout_4">
+              <item>
+               <widget class="SPRSettingsRentgenMainWidget" name="widget_2" native="true"/>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="tab_7">
+             <attribute name="icon">
+              <iconset resource="icons.qrc">
+               <normaloff>:/icons/algoritmSettings/rentgen/icons/AlgoripmSerrings_tabs/Rentgens/Rentgen_Settings_Controls_1.png</normaloff>:/icons/algoritmSettings/rentgen/icons/AlgoripmSerrings_tabs/Rentgens/Rentgen_Settings_Controls_1.png</iconset>
+             </attribute>
+             <attribute name="title">
+              <string>Контрольные параметры</string>
+             </attribute>
+             <layout class="QVBoxLayout" name="verticalLayout_5">
+              <item>
+               <widget class="SPRSettingsRentgenControlWidget" name="widget_3" native="true"/>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="tab_8">
+             <attribute name="icon">
+              <iconset resource="icons.qrc">
+               <normaloff>:/icons/algoritmSettings/rentgen/icons/AlgoripmSerrings_tabs/Rentgens/Rentgen_Settings_Auto_1.png</normaloff>:/icons/algoritmSettings/rentgen/icons/AlgoripmSerrings_tabs/Rentgens/Rentgen_Settings_Auto_1.png</iconset>
+             </attribute>
+             <attribute name="title">
+              <string>Автоустановка</string>
+             </attribute>
+             <layout class="QVBoxLayout" name="verticalLayout_6">
+              <item>
+               <widget class="SPRSettingsRentgenAutosetWidget" name="widget_4" native="true"/>
+              </item>
+             </layout>
+            </widget>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tabSpectrumRanges">
+         <attribute name="icon">
+          <iconset resource="icons.qrc">
+           <normaloff>:/icons/settings/icons/AlgoripmSerrings_tabs/Alroritm_Settings_Spector_tab_1.png</normaloff>:/icons/settings/icons/AlgoripmSerrings_tabs/Alroritm_Settings_Spector_tab_1.png</iconset>
+         </attribute>
+         <attribute name="title">
+          <string>Спектр</string>
+         </attribute>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="SPRSpectrumRangesTableWidget" name="widget_7" native="true"/>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab_3">
+         <attribute name="icon">
+          <iconset resource="icons.qrc">
+           <normaloff>:/icons/settings/icons/AlgoripmSerrings_tabs/Alroritm_Settings_Formulas_tab_1.png</normaloff>:/icons/settings/icons/AlgoripmSerrings_tabs/Alroritm_Settings_Formulas_tab_1.png</iconset>
+         </attribute>
+         <attribute name="title">
+          <string>Аналитика</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_8">
+          <item>
+           <widget class="SPRSettingsFormulaWidget" name="widget_5" native="true"/>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab_2">
+         <attribute name="icon">
+          <iconset resource="icons.qrc">
+           <normaloff>:/icons/settings/icons/AlgoripmSerrings_tabs/Algoritm_Sittings_Porogs_tab_1.png</normaloff>:/icons/settings/icons/AlgoripmSerrings_tabs/Algoritm_Sittings_Porogs_tab_1.png</iconset>
+         </attribute>
+         <attribute name="title">
+          <string>Пороги</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_9">
+          <item>
+           <widget class="SPRSettingsPorogsWidget" name="widget_6" native="true"/>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab_9">
+         <attribute name="icon">
+          <iconset resource="icons.qrc">
+           <normaloff>:/icons/settings/icons/AlgoripmSerrings_tabs/Alroritm_Settings_Ims_tab_1.png</normaloff>:/icons/settings/icons/AlgoripmSerrings_tabs/Alroritm_Settings_Ims_tab_1.png</iconset>
+         </attribute>
+         <attribute name="title">
+          <string>ИМ</string>
+         </attribute>
+        </widget>
+        <widget class="QWidget" name="tab_5">
+         <attribute name="icon">
+          <iconset resource="icons.qrc">
+           <normaloff>:/icons/settings/icons/AlgoripmSerrings_tabs/Alroritm_Settings_SeparationControl_tab_1.png</normaloff>:/icons/settings/icons/AlgoripmSerrings_tabs/Alroritm_Settings_SeparationControl_tab_1.png</iconset>
+         </attribute>
+         <attribute name="title">
+          <string>Контроль</string>
+         </attribute>
+        </widget>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="widget" native="true">
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QSplitter" name="splitter">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <widget class="QWidget" name="layoutWidget">
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <item>
+              <widget class="QPushButton" name="pushButton">
+               <property name="text">
+                <string>Отменить</string>
+               </property>
+               <property name="icon">
+                <iconset resource="icons.qrc">
+                 <normaloff>:/icons/icons/b_Cancel.png</normaloff>:/icons/icons/b_Cancel.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_2">
+               <property name="text">
+                <string>Применить</string>
+               </property>
+               <property name="icon">
+                <iconset resource="icons.qrc">
+                 <normaloff>:/icons/icons/b_Ok_1.png</normaloff>:/icons/icons/b_Ok_1.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_3">
+               <property name="text">
+                <string>Сохранить</string>
+               </property>
+               <property name="icon">
+                <iconset resource="icons.qrc">
+                 <normaloff>:/icons/icons/b_Save.png</normaloff>:/icons/icons/b_Save.png</iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>842</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>SPRSettingsRentgenMainWidget</class>
+   <extends>QWidget</extends>
+   <header>sprsettingsrentgenmainwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SPRSettingsRentgenControlWidget</class>
+   <extends>QWidget</extends>
+   <header>sprsettingsrentgencontrolwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SPRSettingsRentgenAutosetWidget</class>
+   <extends>QWidget</extends>
+   <header>sprsettingsrentgenautosetwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SPRSettingsFormulaWidget</class>
+   <extends>QWidget</extends>
+   <header>sprsettingsformulawidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SPRSettingsPorogsWidget</class>
+   <extends>QWidget</extends>
+   <header>sprsettingsporogswidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SPRSpectrumRangesTableWidget</class>
+   <extends>QWidget</extends>
+   <header>sprspectrumrangestablewidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="icons.qrc"/>
+ </resources>
+ <connections/>
+</ui>
