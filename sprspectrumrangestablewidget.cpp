@@ -46,13 +46,13 @@ void SPRSpectrumRangesTableWidget::viewChange(bool)
         msg.exec();
         return;
     }
-    if(!focusedLe->objectName().startsWith("le")){
+    if(!focusedLe->objectName().startsWith("leTable")){
         QMessageBox msg(QMessageBox::Icon::Critical, tr("Нет выбранного элемента..."), tr("Нет выбранного элемента..."), QMessageBox::Ok);
         msg.exec();
         return;
     }
 
-    int column = QVariant(focusedLe->property("column")).toInt();
+    int column = QVariant(focusedLe->property("col")).toInt();
     uint val = focusedLe->text().toUInt();
     EnumElements el = static_cast<EnumElements>(QVariant(focusedLe->property("element")).toInt());
     SPRSpectrumRangesTableModel *mod = (SPRSpectrumRangesTableModel*)ui.wSpectrumTable->getModel();

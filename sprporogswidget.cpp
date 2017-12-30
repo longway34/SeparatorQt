@@ -43,13 +43,13 @@ void SPRPorogsWidget::widgetsShow()
             hnames.append(QString::number(k));
             for(int c=0; c<cond; c++){
                 if(!t) vnames.append(names->at(c));
-                QLineEdit *cellValue = new QLineEdit(QString::number(model->porogs[t][c]->getData()));
+                QLineEdit *cellValue = new QLineEdit(QString::number(model->porogs[t][c]->getData()),ui.tPorogsValues);
                 cellValue->setFrame(false); cellValue->setAlignment(Qt::AlignCenter);
                 cellValue->setValidator(new QDoubleValidator(0,100,2,cellValue));
                 cellValue->setToolTip(tr("Значение для ручья ")+QString::number(t)+tr(" условия ")+names->at(c));
                 cellValue->setProperty("row", c); cellValue->setProperty("col", t); //cellValue->setProperty("parent", QVariant("tPorogsValues"));
                 ui.tPorogsValues->setCellWidget(c, t, cellValue);
-                connect(cellValue, SIGNAL(editingFinished()), this, SLOT(changeCellLe()));
+                connect(cellValue, SIGNAL(editingFinished()), this, SLOT(viewChange()));
             }
         }
         ui.tPorogsValues->setVerticalHeaderLabels(vnames);
@@ -60,11 +60,11 @@ void SPRPorogsWidget::widgetsShow()
     }
 }
 
-void SPRPorogsWidget::changeCellLe()
+void SPRPorogsWidget::viewChange()
 {
     QLineEdit *le = qobject_cast<QLineEdit*>(sender());
     double value = le->text().toDouble();
-    QTableWidget *tw = qobject_cast<QTableWidget*>(le->parentWidget()->parentWidget());
+    QTableWidget *tw = sender()->property("tw").value<QTableWidget*>();
     int row = le->property("row").toInt();
     int col = le->property("col").toInt();
     model->porogs[col][row]->setData(value);
@@ -77,6 +77,4 @@ ISPRModelData *SPRPorogsWidget::getModel()
 }
 
 
-void SPRPorogsWidget::viewChange(QTableWidget *, int, int)
-{
-}
+

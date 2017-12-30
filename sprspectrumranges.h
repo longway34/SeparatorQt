@@ -35,6 +35,10 @@ public slots:
 //    void onFocus(QFocusEvent *event);
 signals:
     void tableChange(QTableWidget*, int row, int col);
+
+    // ISPRWidget interface
+protected slots:
+    virtual void viewChange();
 };
 
 #endif // SPRSPECTRUMRANGES_H

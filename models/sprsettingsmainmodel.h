@@ -29,6 +29,8 @@ public:
 //    SPRDateVariable *date;
 //    SPRQStringVariable *version;
 
+    SPRVariable<uint> *getRentgens() const;
+    SPRVariable<uint> *getThreads() const;
 };
 
 #endif // SPRSETTINGSMAINMODEL_H

@@ -24,10 +24,6 @@ public:
     void setThreads(SPRVariable<uint>* threads) {this->model->setThreads(threads);}
     ISPRModelData *setModel(ISPRModelData *model);
 
-public slots:
-    void changeCellLe();
-private:
-
     // ISPRWidget interface
 signals:
     void tableChange(QTableWidget *table, int row, int col);
@@ -41,8 +37,9 @@ public slots:
 
 
     // ISPRWidget interface
+    void viewChange();
 protected:
-    virtual void viewChange(QTableWidget*, int, int);
+    virtual void viewChange(QTableWidget*, int, int){}
 };
 
 #endif // SPRPOROGSWIDGET_H

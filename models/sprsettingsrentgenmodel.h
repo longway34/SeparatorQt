@@ -24,12 +24,21 @@ public:
     SPRVariable<uint> *diffParamDisallow;
     SPRVariable<uint> *timeMoveRGU;
     SPRVariable<bool> *woControlPlace;
+    SPRVariable<bool> **withChannel;
+    SPRVariable<bool> *withRGU;
+
+    SPRVariable<TypeAutoSettingRMT> *typeSetting;
+    SPRVariable<uint> *codeBegin;
+    SPRVariable<uint> *codeStep;
+    SPRVariable<uint> *peakPosition;
 
     SPRSettingsRentgenModel(QObject *parent=nullptr);
     SPRSettingsRentgenModel(QDomDocument *_doc, QObject *parent = nullptr);
     virtual ~SPRSettingsRentgenModel();
     void setRentgens(SPRVariable<uint> *value);
     void setThreads(SPRVariable<uint> *value);
+    SPRVariable<uint> *getThreads() const;
+    SPRVariable<uint> *getRentgens() const;
 };
 
 #endif // SPRSETTINGSRENTGENMODEL_H

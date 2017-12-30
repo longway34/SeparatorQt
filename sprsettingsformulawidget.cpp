@@ -28,6 +28,7 @@ ISPRModelData *SPRSettingsFormulaWidget::setModel(ISPRModelData *model)
         int index = sfm->itemsModel[i]->index;
         widgets[index]->setModel(sfm->itemsModel[i]);
     }
+    return model;
 }
 
 ISPRModelData *SPRSettingsFormulaWidget::setItemModel(ISPRModelData *model)

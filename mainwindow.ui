@@ -72,7 +72,7 @@
          <enum>QTabWidget::Rounded</enum>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>7</number>
         </property>
         <property name="iconSize">
          <size>
@@ -106,8 +106,42 @@
          <attribute name="title">
           <string>Устройство</string>
          </attribute>
+         <widget class="QWidget" name="widget_2" native="true">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>10</y>
+            <width>514</width>
+            <height>409</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_7">
+           <item>
+            <widget class="QSplitter" name="splitter_2">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <widget class="SPRSettingsMainWidget" name="wSettingsMianWidget" native="true">
+              <property name="minimumSize">
+               <size>
+                <width>491</width>
+                <height>391</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>491</width>
+                <height>391</height>
+               </size>
+              </property>
+             </widget>
+             <widget class="QWidget" name="widget_3" native="true"/>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </widget>
-        <widget class="QWidget" name="tab">
+        <widget class="QWidget" name="tabRentgen">
          <attribute name="icon">
           <iconset resource="icons.qrc">
            <normaloff>:/icons/settings/icons/AlgoripmSerrings_tabs/Alroritm_Settings_Rentgen_Menu_tab_1.png</normaloff>:/icons/settings/icons/AlgoripmSerrings_tabs/Alroritm_Settings_Rentgen_Menu_tab_1.png</iconset>
@@ -134,7 +168,7 @@
              <string/>
             </property>
             <property name="currentIndex">
-             <number>0</number>
+             <number>1</number>
             </property>
             <property name="iconSize">
              <size>
@@ -161,7 +195,7 @@
              </attribute>
              <layout class="QVBoxLayout" name="verticalLayout_4">
               <item>
-               <widget class="SPRSettingsRentgenMainWidget" name="widget_2" native="true"/>
+               <widget class="SPRSettingsRentgenMainWidget" name="wSettingsRentgenMainWidget" native="true"/>
               </item>
              </layout>
             </widget>
@@ -175,7 +209,7 @@
              </attribute>
              <layout class="QVBoxLayout" name="verticalLayout_5">
               <item>
-               <widget class="SPRSettingsRentgenControlWidget" name="widget_3" native="true"/>
+               <widget class="SPRSettingsRentgenControlWidget" name="wSettingsRentgenControlWidget" native="true"/>
               </item>
              </layout>
             </widget>
@@ -189,7 +223,7 @@
              </attribute>
              <layout class="QVBoxLayout" name="verticalLayout_6">
               <item>
-               <widget class="SPRSettingsRentgenAutosetWidget" name="widget_4" native="true"/>
+               <widget class="SPRSettingsRentgenAutosetWidget" name="wSettingsRentgenAutoWidget" native="true"/>
               </item>
              </layout>
             </widget>
@@ -207,7 +241,7 @@
          </attribute>
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item>
-           <widget class="SPRSpectrumRangesTableWidget" name="tSpectrumPorogs" native="true"/>
+           <widget class="SPRSpectrumRangesTableWidget" name="wSpectrumPorogsWidget" native="true"/>
           </item>
          </layout>
         </widget>
@@ -221,7 +255,7 @@
          </attribute>
          <layout class="QVBoxLayout" name="verticalLayout_8">
           <item>
-           <widget class="SPRSettingsFormulaWidget" name="widget_5" native="true"/>
+           <widget class="SPRSettingsFormulaWidget" name="wSettingsFormulaWidget" native="true"/>
           </item>
          </layout>
         </widget>
@@ -235,7 +269,7 @@
          </attribute>
          <layout class="QVBoxLayout" name="verticalLayout_9">
           <item>
-           <widget class="SPRSettingsPorogsWidget" name="widget_6" native="true"/>
+           <widget class="SPRSettingsPorogsWidget" name="wSettingsPorogsWidget" native="true"/>
           </item>
          </layout>
         </widget>
@@ -256,6 +290,32 @@
          <attribute name="title">
           <string>Контроль</string>
          </attribute>
+        </widget>
+        <widget class="QWidget" name="tab_Test">
+         <attribute name="icon">
+          <iconset resource="icons.qrc">
+           <normaloff>:/icons/settings/icons/AlgoripmSerrings_tabs/Alroritm_Settings_Rentgen_Menu_tab_1.png</normaloff>:/icons/settings/icons/AlgoripmSerrings_tabs/Alroritm_Settings_Rentgen_Menu_tab_1.png</iconset>
+         </attribute>
+         <attribute name="title">
+          <string>Рентген</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_10">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="SPRSettingsRentgenWidget" name="wSettingsRentgen" native="true"/>
+          </item>
+         </layout>
         </widget>
        </widget>
       </item>
@@ -382,6 +442,18 @@
    <class>SPRSpectrumRangesTableWidget</class>
    <extends>QWidget</extends>
    <header>sprspectrumrangestablewidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SPRSettingsMainWidget</class>
+   <extends>QWidget</extends>
+   <header>sprsettingsmainwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SPRSettingsRentgenWidget</class>
+   <extends>QWidget</extends>
+   <header>sprsettingsrentgenwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

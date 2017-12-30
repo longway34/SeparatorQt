@@ -54,3 +54,13 @@ SPRSettingsMainModel::~SPRSettingsMainModel()
 //    if(date) delete date; date = nullptr;
 
 }
+
+SPRVariable<uint> *SPRSettingsMainModel::getThreads() const
+{
+    return threads;
+}
+
+SPRVariable<uint> *SPRSettingsMainModel::getRentgens() const
+{
+    return rentgens;
+}

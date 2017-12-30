@@ -3,6 +3,7 @@
 ISPRModelData *SPRSettingsPorogsWidget::setModel(ISPRModelData *value)
 {
     model = (SPRSettingsPorogsModel*)value;
+    ui.wPorogs->setModel(new SPRPorogsModel(model->getDoc()));
     widgetsShow();
     return model;
 }

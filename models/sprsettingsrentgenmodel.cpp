@@ -22,6 +22,16 @@ void SPRSettingsRentgenModel::setThreads(SPRVariable<uint> *value)
     }
 }
 
+SPRVariable<uint> *SPRSettingsRentgenModel::getThreads() const
+{
+    return threads;
+}
+
+SPRVariable<uint> *SPRSettingsRentgenModel::getRentgens() const
+{
+    return rentgens;
+}
+
 SPRSettingsRentgenModel::SPRSettingsRentgenModel(QObject *parent)
 {
     iTubes = nullptr;
@@ -39,6 +49,11 @@ SPRSettingsRentgenModel::SPRSettingsRentgenModel(QObject *parent)
     setProperty("delete_threads", QVariant(false));
     rentgens = nullptr;
     setProperty("delete_rentgens", QVariant(false));
+    withChannel = nullptr;
+    withRGU = nullptr;
+    typeSetting = nullptr;
+    codeBegin = nullptr;
+    codeStep = nullptr;
 }
 
 SPRSettingsRentgenModel::SPRSettingsRentgenModel(QDomDocument *_doc, QObject *parent):
@@ -77,6 +92,18 @@ SPRSettingsRentgenModel::SPRSettingsRentgenModel(QDomDocument *_doc, QObject *pa
     setProperty("delete_threads", QVariant(true));
     rentgens = new SPRVariable<uint>(doc,SPR_SETTINGS_MAIN_RENTGENS_XPATH, DEF_SPR_MAIN_RENTGENS, this);
     setProperty("delete_rentgens", QVariant(true));
+
+    QVector<QString> xpaths = {SPR_AUTUSETTINGS_WITH_CHANNEL_0, SPR_AUTUSETTINGS_WITH_CHANNEL_1, SPR_AUTUSETTINGS_WITH_CHANNEL_2, SPR_AUTUSETTINGS_WITH_CHANNEL_3,
+                               SPR_AUTUSETTINGS_WITH_CHANNEL_4, SPR_AUTUSETTINGS_WITH_CHANNEL_5, SPR_AUTUSETTINGS_WITH_CHANNEL_6, SPR_AUTUSETTINGS_WITH_CHANNEL_7};
+
+    withChannel = (SPRVariable<bool>**)malloc(sizeof(SPRVariable<bool>*) * MAX_SPR_MAIN_THREADS);
+    for(int i=0; i<MAX_SPR_MAIN_THREADS; i++){
+        withChannel[i] = new SPRVariable<bool>(doc, xpaths[i], DEF_SPR_AUTUSETTINGS_WITH_CHANNEL, this);
+    }
+    withRGU = new SPRVariable<bool>(doc, SPR_AUTOSETTINGS_WITH_RGU_XPATH, DEF_SPR_AUTOSETTINGS_WITH_RGU, this);
+    typeSetting = new SPRVariable<TypeAutoSettingRMT>(doc, SPR_AUTOSETTINGS_TYPE_SETTING_XPATH, DEF_SPR_AUTOSETTINGS_TYPE_SETTING, this);
+    codeBegin = new SPRVariable<uint>(doc,SPR_AUTOSETTINGS_CODE_BEGIN_XPATH, DEF_SPR_AUTOSETTINGS_CODE_BEGIN, this);
+    codeStep = new SPRVariable<uint>(doc, SPR_AUTOSETTINGS_CODE_STEP_XPATH, DEF_SPR_AUTOSETTINGS_CODE_STEP, this);
 }
 
 SPRSettingsRentgenModel::~SPRSettingsRentgenModel()
@@ -119,4 +146,17 @@ SPRSettingsRentgenModel::~SPRSettingsRentgenModel()
     setProperty("delete_threads", QVariant(false));
     if(rentgens && QVariant(property("delete_rentgens")).toBool()) delete rentgens; rentgens = nullptr;
     setProperty("delete_rentgens", QVariant(false));
+
+    if(withChannel){
+        for(int i=0; i<MAX_SPR_MAIN_THREADS; i++){
+            if(withChannel[i]) delete withChannel[i]; withChannel[i] = nullptr;
+        }
+        delete withChannel; withChannel = nullptr;
+    }
+
+    if(withRGU) delete withRGU; withRGU = nullptr;
+
+    if(typeSetting) delete typeSetting; typeSetting = nullptr;
+    if(codeBegin) delete codeBegin; codeBegin = nullptr;
+    if(codeStep) delete codeStep; codeStep = nullptr;
 }

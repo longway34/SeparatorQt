@@ -14,7 +14,7 @@
 #include <QDomDocument>
 #include <QButtonGroup>
 
-class SPRSettingsPorogsWidget : public QWidget, ISPRWidget
+class SPRSettingsPorogsWidget : public QWidget, public ISPRWidget
 {
     Q_OBJECT
 
@@ -31,6 +31,19 @@ public:
     QButtonGroup *bgTypeSelection;
     QwtPlotCurve *curve;
     QwtPlotGrid *grid;
+
+    void setConditions(SPRVariable<TypeConditions> *var){
+        model->setConditions(var);
+        widgetsShow();
+    }
+    void setThreads(SPRVariable<uint> *var){
+        model->setThreads(var);
+        widgetsShow();
+    }
+    void setTypeSelections(SPRVariable<TypeSelection> *var){
+        model->setSelection(var);
+    }
+
 public slots:
     void repaintGraphic(double);
 
