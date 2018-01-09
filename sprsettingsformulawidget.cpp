@@ -68,7 +68,6 @@ void SPRSettingsFormulaWidget::widgetsShow()
         break;
     }
     bgCondition->blockSignals(false);
-    emit doShow();
 }
 
 
@@ -82,15 +81,11 @@ void SPRSettingsFormulaWidget::viewChange(int value)
     if(sender() == bgCondition){
        TypeConditions val = static_cast<TypeConditions>(value);
        if(model){
+           SPRVariable<TypeConditions> *condv = model->getConditions();
             model->getConditions()->setData(val);
        }
        widgetsShow();
     }
+    emit doShow();
 }
 
-
-
-
-void SPRSettingsFormulaWidget::viewChange(QTableWidget *, int, int)
-{
-}

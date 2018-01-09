@@ -1,9 +1,12 @@
 #include "sprsettingsporogswidget.h"
+#include <QObjectUserData>
 
 ISPRModelData *SPRSettingsPorogsWidget::setModel(ISPRModelData *value)
 {
     model = (SPRSettingsPorogsModel*)value;
-    ui.wPorogs->setModel(new SPRPorogsModel(model->getDoc()));
+    ui.wPorogs->setModel(model->getPorogs());
+    ui.wPorogs->setConditions(model->getConditions());
+    ui.wPorogs->setThreads(model->getThreads());
     widgetsShow();
     return model;
 }
@@ -34,9 +37,21 @@ SPRSettingsPorogsWidget::SPRSettingsPorogsWidget(QWidget *parent) :
     ui.setupUi(this);
     ui.wPorogs->ui.gbPorogs->setTitle("");
 
+    ui.rbTail->setProperty("selections", QVariant(OnTail));
+    ui.rbConcentrat->setProperty("selections", QVariant(OnConsentrate));
     bgTypeSelection = new QButtonGroup(this);
     bgTypeSelection->addButton(ui.rbTail, 0);
     bgTypeSelection->addButton(ui.rbConcentrat, 1);
+    connect(bgTypeSelection, SIGNAL(buttonClicked(QAbstractButton*)), SLOT(viewChange(QAbstractButton*)));
+
+    ui.rbH1Resume->setProperty("conditions", QVariant(H1));
+    ui.rbH2Resume->setProperty("conditions", QVariant(H2));
+    ui.rbH3Resume->setProperty("conditions", QVariant(H3));
+    bgTypeConditions = new QButtonGroup(this);
+    bgTypeConditions->addButton(ui.rbH1Resume, 0);
+    bgTypeConditions->addButton(ui.rbH2Resume, 1);
+    bgTypeConditions->addButton(ui.rbH3Resume, 2);
+    connect(bgTypeConditions, SIGNAL(buttonClicked(QAbstractButton*)), SLOT(viewChange(QAbstractButton*)));
 
     curve = new QwtPlotCurve(tr("Коэффициеты"));
     curve->setPen(QColor(Qt::red), 2, Qt::SolidLine);
@@ -67,9 +82,25 @@ void SPRSettingsPorogsWidget::widgetsShow()
     TypeSelection type = model->typeSelection->getData();
     if(type == OnConsentrate){
         ui.rbConcentrat->setChecked(true);
-    } else {
+    } else if(type == OnTail){
         ui.rbTail->setChecked(true);
     }
+
+    TypeConditions cond = model->getConditions()->getData();
+    switch (cond) {
+    case H1:
+        ui.rbH1Resume->setChecked(true);
+        break;
+    case H2:
+        ui.rbH2Resume->setChecked(true);
+        break;
+    case H3:
+        ui.rbH3Resume->setChecked(true);
+        break;
+    default:
+        break;
+    }
+
     repaintGraphic(0);
     ui.wPorogs->widgetsShow();
 }
@@ -81,11 +112,6 @@ ISPRModelData *SPRSettingsPorogsWidget::getModel()
 
 void SPRSettingsPorogsWidget::viewChange(int data)
 {
-    if(sender() == bgTypeSelection){ // изменили состояние сортировки хвост/концентрат
-        TypeSelection val = static_cast<TypeSelection>(data);
-        model->typeSelection->setData(val);
-        return;
-    }
 }
 
 void SPRSettingsPorogsWidget::viewChange(double data)
@@ -106,7 +132,21 @@ void SPRSettingsPorogsWidget::viewChange(double data)
     }
 }
 
-
-void SPRSettingsPorogsWidget::viewChange(QTableWidget *, int, int)
+void SPRSettingsPorogsWidget::viewChange(QAbstractButton *btn)
 {
+    if(sender() == bgTypeConditions){ // изменили состояние выводов по сепарации
+        TypeConditions val = btn->property("conditions").value<TypeConditions>();
+        model->getConditions()->setData(val);
+        emit doShow();
+    }
+    if(sender() == bgTypeSelection){ // изменили состояние сортировки хвост/концентрат
+        TypeSelection val = btn->property("selections").value<TypeSelection>();;
+        model->typeSelection->setData(val);
+        return;
+    }
 }
+
+
+//void SPRSettingsPorogsWidget::viewChange(QTableWidget *, int, int)
+//{
+//}

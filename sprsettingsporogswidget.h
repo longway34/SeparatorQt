@@ -29,15 +29,18 @@ public:
     ISPRModelData *setModel(ISPRModelData *value);
 
     QButtonGroup *bgTypeSelection;
+    QButtonGroup *bgTypeConditions;
     QwtPlotCurve *curve;
     QwtPlotGrid *grid;
 
     void setConditions(SPRVariable<TypeConditions> *var){
         model->setConditions(var);
+//        ui.wPorogs->setConditions(var);
         widgetsShow();
     }
     void setThreads(SPRVariable<uint> *var){
         model->setThreads(var);
+
         widgetsShow();
     }
     void setTypeSelections(SPRVariable<TypeSelection> *var){
@@ -53,14 +56,14 @@ public slots:
     virtual void widgetsShow();
     virtual void viewChange(int data);
     virtual void viewChange(double data);
+    virtual void viewChange(QAbstractButton *btn);
+
+signals:
+    void doShow();
 
     // ISPRWidget interface
-public:
-
-
-    // ISPRWidget interface
-protected:
-    virtual void viewChange(QTableWidget*, int, int);
+//protected:
+//    virtual void viewChange(QTableWidget*, int, int);
 };
 
 #endif // SPRSETTINGSPOROGSWIDGET_H

@@ -13,7 +13,8 @@ typedef enum :int {
     realVariable,
     enumVariable,
     qObjectVariable,
-    boolVariable
+    boolVariable,
+    longVariable
 } TypeVariable;
 
 //Q_DECLARE_METATYPE (TypeVariable)
@@ -28,6 +29,11 @@ static const QMap<const char*, TypeVariable> mTypeVariables =
     {typeid(qint16).name(), intVariable},
     {typeid(quint16).name(), intVariable},
     {typeid(quint16).name(), intVariable},
+
+    {typeid(long).name(), longVariable},
+    {typeid(ulong).name(), longVariable},
+    {typeid(qulonglong).name(), longVariable},
+    {typeid(qlonglong).name(), longVariable},
 
     {typeid(qreal).name(), realVariable},
     {typeid(double).name(), realVariable},

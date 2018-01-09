@@ -28,9 +28,8 @@ public:
     void setModel(SPRSpectrumRangesModel *value);
     QPoint getSelectedPosition();
     EnumElements getSelectedElement();
-public slots:
-    virtual void changeCellLe();
-    virtual void viewChange(QTableWidget *table, int row, int col);
+//public slots:
+//    virtual void viewChange(QTableWidget *table, int row, int col);
 
 //    void onFocus(QFocusEvent *event);
 signals:

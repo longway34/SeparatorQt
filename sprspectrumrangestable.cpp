@@ -34,12 +34,15 @@ void SPRSpectrumRangesTable::widgetsShow()
 {
     if(model){
         for(int i=0; i< model->items.size(); i++){
+            SPRVariable<uint> *thr = model->getThreads();
             if(i < model->getThreads()->getData()){
-                cellWidget(0, i)->setVisible(true);
+                showColumn(i);
+//                cellWidget(0, i)->setVisible(true);
                 ((SPRSpectrumRanges*)(cellWidget(0,i)))->widgetsShow();
 
             } else {
-                cellWidget(0, i)->setVisible(false);
+                hideColumn(i);
+//                cellWidget(0, i)->setVisible(false);
             }
         }
     }

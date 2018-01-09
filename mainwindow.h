@@ -27,12 +27,12 @@ signals:
 
     // ISPRWidget interface
 public:
-    virtual void widgetsShow();
     virtual ISPRModelData *getModel();
 public slots:
     virtual void viewChange();
     virtual void viewChange(int);
     virtual void viewChange(QTableWidget *, int, int);
+    virtual void widgetsShow();
 
 };
 

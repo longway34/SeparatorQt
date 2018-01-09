@@ -43,6 +43,9 @@ public:
         if(mTypeVariables[typeid(value).name()] == intVariable){
             return QString::number(value);
         }
+        if(mTypeVariables[typeid(value).name()] == longVariable){
+            return QString::number(value);
+        }
         if(mTypeVariables[typeid(value).name()] == enumVariable){
             QString var = QVariant(static_cast<QVariant>(value)).toString();
             return var;
@@ -61,6 +64,10 @@ public slots:
             return;
         }
         if(mTypeVariables[typeid(data).name()] == intVariable){
+            IModelVariable::setData(QString::number(data));
+            return;
+        }
+        if(mTypeVariables[typeid(data).name()] == longVariable){
             IModelVariable::setData(QString::number(data));
             return;
         }
@@ -85,6 +92,10 @@ public slots:
     {
         if(mTypeVariables[typeid(data).name()] == intVariable){
             data = static_cast<T>(IModelVariable::getData().toInt());
+            return;
+        }
+        if(mTypeVariables[typeid(data).name()] == longVariable){
+            data = static_cast<T>(IModelVariable::getData().toLong());
             return;
         }
         if(mTypeVariables[typeid(data).name()] == enumVariable){

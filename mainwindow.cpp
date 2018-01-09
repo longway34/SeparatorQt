@@ -27,19 +27,27 @@ MainWindow::MainWindow(QDomDocument *_doc, QWidget *parent):
     model = ui.wSettingsMianWidget->setModel(mainModel);
     connect(this, SIGNAL(doStore()), model, SLOT(store()));
     connect(this,SIGNAL(doShow()), ui.wSettingsMianWidget, SLOT(widgetsShow()));
+    connect(ui.wSettingsMianWidget,SIGNAL(doShow()), this, SLOT(widgetsShow()));
+    connect(ui.wSettingsMianWidget, SIGNAL(doShow()), this, SLOT(widgetsShow()));
 
     model = ui.wSpectrumPorogsWidget->setModel(new SPRSpectrumRangesTableModel(doc));
+    ui.wSpectrumPorogsWidget->setThreads(mainModel->getThreads());
     connect(this, SIGNAL(doStore()), model, SLOT(store()));
     connect(this,SIGNAL(doShow()), ui.wSpectrumPorogsWidget, SLOT(widgetsShow()));
+    connect(ui.wSettingsPorogsWidget, SIGNAL(doShow()), this, SLOT(widgetsShow()));
     
-    model = ui.wSettingsPorogsWidget->setModel(new SPRSettingsPorogsModel(doc));
+    SPRSettingsPorogsModel *porogsModel = new SPRSettingsPorogsModel(doc);
+    ui.wSettingsPorogsWidget->setModel(porogsModel);
     ui.wSettingsPorogsWidget->setThreads(mainModel->getThreads());
-    connect(this, SIGNAL(doStore()), model, SLOT(store()));
+    connect(this, SIGNAL(doStore()), porogsModel, SLOT(store()));
     connect(this,SIGNAL(doShow()), ui.wSettingsPorogsWidget, SLOT(widgetsShow()));
+    connect(ui.wSettingsPorogsWidget,SIGNAL(doShow()), this, SLOT(widgetsShow()));
 
     model = ui.wSettingsFormulaWidget->setModel(new SPRSettingsFormulaModel(doc));
+    ui.wSettingsFormulaWidget->setConditions(porogsModel->getConditions());
     connect(this, SIGNAL(doStore()), model, SLOT(store()));
     connect(this,SIGNAL(doShow()), ui.wSettingsFormulaWidget, SLOT(widgetsShow()));
+    connect(ui.wSettingsFormulaWidget,SIGNAL(doShow()), this, SLOT(widgetsShow()));
 
     SPRSettingsRentgenModel *rentgenModel = new SPRSettingsRentgenModel(doc);
     connect(this, SIGNAL(doStore()), rentgenModel, SLOT(store()));
@@ -47,7 +55,18 @@ MainWindow::MainWindow(QDomDocument *_doc, QWidget *parent):
     rentgenModel->setThreads(mainModel->getThreads());
 
     model = ui.wSettingsRentgen->setModel(rentgenModel);
+    ui.wSettingsRentgen->setThreads(mainModel->getThreads());
+    ui.wSettingsRentgen->setRentgens(mainModel->getRentgens());
     connect(this,SIGNAL(doShow()), ui.wSettingsRentgen, SLOT(widgetsShow()));
+    
+    model = ui.wSettingsIMSWidget->setModel(new SPRSettingsIMSModel(doc));
+    ui.wSettingsIMSWidget->setIms(mainModel->ims);
+    connect(this, SIGNAL(doStore()), model, SLOT(store()));
+    connect(this, SIGNAL(doShow()), ui.wSettingsIMSWidget, SLOT(widgetsShow()));
+
+    model = ui.wSettingsControl->setModel(new SPRSettingsControlModel(doc));
+    connect(this, SIGNAL(doStore()), model, SLOT(store()));
+    connect(this, SIGNAL(doShow()), ui.wSettingsControl, SLOT(widgetsShow()));
 
 //    model = ui.wSettingsRentgenAutoWidget->
 }
@@ -62,6 +81,7 @@ MainWindow::MainWindow(QDomDocument *_doc, QWidget *parent):
 
 void MainWindow::widgetsShow()
 {
+    emit doShow();
 }
 
 ISPRModelData *MainWindow::getModel()

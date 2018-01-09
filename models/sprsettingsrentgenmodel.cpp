@@ -54,6 +54,8 @@ SPRSettingsRentgenModel::SPRSettingsRentgenModel(QObject *parent)
     typeSetting = nullptr;
     codeBegin = nullptr;
     codeStep = nullptr;
+
+    peakPosition = nullptr;
 }
 
 SPRSettingsRentgenModel::SPRSettingsRentgenModel(QDomDocument *_doc, QObject *parent):
@@ -104,6 +106,8 @@ SPRSettingsRentgenModel::SPRSettingsRentgenModel(QDomDocument *_doc, QObject *pa
     typeSetting = new SPRVariable<TypeAutoSettingRMT>(doc, SPR_AUTOSETTINGS_TYPE_SETTING_XPATH, DEF_SPR_AUTOSETTINGS_TYPE_SETTING, this);
     codeBegin = new SPRVariable<uint>(doc,SPR_AUTOSETTINGS_CODE_BEGIN_XPATH, DEF_SPR_AUTOSETTINGS_CODE_BEGIN, this);
     codeStep = new SPRVariable<uint>(doc, SPR_AUTOSETTINGS_CODE_STEP_XPATH, DEF_SPR_AUTOSETTINGS_CODE_STEP, this);
+
+    peakPosition = new SPRVariable<uint>(doc, SPR_AUTOSETTINGS_PEAC_POSITION_XPATH, DEF_SPR_AUTOSETTINGS_PEAC_POSITION, this);
 }
 
 SPRSettingsRentgenModel::~SPRSettingsRentgenModel()
@@ -159,4 +163,5 @@ SPRSettingsRentgenModel::~SPRSettingsRentgenModel()
     if(typeSetting) delete typeSetting; typeSetting = nullptr;
     if(codeBegin) delete codeBegin; codeBegin = nullptr;
     if(codeStep) delete codeStep; codeStep = nullptr;
+    if(peakPosition) delete peakPosition; peakPosition = nullptr;
 }

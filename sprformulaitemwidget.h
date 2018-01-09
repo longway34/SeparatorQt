@@ -31,9 +31,6 @@ public slots:
 public slots:
     virtual ISPRModelData *getModel();
 
-    // ISPRWidget interface
-protected:
-    virtual void viewChange(QTableWidget*, int, int);
 };
 
 #endif // SPRFORMULAITEMWIDGET_H

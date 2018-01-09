@@ -66,9 +66,9 @@ ISPRModelData *SPRSettingsRentgenAutosetWidget::getModel()
     return model;
 }
 
-void SPRSettingsRentgenAutosetWidget::viewChange(QTableWidget *, int, int)
-{
-}
+//void SPRSettingsRentgenAutosetWidget::viewChange(QTableWidget *, int, int)
+//{
+//}
 
 
 void SPRSettingsRentgenAutosetWidget::viewChange(bool value)

@@ -9,6 +9,7 @@ SPRSettingsRentgenControlWidget::SPRSettingsRentgenControlWidget(QWidget *parent
 
 void SPRSettingsRentgenControlWidget::widgetsShow()
 {
+    createDEUCodesTable();
 }
 
 ISPRModelData *SPRSettingsRentgenControlWidget::setModel(SPRSettingsRentgenModel *data)
@@ -85,9 +86,9 @@ void SPRSettingsRentgenControlWidget::createDEUCodesTable(){
 
 }
 
-void SPRSettingsRentgenControlWidget::viewChange(QTableWidget *, int, int)
-{
-}
+//void SPRSettingsRentgenControlWidget::viewChange(QTableWidget *, int, int)
+//{
+//}
 
 void SPRSettingsRentgenControlWidget::viewChange(int value)
 {

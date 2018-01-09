@@ -36,8 +36,6 @@ signals:
     void doShow();
 
     // ISPRWidget interface
-protected:
-    virtual void viewChange(QTableWidget*, int, int);
 };
 
 #endif // SPRSETTINGSFORMULAWIDGET_H

@@ -63,7 +63,6 @@ SPRFormulaItemWidget::SPRFormulaItemWidget(QWidget *parent) :
     ui.setupUi(this);
     setElements(&DEF_SPR_FORMULA_ELEMENTS_PROPERTY);
 
-//    connect(ui.lElementUp1, SIGNAL(changeCurrentElement(EnumElements)), SLOT(setValuesToVariable()(EnumElements)));
 }
 
 void SPRFormulaItemWidget::setElements(const MapElements *elements)
@@ -105,7 +104,3 @@ ISPRModelData *SPRFormulaItemWidget::getModel()
     return model;
 }
 
-
-void SPRFormulaItemWidget::viewChange(QTableWidget *, int, int)
-{
-}

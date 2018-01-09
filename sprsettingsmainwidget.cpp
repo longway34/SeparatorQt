@@ -129,19 +129,20 @@ void SPRSettingsMainWidget::viewChange(int)
             int value = ui.cbThreads->currentData().toInt();
             model->threads->setData(value);
             widgetsShow();
-    //        emit doShow();
+            emit doShow();
             return;
         }
         if(sender() == ui.cbRentgens){ // изменилось количество рентренов
             int value = ui.cbRentgens->currentData().toInt();
             model->rentgens->setData(value);
             widgetsShow();
-    //        emit doShow();
+            emit doShow();
             return;
         }
         if(sender() == ui.cbIMCount){ // изменилось количество исполнительных механизмов
             qint16 value = ui.cbIMCount->currentData().toInt();
             model->ims->setData(value);
+            emit doShow();
             return;
         }
         if(sender() == ui.cbTypePRAM){ // измениля тип ПРАМ
@@ -173,9 +174,5 @@ void SPRSettingsMainWidget::viewChange()
             return;
         }
     }
-}
-
-void SPRSettingsMainWidget::viewChange(QTableWidget *, int, int)
-{
 }
 

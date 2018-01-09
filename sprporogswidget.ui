@@ -67,7 +67,7 @@
            <x>0</x>
            <y>0</y>
            <width>328</width>
-           <height>207</height>
+           <height>213</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout">
@@ -85,6 +85,12 @@
           </property>
           <item>
            <widget class="QTableWidget" name="tPorogsValues">
+            <property name="font">
+             <font>
+              <family>Tahoma</family>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
             <property name="sizeAdjustPolicy">
              <enum>QAbstractScrollArea::AdjustToContents</enum>
             </property>
@@ -96,6 +102,9 @@
             </property>
             <property name="dragDropOverwriteMode">
              <bool>false</bool>
+            </property>
+            <property name="alternatingRowColors">
+             <bool>true</bool>
             </property>
             <property name="selectionBehavior">
              <enum>QAbstractItemView::SelectItems</enum>

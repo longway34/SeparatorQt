@@ -17,6 +17,10 @@ SPRPorogsWidget::SPRPorogsWidget(QWidget *parent) :
     ui.setupUi(this);
 }
 
+void SPRPorogsWidget::setThreads(SPRVariable<uint> *threads) {
+    this->model->setThreads(threads);
+}
+
 ISPRModelData *SPRPorogsWidget::setModel(ISPRModelData *model){
     this->model = (SPRPorogsModel*)model;
     return model;
@@ -27,6 +31,8 @@ void SPRPorogsWidget::widgetsShow()
     if(model){
         ui.tPorogsValues->blockSignals(true);
         ui.tPorogsValues->clear();
+        SPRVariable<TypeConditions> *condv = model->getConditions();
+        SPRVariable<uint> *thr = model->getThreads();
         int cond = mapConditions[model->getConditions()->getData()];
         ui.tPorogsValues->setRowCount(cond);
         ui.tPorogsValues->setColumnCount(model->getThreads()->getData());

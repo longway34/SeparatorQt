@@ -17,6 +17,8 @@ void SPRSpectrumRanges::setModel(SPRSpectrumRangesModel *value)
         setColumnCount(2);
         this->setHorizontalHeaderLabels(nameH);
         setRowCount(model->elements.size());
+        setAlternatingRowColors(true);
+//        setStyleSheet("alternate-background-color: rgb(201, 255, 198);");
     //    setRowCount(1);
         QStringList nameV;
         int count = 0;
@@ -30,7 +32,7 @@ void SPRSpectrumRanges::setModel(SPRSpectrumRangesModel *value)
             cell->setProperty("thread", model->tIndex);
             cell->setMaximumSize(std::max(fontMetrics().width("9999999"),fontMetrics().width(horizontalHeaderItem(0)->text())), 16777215);
             cell->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
-            connect(cell, SIGNAL(editingFinished()), this, SLOT(changeCellLe()));
+            connect(cell, SIGNAL(editingFinished()), this, SLOT(viewChange()));
             tt = tr("Максимальное значение канала ")+
                     QString::number(model->tIndex)+tr(" елемента '") + DEF_SPR_FORMULA_ELEMENTS_PROPERTY[el].sname +"'";
             cell = setNumberCell(this, count, 1, model->elements[el].max->getData(), 0, MAX_SPR_SPECTOR_CHANNELS,tt);
@@ -38,7 +40,7 @@ void SPRSpectrumRanges::setModel(SPRSpectrumRangesModel *value)
             cell->setProperty("thread", model->tIndex);
             cell->setMaximumSize(std::max(fontMetrics().width("9999999"),fontMetrics().width(horizontalHeaderItem(1)->text())), 16777215);
             cell->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
-            connect(cell, SIGNAL(editingFinished()), this, SLOT(changeCellLe()));
+            connect(cell, SIGNAL(editingFinished()), this, SLOT(viewChange()));
     //        connect(cell, QWidget::focusInEvent(QFocusEvent * event), this, SLOT(onFocus(QFocusEvent*)));
             actualSize.setHeight(actualSize.height()+rowHeight(count));
             if(count == 0){
@@ -85,25 +87,21 @@ EnumElements SPRSpectrumRanges::getSelectedElement(){
     }
 }
 
-void SPRSpectrumRanges::changeCellLe()
-{
-}
-
-void SPRSpectrumRanges::viewChange(QTableWidget *table, int row, int col)
-{
-    if(model){
-        int value = ((QLineEdit*)(cellWidget(row, col)))->text().toInt();
-        QLineEdit *le = qobject_cast<QLineEdit*>(sender());
-        EnumElements element = static_cast<EnumElements>(QVariant(le->property("element")).toInt());
-        if(col == 0){ // изиенили минимум для канала
-           model->elements[element].min->setData(value);
-        } else if(col == 1){ // изиенили максимум для канала
-           model->elements[element].max->setData(value);
-        }
-        emit tableChange(this, row, col);
-        return;
-    }
-}
+//void SPRSpectrumRanges::viewChange(QTableWidget *table, int row, int col)
+//{
+//    if(model){
+//        int value = ((QLineEdit*)(cellWidget(row, col)))->text().toInt();
+//        QLineEdit *le = qobject_cast<QLineEdit*>(sender());
+//        EnumElements element = static_cast<EnumElements>(QVariant(le->property("element")).toInt());
+//        if(col == 0){ // изиенили минимум для канала
+//           model->elements[element].min->setData(value);
+//        } else if(col == 1){ // изиенили максимум для канала
+//           model->elements[element].max->setData(value);
+//        }
+//        emit tableChange(this, row, col);
+//        return;
+//    }
+//}
 
 SPRSpectrumRanges::SPRSpectrumRanges(QWidget *parent) :
     QTableWidget(parent), model(nullptr)
@@ -152,11 +150,20 @@ QSize SPRSpectrumRanges::sizeHint() const
 
 void SPRSpectrumRanges::viewChange()
 {
-    QLineEdit *le = qobject_cast<QLineEdit*>(sender());
-    if(le->objectName().startsWith("leTable")){
-        QTableWidget *tw = this;
+    QTableWidget *tw = sender()->property("tw").value<QTableWidget*>();
+    QLineEdit *le = (QLineEdit*)sender();
+    if(tw == this){
+        EnumElements element = le->property("element").value<EnumElements>();
         int row = le->property("row").toInt();
         int col = le->property("col").toInt();
-        viewChange(tw, row, col);
+        uint value = le->text().toInt();
+        if(col == 0){ // изиенили минимум для канала
+           model->elements[element].min->setData(value);
+        } else if(col == 1){ // изиенили максимум для канала
+           model->elements[element].max->setData(value);
+        }
+        emit tableChange(this, row, col);
+
+//        viewChange(tw, row, col);
     }
 }

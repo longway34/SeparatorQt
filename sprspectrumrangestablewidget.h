@@ -19,6 +19,7 @@ public:
     virtual ISPRModelData *getModel();
 
     ISPRModelData *setModel(ISPRModelData *data);
+    void setThreads(SPRVariable<uint> *threads){ui.wSpectrumTable->model->setThreads(threads);}
 public slots:
     virtual void widgetsShow();
     virtual void viewChange(QTableWidget *, int, int);

@@ -18,7 +18,6 @@ private:
 
     // ISPRWidget interface
 public:
-    virtual void widgetsShow();
     virtual ISPRModelData *setModel(SPRSettingsRentgenModel *data);
     virtual ISPRModelData *getModel()
     {
@@ -35,10 +34,11 @@ protected:
 
     // ISPRWidget interface
 protected slots:
-    virtual void viewChange(QTableWidget *, int, int);
+//    virtual void viewChange(QTableWidget *, int, int);
     virtual void viewChange(int value);
     virtual void viewChange(bool value);
     virtual void viewChange();
+    virtual void widgetsShow();
 
 
 };

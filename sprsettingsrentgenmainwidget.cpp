@@ -43,24 +43,24 @@ ISPRModelData *SPRSettingsRentgenMainWidget::getModel()
 
 void SPRSettingsRentgenMainWidget::viewChange(QTableWidget *table, int row, int col)
 {
-    if(table == ui.tTubeVA){
-        int value = ((QLineEdit*)(ui.tTubeVA->cellWidget(row, col)))->text().toInt();
-        if(row == 0){ // изиенили ток на трубе
-           model->iTubes[col]->setData(value);
-        } else if(row == 1){ // изиенили напряжение на трубе
-           model->uTubes[col]->setData(value);
-        }
-        return;
-    }
-    if(table == ui.tDEUCode){
-        int value = ((QLineEdit*)(ui.tDEUCode->cellWidget(row, col)))->text().toInt();
-        if(row == 0){ // изиенили код ДЭУ
-           model->deuCodes[col]->setData(value);
-        } else if(row == 1){ // изиенили код ЦП
-           model->cpCodes[col]->setData(value);
-        }
-        return;
-    }
+//    if(table == ui.tTubeVA){
+//        int value = ((QLineEdit*)(ui.tTubeVA->cellWidget(row, col)))->text().toInt();
+//        if(row == 0){ // изиенили ток на трубе
+//           model->iTubes[col]->setData(value);
+//        } else if(row == 1){ // изиенили напряжение на трубе
+//           model->uTubes[col]->setData(value);
+//        }
+//        return;
+//    }
+//    if(table == ui.tDEUCode){
+//        int value = ((QLineEdit*)(ui.tDEUCode->cellWidget(row, col)))->text().toInt();
+//        if(row == 0){ // изиенили код ДЭУ
+//           model->deuCodes[col]->setData(value);
+//        } else if(row == 1){ // изиенили код ЦП
+//           model->cpCodes[col]->setData(value);
+//        }
+//        return;
+//    }
 }
 
 void SPRSettingsRentgenMainWidget::setRentrenVATable()
@@ -79,11 +79,11 @@ void SPRSettingsRentgenMainWidget::setRentrenVATable()
         QString tt = QString(tr("Ток(mkA) для трубы %1")).arg(QString::number(k));
         QLineEdit *le = setNumberCell(ui.tTubeVA, 0, i, model->iTubes[i]->getData(), 0, 1000, tt);
         le->setProperty("table", "va");
-            connect(le, SIGNAL(editingFinished()), this, SLOT(changeCellLe()));
+            connect(le, SIGNAL(editingFinished()), this, SLOT(viewChange()));
         tt = QString(tr("Напряжение(kV) на трубе %1")).arg(QString::number(k));
         le = setNumberCell(ui.tTubeVA, 1, i, model->uTubes[i]->getData(), 0, 1000, tt);
         le->setProperty("table", "va");
-            connect(le, SIGNAL(editingFinished()), this, SLOT(changeCellLe()));
+            connect(le, SIGNAL(editingFinished()), this, SLOT(viewChange()));
     }
     ui.tTubeVA->setHorizontalHeaderLabels(nameH);
     ui.tTubeVA->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeMode::Stretch);
@@ -135,12 +135,27 @@ void SPRSettingsRentgenMainWidget::setRentgens(SPRVariable<uint> *value)
 
 void SPRSettingsRentgenMainWidget::viewChange()
 {
+    QTableWidget *tw = sender()->property("tw").value<QTableWidget*>();
+    int row = sender()->property("row").toInt();
+    int col = sender()->property("col").toInt();
     QLineEdit *le = (QLineEdit*)sender();
-    if(le){
-        if(le->objectName().startsWith("leTable")){
-            QTableWidget *tw = QVariant(le->property("table")).toString().startsWith("va") ?
-                        ui.tTubeVA : ui.tDEUCode;
-            viewChange(tw, QVariant(le->property("row")).toInt(), QVariant(le->property("col")).toInt());
+
+    if(tw == ui.tTubeVA){
+        uint value = le->text().toInt();
+        if(row == 0){ // изиенили ток на трубе
+           model->iTubes[col]->setData(value);
+        } else if(row == 1){ // изиенили напряжение на трубе
+           model->uTubes[col]->setData(value);
         }
+        return;
+    }
+    if(tw == ui.tDEUCode){
+        uint value = le->text().toInt();
+        if(row == 0){ // изиенили код ДЭУ
+           model->deuCodes[col]->setData(value);
+        } else if(row == 1){ // изиенили код ЦП
+           model->cpCodes[col]->setData(value);
+        }
+        return;
     }
 }

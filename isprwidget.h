@@ -25,7 +25,7 @@ protected:
     virtual void viewChange(double){}
     virtual void viewChange(bool){}
     virtual void viewChange(int, int){}
-    virtual void viewChange(QTableWidget*, int, int)=0;
+    virtual void viewChange(QTableWidget*, int, int){}
 };
 
 #endif // ISPRWIDGET_H

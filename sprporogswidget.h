@@ -21,7 +21,8 @@ public:
     explicit SPRPorogsWidget(QWidget *parent = 0);
     Ui::SPRPorogsWidget ui;
 
-    void setThreads(SPRVariable<uint>* threads) {this->model->setThreads(threads);}
+    void setThreads(SPRVariable<uint>* threads);
+    void setConditions(SPRVariable<TypeConditions>* conditions) {this->model->setConditions(conditions);}
     ISPRModelData *setModel(ISPRModelData *model);
 
     // ISPRWidget interface
@@ -38,8 +39,6 @@ public slots:
 
     // ISPRWidget interface
     void viewChange();
-protected:
-    virtual void viewChange(QTableWidget*, int, int){}
 };
 
 #endif // SPRPOROGSWIDGET_H

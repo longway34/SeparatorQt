@@ -26,9 +26,9 @@ public slots:
     virtual void widgetsShow();
 protected slots:
     virtual void viewChange(int);
-    virtual void viewChange(QTableWidget *, int, int);
     virtual void viewChange();
-
+signals:
+    void doShow();
 };
 
 #endif // SPRSETTINGSMAINWIDGET_H

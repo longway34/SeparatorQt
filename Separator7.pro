@@ -46,7 +46,9 @@ SOURCES += \
     sprspectrumrangestable.cpp \
     sprspectrumrangestablewidget.cpp \
     sprsettingsmainwidget.cpp \
-    sprsettingsrentgenwidget.cpp
+    sprsettingsrentgenwidget.cpp \
+    sprsettingsimswidget.cpp \
+    sprsettingscontrolwidget.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -66,7 +68,9 @@ HEADERS += \
     sprspectrumrangestable.h \
     sprspectrumrangestablewidget.h \
     sprsettingsmainwidget.h \
-    sprsettingsrentgenwidget.h
+    sprsettingsrentgenwidget.h \
+    sprsettingsimswidget.h \
+    sprsettingscontrolwidget.h
 
 FORMS += \
         mainwindow.ui \
@@ -79,7 +83,9 @@ FORMS += \
     sprsettingsporogswidget.ui \
     sprspectrumrangestablewidget.ui \
     sprsettingsmainwidget.ui \
-    sprsettingsrentgenwidget.ui
+    sprsettingsrentgenwidget.ui \
+    sprsettingsimswidget.ui \
+    sprsettingscontrolwidget.ui
 
 RESOURCES += \
     icons.qrc
