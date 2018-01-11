@@ -13,6 +13,7 @@ class SPRSpectrumRanges : public QTableWidget, ISPRWidget
     Q_OBJECT
 
     SPRSpectrumRangesModel *model;
+    bool first;
 public:
     explicit SPRSpectrumRanges(QWidget *parent = 0);
 //    Ui::SPRSpectrumRanges ui;
@@ -34,10 +35,12 @@ public:
 //    void onFocus(QFocusEvent *event);
 signals:
     void tableChange(QTableWidget*, int row, int col);
+    void changeColor(EnumElements el, QColor color);
 
     // ISPRWidget interface
 protected slots:
     virtual void viewChange();
+    void viewChange(QColor color);
 };
 
 #endif // SPRSPECTRUMRANGES_H

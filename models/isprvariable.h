@@ -50,7 +50,6 @@ static const QMap<const char*, TypeVariable> mTypeVariables =
 
     {typeid(bool).name(), boolVariable}
 
-
 };
 
 class ISPRVariable : public QObject

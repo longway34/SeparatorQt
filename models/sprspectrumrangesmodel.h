@@ -17,6 +17,7 @@ public:
     typedef struct {
         SPRVariable<uint> *min;
         SPRVariable<uint> *max;
+        QColor color;
     } SpectorRange;
     int tIndex;
     QMap<EnumElements, SpectorRange> elements;

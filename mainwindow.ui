@@ -72,7 +72,7 @@
          <enum>QTabWidget::Rounded</enum>
         </property>
         <property name="currentIndex">
-         <number>5</number>
+         <number>7</number>
         </property>
         <property name="iconSize">
          <size>
@@ -237,6 +237,27 @@
           </item>
          </layout>
         </widget>
+        <widget class="QWidget" name="tab">
+         <attribute name="title">
+          <string>Страница</string>
+         </attribute>
+         <widget class="SPRSpectrumListTable" name="tSpectrumList">
+          <property name="geometry">
+           <rect>
+            <x>25</x>
+            <y>200</y>
+            <width>791</width>
+            <height>192</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <family>Tahoma</family>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
+         </widget>
+        </widget>
        </widget>
       </item>
       <item>
@@ -369,6 +390,11 @@
    <extends>QWidget</extends>
    <header>sprsettingscontrolwidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SPRSpectrumListTable</class>
+   <extends>QTableWidget</extends>
+   <header>sprspectrumlisttable.h</header>
   </customwidget>
  </customwidgets>
  <resources>

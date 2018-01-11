@@ -2,6 +2,8 @@
 #include "sprspectrumranges.h"
 #include "models/sprsettingsmainmodel.h"
 
+#include <QDir>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
@@ -30,9 +32,9 @@ MainWindow::MainWindow(QDomDocument *_doc, QWidget *parent):
     connect(ui.wSettingsMianWidget,SIGNAL(doShow()), this, SLOT(widgetsShow()));
     connect(ui.wSettingsMianWidget, SIGNAL(doShow()), this, SLOT(widgetsShow()));
 
-    model = ui.wSpectrumPorogsWidget->setModel(new SPRSpectrumRangesTableModel(doc));
+    SPRSpectrumRangesTableModel *tmodel =(SPRSpectrumRangesTableModel*)(ui.wSpectrumPorogsWidget->setModel(new SPRSpectrumRangesTableModel(doc)));
     ui.wSpectrumPorogsWidget->setThreads(mainModel->getThreads());
-    connect(this, SIGNAL(doStore()), model, SLOT(store()));
+    connect(this, SIGNAL(doStore()), tmodel, SLOT(store()));
     connect(this,SIGNAL(doShow()), ui.wSpectrumPorogsWidget, SLOT(widgetsShow()));
     connect(ui.wSettingsPorogsWidget, SIGNAL(doShow()), this, SLOT(widgetsShow()));
     
@@ -67,6 +69,11 @@ MainWindow::MainWindow(QDomDocument *_doc, QWidget *parent):
     model = ui.wSettingsControl->setModel(new SPRSettingsControlModel(doc));
     connect(this, SIGNAL(doStore()), model, SLOT(store()));
     connect(this, SIGNAL(doShow()), ui.wSettingsControl, SLOT(widgetsShow()));
+
+    if(QDir::setCurrent("F:\\Projects\\Separator\\Real spectors")){
+        QFile inp("СРФ3.spc");
+        ui.tSpectrumList->setModel(&inp, tmodel);
+    }
 
 //    model = ui.wSettingsRentgenAutoWidget->
 }

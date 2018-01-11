@@ -48,7 +48,12 @@ SOURCES += \
     sprsettingsmainwidget.cpp \
     sprsettingsrentgenwidget.cpp \
     sprsettingsimswidget.cpp \
-    sprsettingscontrolwidget.cpp
+    sprsettingscontrolwidget.cpp \
+    sprspectrumtableadv.cpp \
+    sprspectrumlisttablewidget.cpp \
+    firstcolumn.cpp \
+    colorbutton.cpp \
+    sprspectrumlisttable.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -70,7 +75,12 @@ HEADERS += \
     sprsettingsmainwidget.h \
     sprsettingsrentgenwidget.h \
     sprsettingsimswidget.h \
-    sprsettingscontrolwidget.h
+    sprsettingscontrolwidget.h \
+    sprspectrumtableadv.h \
+    sprspectrumlisttablewidget.h \
+    firstcolumn.h \
+    colorbutton.h \
+    sprspectrumlisttable.h
 
 FORMS += \
         mainwindow.ui \
@@ -85,7 +95,9 @@ FORMS += \
     sprsettingsmainwidget.ui \
     sprsettingsrentgenwidget.ui \
     sprsettingsimswidget.ui \
-    sprsettingscontrolwidget.ui
+    sprsettingscontrolwidget.ui \
+    sprspectrumlisttablewidget.ui \
+    firstcolumn.ui
 
 RESOURCES += \
     icons.qrc

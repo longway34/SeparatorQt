@@ -21,6 +21,7 @@ public:
 protected:
     QLineEdit* setNumberCell(QTableWidget *table, int row, int col, int value, int min, int max, const QString toolType);
     virtual void viewChange(){}
+    virtual void viewChange(QColor){}
     virtual void viewChange(int){}
     virtual void viewChange(double){}
     virtual void viewChange(bool){}

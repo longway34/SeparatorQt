@@ -18,7 +18,10 @@ HEADERS += models/imodelvariable.h \
     $$PWD/models/sprsettingsspectrumrangesmodel.h \
     $$PWD/models/sprspectrumrangestablemodel.h \
     $$PWD/models/sprsettingsimsmodel.h \
-    $$PWD/models/sprsettingscontrolmodel.h
+    $$PWD/models/sprsettingscontrolmodel.h \
+    $$PWD/models/sprspectrumitemmodel.h \
+    $$PWD/models/sprgrspectrumzonesmodel.h \
+    $$PWD/models/sprgrspectrumitemmodel.h
 
 SOURCES +=     models/imodelvariable.cpp \
     models/sprcolorvariable.cpp \
@@ -40,4 +43,7 @@ SOURCES +=     models/imodelvariable.cpp \
     $$PWD/models/sprsettingsspectrumrangesmodel.cpp \
     $$PWD/models/sprspectrumrangestablemodel.cpp \
     $$PWD/models/sprsettingsimsmodel.cpp \
-    $$PWD/models/sprsettingscontrolmodel.cpp
+    $$PWD/models/sprsettingscontrolmodel.cpp \
+    $$PWD/models/sprspectrumitemmodel.cpp \
+    $$PWD/models/sprgrspectrumzonesmodel.cpp \
+    $$PWD/models/sprgrspectrumitemmodel.cpp

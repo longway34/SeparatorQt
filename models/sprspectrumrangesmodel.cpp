@@ -21,6 +21,7 @@ SPRSpectrumRangesModel::SPRSpectrumRangesModel(QDomDocument *doc, int indexThrea
                 SPR_SETTINGS_SPECTRUM_RANGES_XPATH_MIN_AGRUMENT;
         def = (*_elProperty)[element].min;
         this->elements[element].min = new SPRVariable<uint>(doc, xpath, def, this);
+        this->elements[element].color = (*_elProperty)[element].color;
     }
 
 }

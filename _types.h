@@ -382,27 +382,6 @@ typedef struct{
 #define DEF_SPR_CONTROL_VEMS_LEVEL_LESS     5
 #define DEF_SPR_CONTROL_VEMS_MAX_CODE       100
 
-//correlSpectrumPermiss(nullptr),
-//correlSpectrumCritical(nullptr),
-//speedStreamPermiss(nullptr),
-//speedStreamCritical(nullptr),
-//diffCenterGravityPermiss(nullptr),
-//diffCenterGravityCritical(nullptr),
-//airLoadingMinPermiss(nullptr),
-//airLoadingMaxPermiss(nullptr),
-//airLoadingMinCritical(nullptr),
-//airLoadingMaxCritical(nullptr),
-//controlArea(nullptr),
-//weightAvgStoneTail(nullptr),
-//weightAvgStoneConcentrate(nullptr),
-//tMeassureForData(nullptr),
-//tMeassureForSpectrum(nullptr),
-//tMeassureForHistogramm(nullptr),
-//korrectOptimalOreStream(nullptr),
-//autoOreStreamControl(nullptr),
-//VEMSLevelLess(nullptr),
-//VEMSMaxCode(nullptr)
-
 
 
 #endif // TYPES_H
