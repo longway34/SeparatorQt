@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>842</width>
-    <height>648</height>
+    <width>1215</width>
+    <height>784</height>
    </rect>
   </property>
   <property name="font">
@@ -56,6 +56,9 @@
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <widget class="QTabWidget" name="tabWidget">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
         <property name="font">
          <font>
           <family>Tahoma</family>
@@ -238,25 +241,18 @@
          </layout>
         </widget>
         <widget class="QWidget" name="tab">
-         <attribute name="title">
-          <string>Страница</string>
+         <attribute name="icon">
+          <iconset resource="icons.qrc">
+           <normaloff>:/icons/icons/Spector_tab_icons_no_color_icon.png</normaloff>:/icons/icons/Spector_tab_icons_no_color_icon.png</iconset>
          </attribute>
-         <widget class="SPRSpectrumListTable" name="tSpectrumList">
-          <property name="geometry">
-           <rect>
-            <x>25</x>
-            <y>200</y>
-            <width>791</width>
-            <height>192</height>
-           </rect>
-          </property>
-          <property name="font">
-           <font>
-            <family>Tahoma</family>
-            <pointsize>12</pointsize>
-           </font>
-          </property>
-         </widget>
+         <attribute name="title">
+          <string>Работа со спектром</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_5">
+          <item>
+           <widget class="SPRSpectrumListTableWidget" name="wSpectrumList" native="true"/>
+          </item>
+         </layout>
         </widget>
        </widget>
       </item>
@@ -332,7 +328,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>842</width>
+     <width>1215</width>
      <height>21</height>
     </rect>
    </property>
@@ -392,9 +388,10 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>SPRSpectrumListTable</class>
-   <extends>QTableWidget</extends>
-   <header>sprspectrumlisttable.h</header>
+   <class>SPRSpectrumListTableWidget</class>
+   <extends>QWidget</extends>
+   <header>sprspectrumlisttablewidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>

@@ -15,13 +15,18 @@ void SPRSpectrumRanges::setModel(SPRSpectrumRangesModel *value)
     if(model){
         this->clear();
         QStringList nameH; 
-        if(model->tIndex != 0){
-            nameH << tr("<<") << tr(">>");
-            setColumnCount(2);
-        } else {
-            nameH << "*" << tr("<<") << tr(">>");
-            setColumnCount(3);
-        }
+//        if(model->tIndex != 0){
+//            nameH << tr("<<") << tr(">>");
+//            setColumnCount(2);
+//        } else {
+//            nameH << "*" << tr("<<") << tr(">>");
+//            setColumnCount(3);
+//        }
+
+        nameH << "*" << tr("<<") << tr(">>");
+        setColumnCount(3);
+
+
         this->setHorizontalHeaderLabels(nameH);
         setRowCount(model->elements.size());
         setAlternatingRowColors(true);
@@ -29,10 +34,10 @@ void SPRSpectrumRanges::setModel(SPRSpectrumRangesModel *value)
     //    setRowCount(1);
         QStringList nameV;
         int count = 0;
-        actualSize = QSize(0,horizontalHeader()->height());
+//        actualSize = QSize(0,horizontalHeader()->height());
         foreach(EnumElements el, model->elements.keys()){
             int colCount = 0;
-            if(model->tIndex == 0){
+//            if(model->tIndex == 0){
                 ColorButton *cb = new ColorButton(model->elements[el].color);
                 QVariant qv_tw;
                 qv_tw.setValue<QTableWidget*>(this);
@@ -42,7 +47,7 @@ void SPRSpectrumRanges::setModel(SPRSpectrumRangesModel *value)
                 setCellWidget(count, 0, cb);
                 connect(cb, SIGNAL(changeColor(QColor)), this, SLOT(viewChange(QColor)));
                 colCount++;
-            }
+//            }
             
             nameV.append(DEF_SPR_FORMULA_ELEMENTS_PROPERTY[el].sname);
             QString tt = tr("Минимальное значение канала для елемента'") +
@@ -65,23 +70,24 @@ void SPRSpectrumRanges::setModel(SPRSpectrumRangesModel *value)
             cell->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
             connect(cell, SIGNAL(editingFinished()), this, SLOT(viewChange()));
     //        connect(cell, QWidget::focusInEvent(QFocusEvent * event), this, SLOT(onFocus(QFocusEvent*)));
-            actualSize.setHeight(actualSize.height()+rowHeight(count));
-            if(count == 0){
-                if(model->tIndex == 0){
-                    actualSize.setWidth(columnWidth(0) + columnWidth(1) * 2);
-                } else {
-                    actualSize.setWidth(columnWidth(0) * 2);
-                }
-            }
+//            actualSize.setHeight(actualSize.height()+rowHeight(count));
+//            if(count == 0){
+//                if(model->tIndex == 0){
+//                    actualSize.setWidth(columnWidth(0) + columnWidth(1) * 2);
+//                } else {
+//                    actualSize.setWidth(columnWidth(0) * 2);
+//                }
+//            }
             count++;
         }
-        if(model->tIndex == 0){
-            this->setVerticalHeaderLabels(nameV);
-            actualSize.setWidth(actualSize.width() + verticalHeader()->size().width());
-        } else {
-    //        this->setVerticalHeader(nullptr);
-            this->verticalHeader()->setVisible(false);
-        }
+        this->setVerticalHeaderLabels(nameV);
+//        if(model->tIndex == 0){
+//            this->setVerticalHeaderLabels(nameV);
+//            actualSize.setWidth(actualSize.width() + verticalHeader()->size().width());
+//        } else {
+//    //        this->setVerticalHeader(nullptr);
+//            this->verticalHeader()->setVisible(false);
+//        }
         resizeColumnsToContents();
         resizeRowsToContents();
 
@@ -100,11 +106,12 @@ QPoint SPRSpectrumRanges::getSelectedPosition()
         int row = DEF_SPR_FORMULA_ELEMENTS_PROPERTY[el].index;
         QWidget *wid = cellWidget(row, 0);
         int col;
-        if(model->tIndex == 0){
+//        if(firstStateView){
+//            if(model->tIndex == 0){
             col = focusWidget() == cellWidget(row, 1) ? 1 : 2;
-        } else {
-            col = focusWidget() == cellWidget(row, 0) ? 0 : 1;
-        }
+//        } else {
+//            col = focusWidget() == cellWidget(row, 0) ? 0 : 1;
+//        }
         return QPoint(row, col);
     }
 }
@@ -119,16 +126,24 @@ EnumElements SPRSpectrumRanges::getSelectedElement(){
     }
 }
 
+void SPRSpectrumRanges::setFirstStateView(bool value)
+{
+    firstStateView = value;
+    widgetsShow();
+}
+
 SPRSpectrumRanges::SPRSpectrumRanges(QWidget *parent) :
-    QTableWidget(parent), model(nullptr)
+    QTableWidget(parent), model(nullptr), firstStateView(true)
 {
 }
 
 void SPRSpectrumRanges::widgetsShow()
 {
     if(model){
-        int minColumn = model->tIndex == 0 ? 1 : 0;
-        int maxColumn = model->tIndex == 0 ? 2 : 1;
+//        int minColumn = model->tIndex == 0 ? 1 : 0;
+//        int maxColumn = model->tIndex == 0 ? 2 : 1;
+        int minColumn = 1;
+        int maxColumn = 2;
         foreach(EnumElements el, model->elements.keys()){
             int row = DEF_SPR_FORMULA_ELEMENTS_PROPERTY[el].index;
             QLineEdit *le = (QLineEdit*)cellWidget(row, minColumn);
@@ -136,10 +151,18 @@ void SPRSpectrumRanges::widgetsShow()
             le = (QLineEdit*)cellWidget(row, maxColumn);
             le->setText(model->elements[el].max->toString());
         }
+        if(firstStateView){
+            this->verticalHeader()->setVisible(true);
+            this->setColumnHidden(0, false);
+        } else {
+            this->verticalHeader()->setVisible(false);
+            this->setColumnHidden(0, true);
+        }
+//        resizeColumnsToContents();
     }
 }
 
-ISPRModelData *SPRSpectrumRanges::getModel()
+SPRSpectrumRangesModel *SPRSpectrumRanges::getModel()
 {
     return model;
 }
@@ -151,9 +174,12 @@ QSize SPRSpectrumRanges::sizeHint() const
         for(int i=0; i<model->elements.size(); i++){
             h += rowHeight(i);
         }
-        int w = columnWidth(0) + columnWidth(1) + 3 * lineWidth();
-        if(model->tIndex == 0){
-            w += columnWidth(2)+this->verticalHeader()->sizeHint().width() + lineWidth();
+        int w = columnWidth(1) + columnWidth(2) + 3 * lineWidth();
+//        if(model->tIndex == 0){
+//            w += columnWidth(2)+this->verticalHeader()->sizeHint().width() + lineWidth();
+//        }
+        if(firstStateView){
+            w += columnWidth(0)+this->verticalHeader()->sizeHint().width() + lineWidth();
         }
 
         QSize res(w,h);
@@ -172,13 +198,13 @@ void SPRSpectrumRanges::viewChange()
         EnumElements element = le->property("element").value<EnumElements>();
         int row = le->property("row").toInt();
         int col = le->property("col").toInt();
-        if(model->tIndex == 0) {
-            col = col - 1;
-        }
+//        if(model->tIndex == 0) {
+//            col = col - 1;
+//        }
         uint value = le->text().toInt();
-        if(col == 0){ // изиенили минимум для канала
+        if(col == 1){ // изиенили минимум для канала
            model->elements[element].min->setData(value);
-        } else if(col == 1){ // изиенили максимум для канала
+        } else if(col == 2){ // изиенили максимум для канала
            model->elements[element].max->setData(value);
         }
         emit tableChange(this, row, col);

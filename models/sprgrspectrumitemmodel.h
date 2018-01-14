@@ -3,29 +3,41 @@
 
 #include <QObject>
 #include <QWidget>
+#include <QVector>
+
+#include "qwt_plot_histogram.h"
+#include "qwt_plot_curve.h"
 
 #include "models/sprspectrumitemmodel.h"
+#include "models/sprspectrumrangesmodel.h"
+#include "models/isprmodeldata.h"
+#include <QVector>
 
-class SPRGrSpectrumItemModel : public QObject
+#include "_types.h"
+
+class SPRGrSpectrumItemModel : public ISPRModelData
 {
     Q_OBJECT
 
-    SPRSpectrumItemModel *spect;
+    SPRSpectrumRangesModel *rangesModel;
+    SPRSpectrumItemModel *spectModel;
 
-    QPolygonF samples;
+    QPolygonF spectGraphData;
+    QMap<EnumElements, QVector<QwtIntervalSample>> zonesGraphData;
 
     SPRGrSpectrumItemModel *complite();
     SPRGrSpectrumItemModel *isComplite(){
-        return (samples.size() > 0);
+        return zonesGraphData.size() > 0 ? this : nullptr;
     }
 
 public:
-    explicit SPRGrSpectrumItemModel(QObject *parent = nullptr);
+    explicit SPRGrSpectrumItemModel(SPRSpectrumRangesModel *_ranges, SPRSpectrumItemModel *_spect = nullptr);
 
-    SPRGrSpectrumItemModel *setSpect(SPRSpectrumItemModel *value);
-
+    SPRGrSpectrumItemModel *setSpectModel(SPRSpectrumItemModel *_spectModel);
+    SPRGrSpectrumItemModel *setRangesModel(SPRSpectrumRangesModel *_rangesModel);
     QPolygonF getSamples() const;
-
+    QMap<EnumElements, QVector<QwtIntervalSample> > getIntervalSamples() const;
+    QColor getColorZone(EnumElements el);
 signals:
 
 public slots:

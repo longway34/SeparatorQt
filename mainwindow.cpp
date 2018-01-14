@@ -72,7 +72,7 @@ MainWindow::MainWindow(QDomDocument *_doc, QWidget *parent):
 
     if(QDir::setCurrent("F:\\Projects\\Separator\\Real spectors")){
         QFile inp("СРФ3.spc");
-        ui.tSpectrumList->setModel(&inp, tmodel);
+        ui.wSpectrumList->setModel(tmodel, &inp);
     }
 
 //    model = ui.wSettingsRentgenAutoWidget->

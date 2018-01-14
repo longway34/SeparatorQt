@@ -21,14 +21,68 @@ void SPRSpectrumRangesTable::setModel(SPRSpectrumRangesTableModel *value)
 
         setCellWidget(0, i, ranges);
         connect(ranges, SIGNAL(tableChange(QTableWidget*,int,int)), SLOT(viewChange(QTableWidget*,int,int)));
+        connect(ranges, SIGNAL(changeColor(EnumElements,QColor)), SLOT(onChangeColor(EnumElements,QColor)));
         setColumnWidth(i, ranges->sizeHint().width());
         setContentsMargins(0,0,0,0);
         setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
     }
+    setHddenChannels(QList<bool>({false, false, false, false}));
+    setFirtChannel(0);
+
     setHorizontalHeaderLabels(nameH);
     verticalHeader()->setVisible(false);
     resizeRowsToContents();
 }
+
+void SPRSpectrumRangesTable::setFirtChannel(int ch){
+    for(int i=0; i<columnCount(); i++){
+        SPRSpectrumRanges* ranges = (SPRSpectrumRanges*)cellWidget(0, i);
+        if(i == ch){
+            ranges->setFirstStateView(true);
+        } else {
+            ranges->setFirstStateView(false);
+        }
+        setColumnWidth(i, ranges->sizeHint().width());
+    }
+    //        resizeColumnsToContents();
+}
+
+void SPRSpectrumRangesTable::setHddenChannels(QList<bool> hiddens){
+    for(int i=0; i < columnCount(); i++){
+        bool value = hiddens.size() > i ? hiddens[i] : true;
+        setColumnHidden(i, value);
+    }
+}
+
+void SPRSpectrumRangesTable::setVisibleOneChannel(int ch)
+{
+    QList<bool> hiddens;
+    for(int i=0; i < columnCount(); i++){
+        if(i == ch){
+            hiddens.push_back(false);
+        } else {
+            hiddens.push_back(true);
+        }
+    }
+    setFirtChannel(ch);
+    setHddenChannels(hiddens);
+}
+
+//QSize SPRSpectrumRangesTable::sizeHint() const
+//{
+//    if(rowCount() > 0){
+//        int height = QTableWidget::sizeHint().height();
+//        int width = 0;
+//        for(int i=0; i<columnCount(); i++){
+//            if(!isColumnHidden(i)){
+//                width += columnWidth(i);
+//            }
+//        }
+//        return QSize(width,height);
+//    } else {
+//        QTableWidget::sizeHint();
+//    }
+//}
 
 void SPRSpectrumRangesTable::widgetsShow()
 {
@@ -37,12 +91,12 @@ void SPRSpectrumRangesTable::widgetsShow()
             SPRVariable<uint> *thr = model->getThreads();
             if(i < model->getThreads()->getData()){
                 showColumn(i);
-//                cellWidget(0, i)->setVisible(true);
+                //                cellWidget(0, i)->setVisible(true);
                 ((SPRSpectrumRanges*)(cellWidget(0,i)))->widgetsShow();
 
             } else {
                 hideColumn(i);
-//                cellWidget(0, i)->setVisible(false);
+                //                cellWidget(0, i)->setVisible(false);
             }
         }
     }
@@ -56,6 +110,10 @@ QPoint SPRSpectrumRangesTable::getSelectedPosition()
     return res;
 }
 
+void SPRSpectrumRangesTable::onChangeColor(EnumElements el, QColor color){
+    emit changeColor(el, color);
+}
+
 ISPRModelData *SPRSpectrumRangesTable::getModel()
 {
     return model;
@@ -63,5 +121,11 @@ ISPRModelData *SPRSpectrumRangesTable::getModel()
 
 void SPRSpectrumRangesTable::viewChange(QTableWidget *table, int row, int col)
 {
+    SPRSpectrumRanges *threadTable = (SPRSpectrumRanges*)table;
+    QLineEdit *le = (QLineEdit*)threadTable->cellWidget(row, col);
+    EnumElements el = le->property("element").value<EnumElements>();
+    int thread = threadTable->getModel()->tIndex;
+
+    emit this->tableChange(el, thread, col);
     emit this->tableChange(table, row, col);
 }

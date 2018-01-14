@@ -10,6 +10,13 @@
         <file>icons/b_Save.png</file>
         <file>icons/b_Settings.png</file>
         <file>icons/b_Equialent.png</file>
+        <file>icons/b_Open.png</file>
+        <file>icons/b_Get_Spectrum.png</file>
+        <file>icons/b_refresh_green.png</file>
+        <file>icons/b_refresh_red.png</file>
+        <file>icons/Spector_tab_icons_no_color_icon.png</file>
+        <file>icons/Test_tab_no_color_icons.png</file>
+        <file>icons/Separate_tab_bo_colors_icon.png</file>
     </qresource>
     <qresource prefix="/icons/settings">
         <file>icons/AlgoripmSerrings_tabs/Algoritm_Sittings_Porogs_tab.png</file>

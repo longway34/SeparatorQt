@@ -14,6 +14,7 @@ SPRSpectrumRangesTableWidget::SPRSpectrumRangesTableWidget(QWidget *parent) :
 
     connect(this, SIGNAL(doShow()), ui.wSpectrumTable, SLOT(widgetsShow()));
     connect(ui.bEquialent, SIGNAL(clicked(bool)), this, SLOT(viewChange(bool)));
+    connect(ui.wSpectrumTable, SIGNAL(changeColor(EnumElements,QColor)), this, SLOT(onChangeColor(EnumElements,QColor)));
 }
 
 

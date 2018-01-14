@@ -1,31 +1,79 @@
 #include "sprgrspectrumitemmodel.h"
 
-SPRGrSpectrumItemModel *SPRGrSpectrumItemModel::setSpect(SPRSpectrumItemModel *value)
+SPRGrSpectrumItemModel *SPRGrSpectrumItemModel::setSpectModel(SPRSpectrumItemModel *_spectModel)
 {
-    spect = value;
+    spectModel = _spectModel;
+    return complite();
+}
+
+SPRGrSpectrumItemModel *SPRGrSpectrumItemModel::setRangesModel(SPRSpectrumRangesModel *_rangesModel)
+{
+    rangesModel = _rangesModel;
     return complite();
 }
 
 QPolygonF SPRGrSpectrumItemModel::getSamples() const
 {
-    return samples;
+    return spectGraphData;
+}
+
+QMap<EnumElements, QVector<QwtIntervalSample>> SPRGrSpectrumItemModel::getIntervalSamples() const
+{
+    return zonesGraphData;
+}
+
+QColor SPRGrSpectrumItemModel::getColorZone(EnumElements el)
+{
+    return rangesModel->elements[el].color;
 }
 
 SPRGrSpectrumItemModel *SPRGrSpectrumItemModel::complite()
 {
-    if(spect){
-        uint16_t *rawSpect = spect->getSpData()->spect;
-        if(rawSpect){
-            samples.clear();
-            for(int i=0; i < DEF_SPECTRUM_DATA_LENGTH; i++){
-                samples.push_back(QPointF(qreal(i), qreal(rawSpect[i])));
+    if(rangesModel){
+        zonesGraphData.clear();
+        foreach (EnumElements el, rangesModel->elements.keys()) {
+            double value = 0.5;
+            double xmin = qreal(rangesModel->elements[el].min->getData());
+            double xmax = qreal(rangesModel->elements[el].max->getData());
+            QVector<QwtIntervalSample> inter;
+            inter.push_back(QwtIntervalSample(value, xmin, xmax));
+            zonesGraphData[el] = inter;
+            value = zonesGraphData[el][zonesGraphData[el].size() - 1].value;
+            value = 0.5;
+        }
+        spectGraphData.clear();
+        for(int i=0; i < DEF_SPECTRUM_DATA_LENGTH / sizeof(uint16_t); i++){
+            if(spectModel){
+                uint16_t *rawSpect = spectModel->getSpData()->spect;
+                if(rawSpect){
+                    uint16_t value = rawSpect[i];
+                    foreach(EnumElements z, rangesModel->elements.keys()){
+                        SPRSpectrumRangesModel::SpectorRange elData = rangesModel->elements[z];
+                        int min = elData.min->getData(); int max = elData.max->getData();
+                        if(i >= min && i < max){
+                            if(zonesGraphData[z][0].value < value){
+                                zonesGraphData[z][0].value = value;
+                            }
+                        }
+                    }
+                    if(value > 0){
+                        int iii = 0;
+                    }
+                    spectGraphData.push_back(QPointF(qreal(i), value));
+                }
+            } else {
+                spectGraphData.push_back(QPointF(qreal(i), 0));
             }
         }
     }
     return isComplite();
 }
 
-SPRGrSpectrumItemModel::SPRGrSpectrumItemModel(QObject *parent) : QObject(parent), spect(nullptr)
+SPRGrSpectrumItemModel::SPRGrSpectrumItemModel(SPRSpectrumRangesModel *_ranges, SPRSpectrumItemModel *_spect) :
+    rangesModel(_ranges), spectModel(_spect)
 {
-    samples.clear();
+    spectGraphData.clear();
+    zonesGraphData.clear();
+
+    complite();
 }

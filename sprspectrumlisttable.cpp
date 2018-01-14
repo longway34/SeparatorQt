@@ -23,6 +23,7 @@ void SPRSpectrumListTable::addRowTable(SpectrumData *data, int pastRow)
     QVariant vtw; vtw.setValue<QTableWidget*>(this);
     fc->setProperty("tw",vtw);
     connect(fc, SIGNAL(changeColor(QColor)), this, SLOT(viewChange(QColor)));
+    connect(fc, SIGNAL(iAmSelected(int)), this, SLOT(viewChange(int)));
     connect(this, SIGNAL(doShow()), fc, SLOT(widgetsShow()));
     setCellWidget(row, 0, fc);
 
@@ -95,7 +96,7 @@ SPRSpectrumListTable::SPRSpectrumListTable(QWidget *parent): QTableWidget(parent
 
     setColumnCount(18);
     setHorizontalHeaderLabels(hTitles);
-//    verticalHeader()->setVisible(false);
+    verticalHeader()->setVisible(false);
     horizontalHeader()->setSectionsMovable(true);
     verticalHeader()->setSectionsMovable(true);
 
@@ -181,6 +182,7 @@ void SPRSpectrumListTable::viewChange(QColor color)
         *model[row]->getSpData()->red = color.red();
         *model[row]->getSpData()->green = color.green();
         *model[row]->getSpData()->blue = color.blue();
+        emit rowChangeColor(row);
     }
 }
 
@@ -190,7 +192,6 @@ void SPRSpectrumListTable::viewChange()
         int row = sender()->property("row").toInt();
         SpectrumData *data = model[row]->getSpData();
         const char *value = ((QLineEdit*)sender())->text().toStdString().c_str();
-//        int len = ((QLineEdit*)sender())->text().length();
         strcpy(data->name, value);
     }
 }
@@ -207,3 +208,9 @@ void SPRSpectrumListTable::showCols(bool)
     }
 
 }
+
+void SPRSpectrumListTable::viewChange(int num)
+{
+    emit rowSelected(num);
+}
+

@@ -24,8 +24,12 @@ public slots:
     virtual void widgetsShow();
     virtual void viewChange(QTableWidget *, int, int);
     virtual void viewChange(bool);
+    virtual void onChangeColor(EnumElements el, QColor color){
+        emit changeColor(el, color);
+    }
 signals:
     void doShow();
+    void changeColor(EnumElements, QColor);
 
     // ISPRWidget interface
 protected:

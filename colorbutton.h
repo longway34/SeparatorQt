@@ -18,18 +18,18 @@ public:
 
     void setColor(QColor _color){
             color = _color;
-            QString gradFormat = "QPushButton{background-color: qlineargradient(spread:pad, x0: 0, y1: 0, x2: 0, y2: 0.5, x3: 0, y3: 1,"
+            QString gradFormat = "QPushButton{background-color: qlineargradient(spread:pad, x1: 0, y1: 0, x2: 0, y2: 1,"
                     "stop: 0 rgba(%d, %d, %d, 64),"
-                    "stop: 1 rgba(%d, %d, %d, 255),"
-                    "stop: 2 rgba(%d, %d, %d, 64)); border-radius: 3px; border: 1px solid #8f8f91}";
-            QString gradFormatPress = "QPushButton:pressed{background-color: qlineargradient(spread:pad, x0: 0, y1: 0, x2: 0, y2: 0.5, x3: 0, y3: 1,"
+                    "stop: 0.5 rgba(%d, %d, %d, 255),"
+                    "stop: 1 rgba(%d, %d, %d, 64)); border-radius: 3px; border: 1px solid #8f8f91}";
+            QString gradFormatPress = "QPushButton:pressed{background-color: qlineargradient(spread:pad, x1: 0, y1: 0, x2: 0, y2: 1,"
                     "stop: 0 rgba(%d, %d, %d, 128),"
-                    "stop: 1 rgba(%d, %d, %d, 255),"
-                    "stop: 2 rgba(%d, %d, %d, 128)); border: 2px solid #8f8f91}";
-            QString gradFormatHover = "QPushButton:hover{background-color: qlineargradient(spread:pad, x0: 0, y1: 0, x2: 0, y2: 0.5, x3: 0, y3: 1,"
+                    "stop: 0.5 rgba(%d, %d, %d, 255),"
+                    "stop: 1 rgba(%d, %d, %d, 128)); border: 2px solid #8f8f91}";
+            QString gradFormatHover = "QPushButton:hover{background-color: qlineargradient(spread:pad, x1: 0, y1: 0, x2: 0, y2: 1,"
                     "stop: 0 rgba(%d, %d, %d, 64),"
-                    "stop: 1 rgba(%d, %d, %d, 128),"
-                    "stop: 2 rgba(%d, %d, %d, 255))}";
+                    "stop: 0.5 rgba(%d, %d, %d, 128),"
+                    "stop: 1 rgba(%d, %d, %d, 255))}";
 
             QString ssh; ssh.sprintf(gradFormat.toStdString().c_str(), color.red(), color.green(), color.blue(),
                                                  color.red(), color.green(), color.blue(),
