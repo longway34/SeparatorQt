@@ -16,10 +16,16 @@ class SPRSpectrumListTable : public QTableWidget, public ISPRWidget
 {
     Q_OBJECT
 
+
+protected:
     QVector<SPRSpectrumItemModel*> model;
 
-    void addRowTable(SpectrumData *data, int pastRow = -1);
     QLineEdit *setCellMyWidget(QTableWidget *table, int row, int col, QString value, bool editable=false, QString tt="");
+
+    virtual void insertFirstColumn(SpectrumData *data, int row);
+    virtual void addRowTable(SpectrumData *data, int pastRow = -1);
+    virtual void connectFirstTable(FirstColumn *fc);
+    virtual void insertContentColumns(SpectrumData *data, int row);
 public:
     explicit SPRSpectrumListTable(QWidget *parent = 0);
 
@@ -64,6 +70,7 @@ public:
         QLabel* lth = (QLabel*)cellWidget(row, 2);
         return lth->text();
     }
+    ISPRModelData *setModel(uint8_t *inp, SPRSpectrumRangesTableModel *ranges);
 public slots:
     virtual void widgetsShow();
     virtual ISPRModelData *getModel();

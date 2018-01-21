@@ -1,17 +1,15 @@
 #include "sprspectrumlisttable.h"
 #include <QLabel>
 
-void SPRSpectrumListTable::addRowTable(SpectrumData *data, int pastRow)
-{
-    int row = 0;
-    if(pastRow >= 0 && pastRow < rowCount() - 1){
-        insertRow(pastRow);
-        row = pastRow + 1;
-    } else {
-        insertRow(this->rowCount());
-        row = rowCount() - 1;
-    }
 
+void SPRSpectrumListTable::connectFirstTable(FirstColumn *fc){
+    connect(fc, SIGNAL(changeColor(QColor)), this, SLOT(viewChange(QColor)));
+    connect(fc, SIGNAL(iAmSelected(int)), this, SLOT(viewChange(int)));
+    connect(this, SIGNAL(doShow()), fc, SLOT(widgetsShow()));
+
+}
+
+void SPRSpectrumListTable::insertFirstColumn(SpectrumData *data, int row){
     FirstColumn *fc = new FirstColumn(this);
     int r = *data->red;
     int g = *data->green;
@@ -22,11 +20,11 @@ void SPRSpectrumListTable::addRowTable(SpectrumData *data, int pastRow)
     fc->setProperty("row", QVariant(row));
     QVariant vtw; vtw.setValue<QTableWidget*>(this);
     fc->setProperty("tw",vtw);
-    connect(fc, SIGNAL(changeColor(QColor)), this, SLOT(viewChange(QColor)));
-    connect(fc, SIGNAL(iAmSelected(int)), this, SLOT(viewChange(int)));
-    connect(this, SIGNAL(doShow()), fc, SLOT(widgetsShow()));
+    connectFirstTable(fc);
     setCellWidget(row, 0, fc);
+}
 
+void SPRSpectrumListTable::insertContentColumns(SpectrumData *data, int row){
     setCellMyWidget(this, row, 1, QString::number(*data->thread), false, tr("Номер ручья"));
     setCellMyWidget(this, row, 2, QString(data->name), true, tr("Номер ручья"));
     setCellMyWidget(this, row, 3, QString::number(*data->summ), false, tr("Номер ручья"));
@@ -49,7 +47,22 @@ void SPRSpectrumListTable::addRowTable(SpectrumData *data, int pastRow)
     setCellMyWidget(this, row, 15, QString::number(*data->Mo), false, tr("Значения спектра в зоне молибдена"));
     setCellMyWidget(this, row, 16, QString::number(*data->Zn), false, tr("Значения спектра в зоне цинка"));
     setCellMyWidget(this, row, 17, QString::number(*data->Mg), false, tr("Значения спектра в зоне марганца"));
+}
 
+void SPRSpectrumListTable::addRowTable(SpectrumData *data, int pastRow)
+{
+    int row = 0;
+    if(pastRow >= 0 && pastRow < rowCount() - 1){
+        insertRow(pastRow);
+        row = pastRow + 1;
+    } else {
+        insertRow(this->rowCount());
+        row = rowCount() - 1;
+    }
+
+    insertFirstColumn(data, row);
+
+    insertContentColumns(data, row);
 }
 
 QLineEdit *SPRSpectrumListTable::setCellMyWidget(QTableWidget *table, int row, int col, QString value, bool editable, QString tt)
@@ -107,6 +120,15 @@ SPRSpectrumListTable::SPRSpectrumListTable(QWidget *parent): QTableWidget(parent
 
     this->addAction(actHide); this->addAction(actShow);
     setContextMenuPolicy(Qt::ActionsContextMenu);
+    resizeColumnsToContents();
+    resizeRowsToContents();
+}
+
+ISPRModelData *SPRSpectrumListTable::setModel(uint8_t *inp, SPRSpectrumRangesTableModel *ranges){
+    SPRSpectrumItemModel *mod = new SPRSpectrumItemModel(ranges);
+    mod->setSpData(inp);
+    model.push_back(mod);
+    addRowTable(mod->getSpData());
 }
 
 ISPRModelData *SPRSpectrumListTable::setModel(QFile *inp, SPRSpectrumRangesTableModel *ranges)
@@ -119,18 +141,14 @@ ISPRModelData *SPRSpectrumListTable::setModel(QFile *inp, SPRSpectrumRangesTable
             }
         }
         if(inp->open(QIODevice::ReadOnly)){
-            char b[2];
+           char b[2];
            inp->read(b, 2);
-            while(inp->read((char*)(buf), DEF_SPECTRUM_DATA_BUF_LENGTH)){
-                SPRSpectrumItemModel *mod = new SPRSpectrumItemModel(ranges);
-                mod->setSpData(buf);
-                model.push_back(mod);
-                addRowTable(mod->getSpData());
-            }
+           while(inp->read((char*)(buf), DEF_SPECTRUM_DATA_BUF_LENGTH)){
+                setModel(buf, ranges);
+           }
         }
     }
     resizeColumnsToContents();
-
     return ranges;
 }
 

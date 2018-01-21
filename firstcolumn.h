@@ -14,6 +14,7 @@ class FirstColumn : public QWidget, public ISPRWidget
 public:
     explicit FirstColumn(QWidget *parent = 0);
 
+    Ui::FirstColumn ui;
     QColor getMyColor(){return color;}
     int getMyNum(){return num;}
     void setData(int num, QColor(color)){
@@ -53,7 +54,6 @@ signals:
     void iAmDelete(int);
     void changeColor(QColor);
 private:
-    Ui::FirstColumn ui;
 
     // ISPRWidget interface
 public:

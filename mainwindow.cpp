@@ -71,7 +71,7 @@ MainWindow::MainWindow(QDomDocument *_doc, QWidget *parent):
     connect(this, SIGNAL(doShow()), ui.wSettingsControl, SLOT(widgetsShow()));
 
     if(QDir::setCurrent("F:\\Projects\\Separator\\Real spectors")){
-        QFile inp("СРФ3.spc");
+        QFile inp("СРФ4.spc");
         ui.wSpectrumList->setModel(tmodel, &inp);
     }
 

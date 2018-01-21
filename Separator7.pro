@@ -53,7 +53,8 @@ SOURCES += \
     sprspectrumlisttablewidget.cpp \
     firstcolumn.cpp \
     colorbutton.cpp \
-    sprspectrumlisttable.cpp
+    sprspectrumlisttable.cpp \
+    sprspectrumbasedlisttable.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -80,7 +81,8 @@ HEADERS += \
     sprspectrumlisttablewidget.h \
     firstcolumn.h \
     colorbutton.h \
-    sprspectrumlisttable.h
+    sprspectrumlisttable.h \
+    sprspectrumbasedlisttable.h
 
 FORMS += \
         mainwindow.ui \

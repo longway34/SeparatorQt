@@ -2,23 +2,35 @@
 
 void spectumData::setData(uint8_t *inp, uint16_t inplength)
 {
+
     if(!buf){
         bufLength = DEF_SPECTRUM_DATA_BUF_LENGTH;
         buf = (uint8_t*)malloc(bufLength);
         memset(buf, 0, bufLength);
 
         name = (char*)buf;
-        thread = (uint32_t*)(buf + 40);
-        red = buf + 44; green = buf + 45; blue = buf + 46;
-        spect = (uint16_t*)(buf + 48);
-        summ = (uint32_t*)(buf + 560);
-        peak_value = (uint32_t*)(buf + 564);
-        peak = (uint32_t*)(buf + 568);
-        Rs = (double*)(buf + 572);
-        H1 = (double*)(buf + 580); H2 = (double*)(buf + 588); H3 = (double*)(buf + 596);
-        time = (double*)(buf + 604); center = (double*)(buf + 616);
-        Ns = (uint32_t*)(buf + 632); Fe = (uint32_t*)(buf + 636); Cu = (uint32_t*)(buf + 640); Mo = (uint32_t*)(buf + 644); Zn = (uint32_t*)(buf + 648); Mg = (uint32_t*)(buf + 652);
-        year = (uint32_t*)(buf + 684); month = (uint32_t*)(buf + 688); day = (uint32_t*)(buf + 692); hours = (uint32_t*)(buf + 696); min = (uint32_t*)(buf + 700); sec = (uint32_t*)(buf + 704);
+        thread = (uint32_t*)(buf + 0x28); // 40
+        red = buf + 0x2C; green = buf + 0x2D; blue = buf + 0x2E; // 44 45 46
+        spect = (uint16_t*)(buf + 0x30); // 48
+        summ = (uint32_t*)(buf + 0x230); // 560
+        peak_value = (uint32_t*)(buf + 0x234); // 564
+        peak = (uint32_t*)(buf + 0x238); // 568
+        Rs = (double*)(buf + 0x23C); // 572
+        H1 = (double*)(buf + 0x244); H2 = (double*)(buf + 0x24C); H3 = (double*)(buf + 0x254); // 580 588 596
+        time = (double*)(buf + 0x25C); // 604
+        center = (double*)(buf + 0x268); // 616
+        Ns = (uint32_t*)(buf + 0x278); // 632
+        Fe = (uint32_t*)(buf + 0x27C); // 636
+        Cu = (uint32_t*)(buf + 0x280); // 640
+        Mo = (uint32_t*)(buf + 0x284); // 644
+        Zn = (uint32_t*)(buf + 0x288); // 648
+        Mg = (uint32_t*)(buf + 0x28C); // 652
+        year = (uint32_t*)(buf + 0x2AC); // 684
+        month = (uint32_t*)(buf + 0x2B0);  // 688
+        day = (uint32_t*)(buf + 0x2B4);  // 692
+        hours = (uint32_t*)(buf + 0x2B8); // 696
+        min = (uint32_t*)(buf + 0x2BC); // 700
+        sec = (uint32_t*)(buf + 0x2C0); // 704
 
     }
     if(inp){

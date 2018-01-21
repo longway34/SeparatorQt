@@ -53,10 +53,12 @@ class SPRSpectrumListTableWidget : public QWidget, public ISPRWidget
 
     SPRSpectrumRangesTableModel *rangesModel;
     QVector<SPRGrSpectrumItemModel*> spectGrData;
+    QVector<SPRGrSpectrumItemModel*> spectBaseGrData;
 
 
     QwtPlotGrid *grid;
     QVector<GraphItem> grItems;
+    QVector<GraphItem> baseItems;
 
     GraphItem nullGrItems;
 
@@ -102,7 +104,8 @@ signals:
 protected slots:
     virtual void viewChange(int row, int col);
     virtual void viewChange(int row);
-    virtual void viewChange(QColor);
+//    virtual void viewChange(QColor);
+    virtual void viewChange(bool value);
     void onChangeZoneRange(EnumElements el, int thread, int col);
 
     // ISPRWidget interface
