@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui xml
+QT       += core gui xml network
 CONFIG   += qwt
 
 win32:CONFIG += console
@@ -28,61 +28,120 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
-        main.cpp \
-        mainwindow.cpp \
-    sprsettingsrentgenmainwidget.cpp \
-    sprsettingsrentgencontrolwidget.cpp \
-    sprsettingsrentgenautosetwidget.cpp \
     _types.cpp \
-    sprformulaitemwidget.cpp \
-    sprsettingsformulawidget.cpp \
+    colorbutton.cpp \
+    firstcolumn.cpp \
     ipvalidator.cpp \
     isprcontroller.cpp \
     isprwidget.cpp \
+    main.cpp \
+    mainwindow.cpp \
     sprformulaelement.cpp \
+    sprformulaitemwidget.cpp \
     sprporogswidget.cpp \
+    sprsettingscontrolwidget.cpp \
+    sprsettingsformulawidget.cpp \
+    sprsettingsimswidget.cpp \
+    sprsettingsmainwidget.cpp \
     sprsettingsporogswidget.cpp \
+    sprsettingsrentgenautosetwidget.cpp \
+    sprsettingsrentgencontrolwidget.cpp \
+    sprsettingsrentgenmainwidget.cpp \
+    sprsettingsrentgenwidget.cpp \
+    sprspectrumbasedlisttable.cpp \
+    sprspectrumlisttable.cpp \
+    sprspectrumlisttablewidget.cpp \
     sprspectrumranges.cpp \
     sprspectrumrangestable.cpp \
     sprspectrumrangestablewidget.cpp \
-    sprsettingsmainwidget.cpp \
-    sprsettingsrentgenwidget.cpp \
-    sprsettingsimswidget.cpp \
-    sprsettingscontrolwidget.cpp \
     sprspectrumtableadv.cpp \
-    sprspectrumlisttablewidget.cpp \
-    firstcolumn.cpp \
-    colorbutton.cpp \
-    sprspectrumlisttable.cpp \
-    sprspectrumbasedlisttable.cpp
+    models/imodelvariable.cpp \
+    models/isprmodeldata.cpp \
+    models/isprvariable.cpp \
+    models/sprcolorvariable.cpp \
+    models/sprdatevariable.cpp \
+    models/sprelementvariable.cpp \
+    models/sprformulaitemmodel.cpp \
+    models/sprgrspectrumitemmodel.cpp \
+    models/sprkprvariable.cpp \
+    models/sprporogsmodel.cpp \
+    models/sprqstringvariable.cpp \
+    models/sprsettingscontrolmodel.cpp \
+    models/sprsettingsformulamodel.cpp \
+    models/sprsettingsimsmodel.cpp \
+    models/sprsettingsmainmodel.cpp \
+    models/sprsettingsporogsmodel.cpp \
+    models/sprsettingsrentgenmodel.cpp \
+    models/sprsettingsrmtautosetmodel.cpp \
+    models/sprsettingsspectrumrangesmodel.cpp \
+    models/sprspectrumitemmodel.cpp \
+    models/sprspectrumrangesmodel.cpp \
+    models/sprspectrumrangestablemodel.cpp \
+    models/sprvariable.cpp \
+    tcp/tcpcommand.cpp \
+    tcp/tcpcommandset.cpp \
+    tcp/tcpgetstatecommand.cpp \
+    verticallabel.cpp \
+    tabwidget.cpp
 
 HEADERS += \
-        mainwindow.h \
-    sprsettingsrentgenmainwidget.h \
-    sprsettingsrentgencontrolwidget.h \
-    sprsettingsrentgenautosetwidget.h \
     _types.h \
-    sprformulaitemwidget.h \
-    sprsettingsformulawidget.h \
+    colorbutton.h \
+    firstcolumn.h \
     ipvalidator.h \
     isprcontroller.h \
     isprwidget.h \
+    mainwindow.h \
     sprformulaelement.h \
+    sprformulaitemwidget.h \
     sprporogswidget.h \
+    sprsettingscontrolwidget.h \
+    sprsettingsformulawidget.h \
+    sprsettingsimswidget.h \
+    sprsettingsmainwidget.h \
     sprsettingsporogswidget.h \
+    sprsettingsrentgenautosetwidget.h \
+    sprsettingsrentgencontrolwidget.h \
+    sprsettingsrentgenmainwidget.h \
+    sprsettingsrentgenwidget.h \
+    sprspectrumbasedlisttable.h \
+    sprspectrumlisttable.h \
+    sprspectrumlisttablewidget.h \
     sprspectrumranges.h \
     sprspectrumrangestable.h \
     sprspectrumrangestablewidget.h \
-    sprsettingsmainwidget.h \
-    sprsettingsrentgenwidget.h \
-    sprsettingsimswidget.h \
-    sprsettingscontrolwidget.h \
     sprspectrumtableadv.h \
-    sprspectrumlisttablewidget.h \
-    firstcolumn.h \
-    colorbutton.h \
-    sprspectrumlisttable.h \
-    sprspectrumbasedlisttable.h
+    models/imodelvariable.h \
+    models/isprmodeldata.h \
+    models/isprvariable.h \
+    models/sprcolorvariable.h \
+    models/sprdatevariable.h \
+    models/sprelementvariable.h \
+    models/sprformulaitemmodel.h \
+    models/sprgrspectrumitemmodel.h \
+    models/sprkprvariable.h \
+    models/sprporogsmodel.h \
+    models/sprqstringvariable.h \
+    models/sprsettingscontrolmodel.h \
+    models/sprsettingsformulamodel.h \
+    models/sprsettingsimsmodel.h \
+    models/sprsettingsmainmodel.h \
+    models/sprsettingsporogsmodel.h \
+    models/sprsettingsrentgenmodel.h \
+    models/sprsettingsrmtautosetmodel.h \
+    models/sprsettingsspectrumrangesmodel.h \
+    models/sprspectrumitemmodel.h \
+    models/sprspectrumrangesmodel.h \
+    models/sprspectrumrangestablemodel.h \
+    models/sprvariable.h \
+    tcp/itcpcommand.h \
+    tcp/tcpcommand.h \
+    tcp/tcpsenddatacommand.h \
+    tcp/tcptimeoutcommand.h \
+    tcp/tcpcommandset.h \
+    tcp/tcpgetstatecommand.h \
+    verticallabel.h \
+    tabwidget.h
 
 FORMS += \
         mainwindow.ui \
@@ -99,12 +158,15 @@ FORMS += \
     sprsettingsimswidget.ui \
     sprsettingscontrolwidget.ui \
     sprspectrumlisttablewidget.ui \
-    firstcolumn.ui
+    firstcolumn.ui \
+    tabwidget.ui
 
 RESOURCES += \
     icons.qrc
 
-DISTFILES += \
-    models.pri
+#DISTFILES += \
+#    models.pri
 
-include(models.pri)
+
+#include(models/models.pri)
+#include(tcp/tcp.pri)

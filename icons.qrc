@@ -18,6 +18,11 @@
         <file>icons/Test_tab_no_color_icons.png</file>
         <file>icons/Separate_tab_bo_colors_icon.png</file>
         <file>icons/b_Get_Base_Spectrum.png</file>
+        <file>icons/Settings_tab_no_color_icon.png</file>
+        <file>icons/Logs_tab_no_color_icon_90.png</file>
+        <file>icons/Settings_tab_no_color_icon_90.png</file>
+        <file>icons/Spector_tab_icons_no_color_icon_90.png</file>
+        <file>icons/Separate_tab_bo_colors_icon_90.png</file>
     </qresource>
     <qresource prefix="/icons/settings">
         <file>icons/AlgoripmSerrings_tabs/Algoritm_Sittings_Porogs_tab.png</file>
@@ -38,6 +43,7 @@
         <file>icons/AlgoripmSerrings_tabs/Alroritm_Settings_SeparationControl_tab_1.png</file>
         <file>icons/AlgoripmSerrings_tabs/Alroritm_Settings_Spector_tab_1.png</file>
         <file>icons/AlgoripmSerrings_tabs/SettingsDevice.png</file>
+        <file>icons/Separate_tab_bo_colors_icon_90.png</file>
     </qresource>
     <qresource prefix="/icons/algoritmSettings/rentgen">
         <file>icons/AlgoripmSerrings_tabs/Rentgens/Rentgen_Settings_Auto.png</file>

@@ -75,7 +75,7 @@
          <enum>QTabWidget::Rounded</enum>
         </property>
         <property name="currentIndex">
-         <number>7</number>
+         <number>3</number>
         </property>
         <property name="iconSize">
          <size>
@@ -304,6 +304,13 @@
           </widget>
          </item>
          <item>
+          <widget class="VerticalLabel" name="vlText">
+           <property name="text">
+            <string>Vertical</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <spacer name="horizontalSpacer">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -392,6 +399,11 @@
    <extends>QWidget</extends>
    <header>sprspectrumlisttablewidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>VerticalLabel</class>
+   <extends>QLabel</extends>
+   <header>verticallabel.h</header>
   </customwidget>
  </customwidgets>
  <resources>
