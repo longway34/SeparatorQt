@@ -2,8 +2,8 @@
 
 
 
-SPRSettingsControlModel::SPRSettingsControlModel(QDomDocument *_doc, QObject *parent):
-    ISPRModelData(_doc)
+SPRSettingsControlModel::SPRSettingsControlModel(QDomDocument *_doc, ISPRModelData *parent):
+    ISPRModelData(_doc, parent)
 {
     correlSpectrumPermiss = new SPRVariable<double>(doc,SPR_CONTROL_CORREL_SPECTRUM_PERMISS_XPATH, DEF_SPR_CONTROL_CORREL_SPECTRUM_PERMISS, this);
     correlSpectrumCritical = new SPRVariable<double>(doc,SPR_CONTROL_CORREL_SPECTRUM_CRITICAL_XPATH, DEF_SPR_CONTROL_CORREL_SPECTRUM_CRITICAL, this);

@@ -1,5 +1,5 @@
-#ifndef SPRSPECTRUMRANGESMODEL_H
-#define SPRSPECTRUMRANGESMODEL_H
+#ifndef SPRSPECTRUMZONESMODEL_H
+#define SPRSPECTRUMZONESMODEL_H
 
 #include <QObject>
 #include <QDomDocument>
@@ -11,7 +11,7 @@
 #define SPR_SETTINGS_SPECTRUM_RANGES_XPATH_MIN_AGRUMENT "[Ls]"
 #define SPR_SETTINGS_SPECTRUM_RANGES_XPATH_MAX_ARGUMENT "[Rs]"
 
-class SPRSpectrumRangesModel : public ISPRModelData
+class SPRSpectrumZonesModel : public ISPRModelData
 {
 public:
     typedef struct {
@@ -22,9 +22,9 @@ public:
     int tIndex;
     QMap<EnumElements, SpectorRange> elements;
 
-    SPRSpectrumRangesModel(){}
-    SPRSpectrumRangesModel(QDomDocument *doc, int indexThread, const MapElements *_elProperty = nullptr);
-    virtual ~SPRSpectrumRangesModel();
+    SPRSpectrumZonesModel(){}
+    SPRSpectrumZonesModel(QDomDocument *doc, int indexThread, const MapElements *_elProperty = nullptr);
+    virtual ~SPRSpectrumZonesModel();
 };
 
-#endif // SPRSPECTRUMRANGESMODEL_H
+#endif // SPRSPECTRUMZONESMODEL_H

@@ -1,13 +1,13 @@
 #include <QHeaderView>
-#include "sprspectrumrangestable.h"
+#include "sprspectrumzonestable.h"
 #include "sprspectrumranges.h"
 
-SPRSpectrumRangesTable::SPRSpectrumRangesTable(QWidget *parent):
+SPRSpectrumZonesTable::SPRSpectrumZonesTable(QWidget *parent):
     QTableWidget(parent), model(nullptr)
 {
 }
 
-void SPRSpectrumRangesTable::setModel(SPRSpectrumRangesTableModel *value)
+void SPRSpectrumZonesTable::setModel(SPRSpectrumZonesTableModel *value)
 {
     model = value;
 
@@ -34,7 +34,7 @@ void SPRSpectrumRangesTable::setModel(SPRSpectrumRangesTableModel *value)
     resizeRowsToContents();
 }
 
-void SPRSpectrumRangesTable::setFirtChannel(int ch){
+void SPRSpectrumZonesTable::setFirtChannel(int ch){
     for(int i=0; i<columnCount(); i++){
         SPRSpectrumRanges* ranges = (SPRSpectrumRanges*)cellWidget(0, i);
         if(i == ch){
@@ -47,14 +47,14 @@ void SPRSpectrumRangesTable::setFirtChannel(int ch){
     //        resizeColumnsToContents();
 }
 
-void SPRSpectrumRangesTable::setHddenChannels(QList<bool> hiddens){
+void SPRSpectrumZonesTable::setHddenChannels(QList<bool> hiddens){
     for(int i=0; i < columnCount(); i++){
         bool value = hiddens.size() > i ? hiddens[i] : true;
         setColumnHidden(i, value);
     }
 }
 
-void SPRSpectrumRangesTable::setVisibleOneChannel(int ch)
+void SPRSpectrumZonesTable::setVisibleOneChannel(int ch)
 {
     QList<bool> hiddens;
     for(int i=0; i < columnCount(); i++){
@@ -84,7 +84,7 @@ void SPRSpectrumRangesTable::setVisibleOneChannel(int ch)
 //    }
 //}
 
-void SPRSpectrumRangesTable::widgetsShow()
+void SPRSpectrumZonesTable::widgetsShow()
 {
     if(model){
         for(int i=0; i< model->items.size(); i++){
@@ -102,24 +102,24 @@ void SPRSpectrumRangesTable::widgetsShow()
     }
 }
 
-QPoint SPRSpectrumRangesTable::getSelectedPosition()
+QPoint SPRSpectrumZonesTable::getSelectedPosition()
 {
     SPRSpectrumRanges* range = (SPRSpectrumRanges*)focusWidget();
     QPoint res(range->getSelectedPosition());
-    res.setX(res.x() + ((SPRSpectrumRangesModel*)range->getModel())->tIndex * 2);
+    res.setX(res.x() + ((SPRSpectrumZonesModel*)range->getModel())->tIndex * 2);
     return res;
 }
 
-void SPRSpectrumRangesTable::onChangeColor(EnumElements el, QColor color){
+void SPRSpectrumZonesTable::onChangeColor(EnumElements el, QColor color){
     emit changeColor(el, color);
 }
 
-ISPRModelData *SPRSpectrumRangesTable::getModel()
+ISPRModelData *SPRSpectrumZonesTable::getModel()
 {
     return model;
 }
 
-void SPRSpectrumRangesTable::viewChange(QTableWidget *table, int row, int col)
+void SPRSpectrumZonesTable::viewChange(QTableWidget *table, int row, int col)
 {
     SPRSpectrumRanges *threadTable = (SPRSpectrumRanges*)table;
     QLineEdit *le = (QLineEdit*)threadTable->cellWidget(row, col);

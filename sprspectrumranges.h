@@ -5,19 +5,19 @@
 #include <QTableWidget>
 #include <QPoint>
 
-#include "models/sprspectrumrangesmodel.h"
+#include "models/sprspectrumzonesmodel.h"
 #include "isprwidget.h"
 
 class SPRSpectrumRanges : public QTableWidget, ISPRWidget
 {
     Q_OBJECT
 
-    SPRSpectrumRangesModel *model;
+    SPRSpectrumZonesModel *model;
     bool firstStateView;
 public:
     explicit SPRSpectrumRanges(QWidget *parent = 0);
 
-    virtual SPRSpectrumRangesModel *getModel();
+    virtual SPRSpectrumZonesModel *getModel();
     QSize sizeHint() const;
 //    QSize actualSize;
 private:
@@ -25,7 +25,7 @@ private:
     // ISPRWidget interface
 public:
     virtual void widgetsShow();
-    void setModel(SPRSpectrumRangesModel *value);
+    void setModel(SPRSpectrumZonesModel *value);
     QPoint getSelectedPosition();
     EnumElements getSelectedElement();
 

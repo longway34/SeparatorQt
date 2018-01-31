@@ -16,8 +16,8 @@ SPRFormulaItemModel::SPRFormulaItemModel(QObject *parent):
 {
 }
 
-SPRFormulaItemModel::SPRFormulaItemModel(QDomDocument *_doc, int _index, QObject *parent):
-    ISPRModelData(_doc), ElementUp1(nullptr), ElementUp2(nullptr),
+SPRFormulaItemModel::SPRFormulaItemModel(QDomDocument *_doc, int _index, ISPRModelData *parent):
+    ISPRModelData(_doc, parent), ElementUp1(nullptr), ElementUp2(nullptr),
         ElementDown1(nullptr), ElementDown2(nullptr), ElementDown3(nullptr), ElementDown4(nullptr),
         MulUp(nullptr), MulDown(nullptr), min(nullptr), max(nullptr)
 {

@@ -15,7 +15,7 @@ public:
     SPRVariable<double> ***porogs;
 
     SPRPorogsModel(QObject *parent);
-    SPRPorogsModel(QDomDocument *_doc, QObject *parent = nullptr);
+    SPRPorogsModel(QDomDocument *_doc, ISPRModelData *parent = nullptr);
     virtual ~SPRPorogsModel();
     void setThreads(SPRVariable<uint> *value);
     void setConditions(SPRVariable<TypeConditions> *value);

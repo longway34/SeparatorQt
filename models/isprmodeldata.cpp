@@ -1,21 +1,23 @@
 #include <QDebug>
 #include "isprmodeldata.h"
+#include <QFile>
 
 QDomDocument *ISPRModelData::getDoc() const
 {
     return doc;
 }
 
-void ISPRModelData::setDoc(QDomDocument *value)
+void ISPRModelData::setDoc(QDomDocument *_doc, ISPRModelData *parent)
 {
-    doc = value;
+    doc = _doc;
     root = doc->documentElement();
+    if(parent){
+        connect(parent, SIGNAL(goStore()), this, SLOT(store()));
+    }
 }
 
-
-ISPRModelData::ISPRModelData(QString fname)
+void ISPRModelData::setDoc(QString fname, ISPRModelData *parent)
 {
-//    QDomDocument document;
     QFile in(fname);
     if(in.open(QIODevice::ReadOnly)){
         if(!document.setContent(&in)){
@@ -23,12 +25,18 @@ ISPRModelData::ISPRModelData(QString fname)
             document.createElement("SEPARATOR");
         }
     }
-    setDoc(&document);
+    setDoc(&document, parent);
 }
 
-ISPRModelData::ISPRModelData(QDomDocument *_doc)
+
+ISPRModelData::ISPRModelData(QString fname, ISPRModelData *parent):doc(nullptr)
 {
-    setDoc(_doc);
+    setDoc(fname, parent);
+}
+
+ISPRModelData::ISPRModelData(QDomDocument *_doc, ISPRModelData *parent): doc(nullptr)
+{
+    setDoc(_doc, parent);
 }
 
 void ISPRModelData::store(QString fname)

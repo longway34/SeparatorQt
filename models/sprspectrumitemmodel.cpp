@@ -52,12 +52,12 @@ void spectumData::recomplite()
 
 }
 
-SPRSpectrumRangesTableModel *SPRSpectrumItemModel::getRangesTable() const
+SPRSpectrumZonesTableModel *SPRSpectrumItemModel::getRangesTable() const
 {
     return rangesTable;
 }
 
-void SPRSpectrumItemModel::setRangesTable(SPRSpectrumRangesTableModel *value)
+void SPRSpectrumItemModel::setRangesTable(SPRSpectrumZonesTableModel *value)
 {
     rangesTable = value;
     setProperty("delete_ranges", QVariant(false));
@@ -75,11 +75,11 @@ void SPRSpectrumItemModel::setSpData(uint8_t *buf, uint16_t len)
 
 SPRSpectrumItemModel::SPRSpectrumItemModel(QDomDocument *_doc) : ISPRModelData(_doc)
 {
-    rangesTable = new SPRSpectrumRangesTableModel(doc);
+    rangesTable = new SPRSpectrumZonesTableModel(doc);
     setProperty("delete_ranges", QVariant(true));
 }
 
-SPRSpectrumItemModel::SPRSpectrumItemModel(SPRSpectrumRangesTableModel *_rangesTable)
+SPRSpectrumItemModel::SPRSpectrumItemModel(SPRSpectrumZonesTableModel *_rangesTable)
 {
     setRangesTable(_rangesTable);
 }

@@ -56,8 +56,8 @@ SPRSettingsPorogsModel::SPRSettingsPorogsModel(QObject *parent)
     setProperty("delete_conditions", QVariant(false));
 }
 
-SPRSettingsPorogsModel::SPRSettingsPorogsModel(QDomDocument *_doc, QObject *parent):
-    ISPRModelData(_doc)
+SPRSettingsPorogsModel::SPRSettingsPorogsModel(QDomDocument *_doc, ISPRModelData *parent):
+    ISPRModelData(_doc, parent)
 {
     typeSelection = new SPRVariable<TypeSelection>(doc,SPR_POROGS_TYPE_SELECTION_XPATH, DEF_SPR_POROGS_TYPE_SELECTION, this);
     setProperty("delete_selection", QVariant(false));

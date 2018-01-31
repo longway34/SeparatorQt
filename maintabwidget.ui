@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>757</width>
+    <width>996</width>
     <height>762</height>
    </rect>
   </property>
@@ -70,6 +70,11 @@
    <attribute name="title">
     <string>Спектор</string>
    </attribute>
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <widget class="SPRSpectrumListTableWidget" name="widget" native="true"/>
+    </item>
+   </layout>
   </widget>
   <widget class="QWidget" name="tabSeparate">
    <attribute name="icon">
@@ -89,7 +94,7 @@
     <string>Тесты</string>
    </attribute>
   </widget>
-  <widget class="SPRSettingsMainWidget" name="tabSettings">
+  <widget class="SPRSettingsWidget" name="tabSettings">
    <attribute name="icon">
     <iconset resource="icons.qrc">
      <normaloff>:/icons/icons/Test_tab_no_color_icons.png</normaloff>:/icons/icons/Test_tab_no_color_icons.png</iconset>
@@ -97,13 +102,20 @@
    <attribute name="title">
     <string>Настройка</string>
    </attribute>
+   <layout class="QVBoxLayout" name="verticalLayout"/>
   </widget>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>SPRSettingsMainWidget</class>
+   <class>SPRSpectrumListTableWidget</class>
    <extends>QWidget</extends>
-   <header>sprsettingsmainwidget.h</header>
+   <header>sprspectrumlisttablewidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SPRSettingsWidget</class>
+   <extends>QWidget</extends>
+   <header>sprsettingswidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

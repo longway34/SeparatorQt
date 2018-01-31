@@ -35,7 +35,6 @@ SOURCES += \
     isprcontroller.cpp \
     isprwidget.cpp \
     main.cpp \
-    mainwindow.cpp \
     sprformulaelement.cpp \
     sprformulaitemwidget.cpp \
     sprporogswidget.cpp \
@@ -52,8 +51,6 @@ SOURCES += \
     sprspectrumlisttable.cpp \
     sprspectrumlisttablewidget.cpp \
     sprspectrumranges.cpp \
-    sprspectrumrangestable.cpp \
-    sprspectrumrangestablewidget.cpp \
     sprspectrumtableadv.cpp \
     models/imodelvariable.cpp \
     models/isprmodeldata.cpp \
@@ -75,14 +72,18 @@ SOURCES += \
     models/sprsettingsrmtautosetmodel.cpp \
     models/sprsettingsspectrumrangesmodel.cpp \
     models/sprspectrumitemmodel.cpp \
-    models/sprspectrumrangesmodel.cpp \
-    models/sprspectrumrangestablemodel.cpp \
     models/sprvariable.cpp \
     tcp/tcpcommand.cpp \
     tcp/tcpcommandset.cpp \
     tcp/tcpgetstatecommand.cpp \
     verticallabel.cpp \
-    tabwidget.cpp
+    maintabwidget.cpp \
+    sprsettingswidget.cpp \
+    models/sprmainmodel.cpp \
+    models/sprspectrumzonestablemodel.cpp \
+    sprspectrumzonestablewidget.cpp \
+    models/sprspectrumzonesmodel.cpp \
+    sprspectrumzonestable.cpp
 
 HEADERS += \
     _types.h \
@@ -91,7 +92,6 @@ HEADERS += \
     ipvalidator.h \
     isprcontroller.h \
     isprwidget.h \
-    mainwindow.h \
     sprformulaelement.h \
     sprformulaitemwidget.h \
     sprporogswidget.h \
@@ -108,8 +108,6 @@ HEADERS += \
     sprspectrumlisttable.h \
     sprspectrumlisttablewidget.h \
     sprspectrumranges.h \
-    sprspectrumrangestable.h \
-    sprspectrumrangestablewidget.h \
     sprspectrumtableadv.h \
     models/imodelvariable.h \
     models/isprmodeldata.h \
@@ -131,8 +129,6 @@ HEADERS += \
     models/sprsettingsrmtautosetmodel.h \
     models/sprsettingsspectrumrangesmodel.h \
     models/sprspectrumitemmodel.h \
-    models/sprspectrumrangesmodel.h \
-    models/sprspectrumrangestablemodel.h \
     models/sprvariable.h \
     tcp/itcpcommand.h \
     tcp/tcpcommand.h \
@@ -141,10 +137,15 @@ HEADERS += \
     tcp/tcpcommandset.h \
     tcp/tcpgetstatecommand.h \
     verticallabel.h \
-    tabwidget.h
+    maintabwidget.h \
+    sprsettingswidget.h \
+    models/sprmainmodel.h \
+    models/sprspectrumzonestablemodel.h \
+    sprspectrumzonestablewidget.h \
+    models/sprspectrumzonesmodel.h \
+    sprspectrumzonestable.h
 
 FORMS += \
-        mainwindow.ui \
     sprsettingsrentgenmainwidget.ui \
     sprsettingsrentgencontrolwidget.ui \
     sprsettingsrentgenautosetwidget.ui \
@@ -152,14 +153,15 @@ FORMS += \
     sprsettingsformulawidget.ui \
     sprporogswidget.ui \
     sprsettingsporogswidget.ui \
-    sprspectrumrangestablewidget.ui \
     sprsettingsmainwidget.ui \
     sprsettingsrentgenwidget.ui \
     sprsettingsimswidget.ui \
     sprsettingscontrolwidget.ui \
     sprspectrumlisttablewidget.ui \
     firstcolumn.ui \
-    tabwidget.ui
+    maintabwidget.ui \
+    sprsettingswidget.ui \
+    sprspectrumzonestablewidget.ui
 
 RESOURCES += \
     icons.qrc

@@ -18,8 +18,8 @@ SPRSettingsMainModel::SPRSettingsMainModel(QObject *parent)
 
 }
 
-SPRSettingsMainModel::SPRSettingsMainModel(QDomDocument *_doc, QObject *parent):
-    ISPRModelData(_doc)
+SPRSettingsMainModel::SPRSettingsMainModel(QDomDocument *_doc, ISPRModelData *parent):
+    ISPRModelData(_doc, parent)
 {
     name = new SPRQStringVariable(doc, SPR_SETTINGS_MAIN_NAME_XPATH, DEF_SPR_MAIN_NAME,this);
     ipAddress = new SPRQStringVariable(doc, SPR_SETTINGS_MAIN_ADDRESS_XPATH, DEF_SPR_MAIN_ADDRESS,this);
@@ -35,7 +35,7 @@ SPRSettingsMainModel::SPRSettingsMainModel(QDomDocument *_doc, QObject *parent):
     color = new SPRColorVariable(doc, SPR_SETTINGS_MAIN_COLOR_XPATH, DEF_SPR_MAIN_COLOR,this);
 //    date = new SPRDateVariable(doc, SPR_SETTINGS_MAIN_DATE_XPATH, DEF_SPR_MAIN_DATE);
 //    version = new SPRQStringVariable(doc, SPR_SETTINGS_MAIN_VERSION_XPATH, DEF_SPR_MAIN_VERSION);
-
+    spectrumFileName = new SPRQStringVariable(doc, SPR_SETTINGS_MAIN_SPECTRUM_FNAME_XPATH, DEF_SPR_MAIN_SPECTRUM_FNAME, this);
 }
 
 SPRSettingsMainModel::~SPRSettingsMainModel()
@@ -55,9 +55,49 @@ SPRSettingsMainModel::~SPRSettingsMainModel()
 
 }
 
+void SPRSettingsMainModel::setName(SPRQStringVariable *value)
+{
+    name = value;
+}
+
+SPRVariable<uint> *SPRSettingsMainModel::getIpPort() const
+{
+    return ipPort;
+}
+
+void SPRSettingsMainModel::setIpPort(SPRVariable<uint> *value)
+{
+    ipPort = value;
+}
+
+SPRQStringVariable *SPRSettingsMainModel::getIpAddress() const
+{
+    return ipAddress;
+}
+
+void SPRSettingsMainModel::setIpAddress(SPRQStringVariable *value)
+{
+    ipAddress = value;
+}
+
+SPRQStringVariable *SPRSettingsMainModel::getName() const
+{
+    return name;
+}
+
+SPRQStringVariable *SPRSettingsMainModel::getSpectrumFileName() const
+{
+    return spectrumFileName;
+}
+
 SPRVariable<uint> *SPRSettingsMainModel::getThreads() const
 {
     return threads;
+}
+
+SPRVariable<uint> *SPRSettingsMainModel::getIms() const
+{
+    return ims;
 }
 
 SPRVariable<uint> *SPRSettingsMainModel::getRentgens() const

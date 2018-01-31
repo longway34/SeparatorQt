@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+#include "maintabwidget.h"
 
 #include <QApplication>
 
@@ -24,8 +24,11 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
 
-    MainWindow w(&doc);
-    w.show();
+//    MainWindow w(&doc);
+//    w.show();
+
+    MainTabWidget tw(&doc);
+    tw.show();
 
     return a.exec();
 }

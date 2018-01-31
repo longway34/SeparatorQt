@@ -37,7 +37,7 @@ SPRSpectrumListTableWidget::SPRSpectrumListTableWidget(QWidget *parent) :
 
 }
 
-ISPRModelData *SPRSpectrumListTableWidget::setModel(SPRSpectrumRangesTableModel *ranges, QFile *inp)
+ISPRModelData *SPRSpectrumListTableWidget::setModel(SPRSpectrumZonesTableModel *ranges, QFile *inp)
 {
     rangesModel = ranges;
     if(rangesModel){
@@ -68,7 +68,7 @@ ISPRModelData *SPRSpectrumListTableWidget::setModel(SPRSpectrumRangesTableModel 
         connect(ui.tRangesChannel, SIGNAL(changeColor(EnumElements,QColor)), this, SLOT(onChangeZoneColor(EnumElements,QColor)));
         for(int row=0; row<ui.tListBasedSpectrumItem->rowCount(); row++){
             uint32_t thread = *ui.tListBasedSpectrumItem->getModel(row)->getSpData()->thread;
-            SPRSpectrumRangesModel *ranges = rangesModel->items[thread];
+            SPRSpectrumZonesModel *ranges = rangesModel->items[thread];
             SPRGrSpectrumItemModel *gr = new SPRGrSpectrumItemModel(ranges, ui.tListBasedSpectrumItem->getModel(row));
             QwtPlotCurve *curve = new QwtPlotCurve();
 
@@ -104,7 +104,7 @@ ISPRModelData *SPRSpectrumListTableWidget::setModel(SPRSpectrumRangesTableModel 
         for(int row=0; row<ui.tListSpectrumItem->rowCount(); row++){
             uint32_t thread = *ui.tListSpectrumItem->getModel(row)->getSpData()->thread;
 
-            SPRSpectrumRangesModel *ranges = rangesModel->items[thread];
+            SPRSpectrumZonesModel *ranges = rangesModel->items[thread];
             SPRGrSpectrumItemModel *gr = new SPRGrSpectrumItemModel(ranges, ui.tListSpectrumItem->getModel(row));
 
             QwtPlotCurve *curve = new QwtPlotCurve();
@@ -167,7 +167,7 @@ void SPRSpectrumListTableWidget::onChangeSpectColor(int row)
 }
 
 
-SPRSpectrumRangesTableModel *SPRSpectrumListTableWidget::getModel()
+SPRSpectrumZonesTableModel *SPRSpectrumListTableWidget::getModel()
 {
     return rangesModel;
 }
@@ -210,7 +210,7 @@ void SPRSpectrumListTableWidget::onChangeZoneRange(EnumElements el, int thread, 
 
 
             double value = grItems[i].zones[el]->sample(0).value;
-            SPRSpectrumRangesModel *ranges = getModel()->items[thread];
+            SPRSpectrumZonesModel *ranges = getModel()->items[thread];
 
             QwtIntervalSample samp(value, ranges->elements[el].min->getData(), ranges->elements[el].max->getData());
             grItems[i].zones[el]->setSamples(QVector<QwtIntervalSample>{samp});

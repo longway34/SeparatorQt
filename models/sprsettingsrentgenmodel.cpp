@@ -58,8 +58,8 @@ SPRSettingsRentgenModel::SPRSettingsRentgenModel(QObject *parent)
     peakPosition = nullptr;
 }
 
-SPRSettingsRentgenModel::SPRSettingsRentgenModel(QDomDocument *_doc, QObject *parent):
-    ISPRModelData(_doc)
+SPRSettingsRentgenModel::SPRSettingsRentgenModel(QDomDocument *_doc, ISPRModelData *parent):
+    ISPRModelData(_doc, parent)
 {
     iTubes = (SPRVariable<uint>**) malloc(sizeof(SPRVariable<uint>*) * MAX_SPR_MAIN_RENTGENS);
     uTubes = (SPRVariable<uint>**) malloc(sizeof(SPRVariable<uint>*) * MAX_SPR_MAIN_RENTGENS);

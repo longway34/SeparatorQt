@@ -13,10 +13,11 @@ class SPRSettingsMainModel : public ISPRModelData
 {
 public:
     SPRSettingsMainModel(QObject *parent=nullptr);
-    SPRSettingsMainModel(QDomDocument *_doc, QObject *parent = nullptr);
+    SPRSettingsMainModel(QDomDocument *_doc, ISPRModelData *parent = nullptr);
     virtual ~SPRSettingsMainModel();
 
     SPRQStringVariable *name;
+    SPRQStringVariable *spectrumFileName;
     SPRQStringVariable *ipAddress;
     SPRVariable<uint> *ipPort;
     SPRVariable<uint> *rentgens;
@@ -26,11 +27,20 @@ public:
     SPRVariable<TypePRAM> *typePRAM;
     SPRVariable<TypeThermo> *typeThermo;
     SPRColorVariable *color;
+
 //    SPRDateVariable *date;
 //    SPRQStringVariable *version;
 
     SPRVariable<uint> *getRentgens() const;
     SPRVariable<uint> *getThreads() const;
+    SPRVariable<uint> *getIms() const;
+    SPRQStringVariable *getSpectrumFileName() const;
+    SPRQStringVariable *getName() const;
+    SPRQStringVariable *getIpAddress() const;
+    void setIpAddress(SPRQStringVariable *value);
+    SPRVariable<uint> *getIpPort() const;
+    void setIpPort(SPRVariable<uint> *value);
+    void setName(SPRQStringVariable *value);
 };
 
 #endif // SPRSETTINGSMAINMODEL_H

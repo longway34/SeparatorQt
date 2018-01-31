@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SPRSpectrumRangesTableWidget</class>
- <widget class="QWidget" name="SPRSpectrumRangesTableWidget">
+ <class>SPRSpectrumZonesTableWidget</class>
+ <widget class="QWidget" name="SPRSpectrumZonesTableWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -75,7 +75,7 @@
     </widget>
    </item>
    <item>
-    <widget class="SPRSpectrumRangesTable" name="wSpectrumTable">
+    <widget class="SPRSpectrumZonesTable" name="wSpectrumTable">
      <property name="font">
       <font>
        <family>Tahoma</family>
@@ -88,9 +88,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>SPRSpectrumRangesTable</class>
+   <class>SPRSpectrumZonesTable</class>
    <extends>QTableWidget</extends>
-   <header>sprspectrumrangestable.h</header>
+   <header>sprspectrumzonestable.h</header>
   </customwidget>
  </customwidgets>
  <resources>

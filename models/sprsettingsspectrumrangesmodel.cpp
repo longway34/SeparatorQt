@@ -11,12 +11,12 @@ void SPRSettingsSpectrumRangesModel::setThreads(SPRVariable<uint> *value)
     }
 }
 
-SPRSettingsSpectrumRangesModel::SPRSettingsSpectrumRangesModel(QDomDocument *doc):
-    ISPRModelData(doc), threads(nullptr), items(nullptr)
+SPRSettingsSpectrumRangesModel::SPRSettingsSpectrumRangesModel(QDomDocument *doc, ISPRModelData *parent):
+    ISPRModelData(doc, parent), threads(nullptr), items(nullptr)
 {
-    items = (SPRSpectrumRangesModel**)malloc(sizeof(SPRSpectrumRangesModel*) * MAX_SPR_MAIN_THREADS);
+    items = (SPRSpectrumZonesModel**)malloc(sizeof(SPRSpectrumZonesModel*) * MAX_SPR_MAIN_THREADS);
     for(int i=0; i < MAX_SPR_MAIN_THREADS; i++){
-        items[i] = new SPRSpectrumRangesModel(doc, i);
+        items[i] = new SPRSpectrumZonesModel(doc, i);
     }
     threads = new SPRVariable<uint>(doc,SPR_SETTINGS_MAIN_THREADS_XPATH, DEF_SPR_MAIN_THREADS, this);
     setProperty("delete_threads", QVariant(true));

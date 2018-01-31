@@ -1,6 +1,6 @@
-#include "sprspectrumrangesmodel.h"
+#include "sprspectrumzonesmodel.h"
 
-SPRSpectrumRangesModel::SPRSpectrumRangesModel(QDomDocument *doc, int indexThread, const MapElements *_elProperty):
+SPRSpectrumZonesModel::SPRSpectrumZonesModel(QDomDocument *doc, int indexThread, const MapElements *_elProperty):
     ISPRModelData(doc)
 {
     tIndex = indexThread;
@@ -26,7 +26,7 @@ SPRSpectrumRangesModel::SPRSpectrumRangesModel(QDomDocument *doc, int indexThrea
 
 }
 
-SPRSpectrumRangesModel::~SPRSpectrumRangesModel()
+SPRSpectrumZonesModel::~SPRSpectrumZonesModel()
 {
     foreach (EnumElements elem, elements.keys()) {
         delete elements[elem].max; elements[elem].max = nullptr;

@@ -33,7 +33,7 @@ public:
     SPRVariable<uint> *peakPosition;
 
     SPRSettingsRentgenModel(QObject *parent=nullptr);
-    SPRSettingsRentgenModel(QDomDocument *_doc, QObject *parent = nullptr);
+    SPRSettingsRentgenModel(QDomDocument *_doc, ISPRModelData *parent = nullptr);
     virtual ~SPRSettingsRentgenModel();
     void setRentgens(SPRVariable<uint> *value);
     void setThreads(SPRVariable<uint> *value);

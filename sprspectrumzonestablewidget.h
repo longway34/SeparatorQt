@@ -1,24 +1,24 @@
-#ifndef SPRSPECTRUMRANGESTABLEWIDGET_H
-#define SPRSPECTRUMRANGESTABLEWIDGET_H
+#ifndef SPRSPECTRUMZONESTABLEWIDGET_H
+#define SPRSPECTRUMZONESTABLEWIDGET_H
 
-#include "ui_sprspectrumrangestablewidget.h"
+#include "ui_sprspectrumzonestablewidget.h"
 #include "isprwidget.h"
 
-class SPRSpectrumRangesTableWidget : public QWidget, public ISPRWidget
+class SPRSpectrumZonesTableWidget : public QWidget, public ISPRWidget
 {
     Q_OBJECT
 
 public:
-    explicit SPRSpectrumRangesTableWidget(QWidget *parent = 0);
+    explicit SPRSpectrumZonesTableWidget(QWidget *parent = 0);
 
 private:
-    Ui::SPRSpectrumRangesTableWidget ui;
+    Ui::SPRSpectrumZonesTableWidget ui;
 
     // ISPRWidget interface
 public:
     virtual ISPRModelData *getModel();
 
-    ISPRModelData *setModel(ISPRModelData *data);
+    SPRSpectrumZonesTableModel *setModel(SPRSpectrumZonesTableModel *data);
     void setThreads(SPRVariable<uint> *threads){ui.wSpectrumTable->model->setThreads(threads);}
 public slots:
     virtual void widgetsShow();
@@ -35,4 +35,4 @@ signals:
 protected:
 };
 
-#endif // SPRSPECTRUMRANGESTABLEWIDGET_H
+#endif // SPRSPECTRUMZONESTABLEWIDGET_H

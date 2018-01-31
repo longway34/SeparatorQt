@@ -9,7 +9,7 @@
 #include "qwt_plot_curve.h"
 
 #include "models/sprspectrumitemmodel.h"
-#include "models/sprspectrumrangesmodel.h"
+#include "models/sprspectrumzonesmodel.h"
 #include "models/isprmodeldata.h"
 #include <QVector>
 
@@ -19,7 +19,7 @@ class SPRGrSpectrumItemModel : public ISPRModelData
 {
     Q_OBJECT
 
-    SPRSpectrumRangesModel *rangesModel;
+    SPRSpectrumZonesModel *rangesModel;
     SPRSpectrumItemModel *spectModel;
 
     QPolygonF spectGraphData;
@@ -31,10 +31,10 @@ class SPRGrSpectrumItemModel : public ISPRModelData
     }
 
 public:
-    explicit SPRGrSpectrumItemModel(SPRSpectrumRangesModel *_ranges, SPRSpectrumItemModel *_spect = nullptr);
+    explicit SPRGrSpectrumItemModel(SPRSpectrumZonesModel *_ranges, SPRSpectrumItemModel *_spect = nullptr);
 
     SPRGrSpectrumItemModel *setSpectModel(SPRSpectrumItemModel *_spectModel);
-    SPRGrSpectrumItemModel *setRangesModel(SPRSpectrumRangesModel *_rangesModel);
+    SPRGrSpectrumItemModel *setRangesModel(SPRSpectrumZonesModel *_rangesModel);
     QPolygonF getSamples() const;
     QMap<EnumElements, QVector<QwtIntervalSample> > getIntervalSamples() const;
     QColor getColorZone(EnumElements el);

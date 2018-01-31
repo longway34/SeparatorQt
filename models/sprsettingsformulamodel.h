@@ -23,7 +23,8 @@ public:
         setProperty("delete_conditions", QVariant(false));
         itemsModel.clear();
     }
-    SPRSettingsFormulaModel(QDomDocument *doc, QObject *parent = nullptr)
+    SPRSettingsFormulaModel(QDomDocument *doc, ISPRModelData *parent = nullptr):
+        ISPRModelData(doc, parent)
     {
 
         for(int i=0; i<DEF_SPR_FORMULA_NUMBER; i++){

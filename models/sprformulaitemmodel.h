@@ -25,7 +25,7 @@ public:
     int index;
 
     SPRFormulaItemModel(QObject *parent=nullptr);
-    SPRFormulaItemModel(QDomDocument *_doc, int _index = 0, QObject *parent = nullptr);
+    SPRFormulaItemModel(QDomDocument *_doc, int _index = 0, ISPRModelData *parent = nullptr);
     virtual ~SPRFormulaItemModel();
 };
 

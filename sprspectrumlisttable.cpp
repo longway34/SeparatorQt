@@ -124,14 +124,14 @@ SPRSpectrumListTable::SPRSpectrumListTable(QWidget *parent): QTableWidget(parent
     resizeRowsToContents();
 }
 
-ISPRModelData *SPRSpectrumListTable::setModel(uint8_t *inp, SPRSpectrumRangesTableModel *ranges){
+ISPRModelData *SPRSpectrumListTable::setModel(uint8_t *inp, SPRSpectrumZonesTableModel *ranges){
     SPRSpectrumItemModel *mod = new SPRSpectrumItemModel(ranges);
     mod->setSpData(inp);
     model.push_back(mod);
     addRowTable(mod->getSpData());
 }
 
-ISPRModelData *SPRSpectrumListTable::setModel(QFile *inp, SPRSpectrumRangesTableModel *ranges)
+ISPRModelData *SPRSpectrumListTable::setModel(QFile *inp, SPRSpectrumZonesTableModel *ranges)
 {
     if(inp){
         uint8_t buf[DEF_SPECTRUM_DATA_BUF_LENGTH];

@@ -15,7 +15,7 @@ class SPRSettingsPorogsModel : public ISPRModelData
     SPRPorogsModel *porogs;
 public:
     SPRSettingsPorogsModel(QObject *parent=nullptr);
-    SPRSettingsPorogsModel(QDomDocument *_doc, QObject *parent = nullptr);
+    SPRSettingsPorogsModel(QDomDocument *_doc, ISPRModelData *parent = nullptr);
     virtual ~SPRSettingsPorogsModel();
 
     SPRKPRVariable *forMinStone;

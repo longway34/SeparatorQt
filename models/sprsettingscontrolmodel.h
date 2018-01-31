@@ -61,7 +61,7 @@ public:
         VEMSLevelLess(nullptr),
         VEMSMaxCode(nullptr)
     {}
-    SPRSettingsControlModel(QDomDocument *_doc, QObject *parent = nullptr);
+    SPRSettingsControlModel(QDomDocument *_doc, ISPRModelData *parent = nullptr);
     virtual ~SPRSettingsControlModel();
 };
 

@@ -9,7 +9,7 @@
 
 #include "sprspectrumranges.h"
 
-void SPRSpectrumRanges::setModel(SPRSpectrumRangesModel *value)
+void SPRSpectrumRanges::setModel(SPRSpectrumZonesModel *value)
 {
     model = value;
     if(model){
@@ -162,7 +162,7 @@ void SPRSpectrumRanges::widgetsShow()
     }
 }
 
-SPRSpectrumRangesModel *SPRSpectrumRanges::getModel()
+SPRSpectrumZonesModel *SPRSpectrumRanges::getModel()
 {
     return model;
 }

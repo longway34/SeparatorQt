@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include "models/isprmodeldata.h"
-#include "models/sprspectrumrangestablemodel.h"
+#include "models/sprspectrumzonestablemodel.h"
 
 #define DEF_SPECTRUM_DATA_BUF_LENGTH    708
 #define DEF_SPECTRUM_DATA_LENGTH        512
@@ -40,12 +40,12 @@ Q_DECLARE_METATYPE(SpectrumData)
 
 class SPRSpectrumItemModel : public ISPRModelData
 {
-    SPRSpectrumRangesTableModel *rangesTable;
+    SPRSpectrumZonesTableModel *rangesTable;
     SpectrumData spData;
 
 public:
     SPRSpectrumItemModel(QDomDocument *_doc);
-    SPRSpectrumItemModel(SPRSpectrumRangesTableModel *_rangesTable);
+    SPRSpectrumItemModel(SPRSpectrumZonesTableModel *_rangesTable);
 
     virtual ~SPRSpectrumItemModel(){
         if(QVariant(property("delete_ranges")).toBool()){
@@ -54,14 +54,14 @@ public:
         }
     }
 
-    ISPRModelData *setModel(SPRSpectrumRangesTableModel *_ranges){
+    ISPRModelData *setModel(SPRSpectrumZonesTableModel *_ranges){
         setRangesTable(_ranges);
         spData.recomplite();
         return _ranges;
     }
 
-    SPRSpectrumRangesTableModel *getRangesTable() const;
-    SPRSpectrumRangesModel *getRanges(){
+    SPRSpectrumZonesTableModel *getRangesTable() const;
+    SPRSpectrumZonesModel *getRanges(){
         if(spData.thread){
             if(*spData.thread > 0 && *spData.thread < MAX_SPR_MAIN_THREADS){
                 if(rangesTable){
@@ -70,7 +70,7 @@ public:
             }
         }
     }
-    void setRangesTable(SPRSpectrumRangesTableModel *value);
+    void setRangesTable(SPRSpectrumZonesTableModel *value);
     SpectrumData *getSpData();
     void setSpData(uint8_t *buf, uint16_t len = DEF_SPECTRUM_DATA_BUF_LENGTH);
 

@@ -27,8 +27,11 @@ public slots:
 protected slots:
     virtual void viewChange(int);
     virtual void viewChange();
+    virtual void viewChange(bool value);
 signals:
     void doShow();
+    void changeFileSettinds(QString);
+    void changeFileSpectrum(QString);
 };
 
 #endif // SPRSETTINGSMAINWIDGET_H

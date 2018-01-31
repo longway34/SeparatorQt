@@ -21,16 +21,12 @@ protected:
 
 public:
     ISPRModelData(){}
-    ISPRModelData(QString fname);
-    ISPRModelData(QDomDocument *_doc);
+    ISPRModelData(QString fname, ISPRModelData *parent = nullptr);
+    ISPRModelData(QDomDocument *_doc, ISPRModelData *parent = nullptr);
 
-//    void addControlVariable(ISPRVariable* var){
-//        if(var){
-//            connect(this, SIGNAL(store()), var, SLOT(setData()));
-//        }
-//    }
     QDomDocument *getDoc() const;
-    void setDoc(QDomDocument *value);
+    void setDoc(QDomDocument *_doc, ISPRModelData *parent = nullptr);
+    void setDoc(QString fname, ISPRModelData *parent = nullptr);
 
 signals:
     void goStore();

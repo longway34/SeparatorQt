@@ -1,6 +1,8 @@
 #include "sprsettingsmainwidget.h"
 #include "ipvalidator.h"
 
+#include <QFileDialog>
+
 ISPRModelData *SPRSettingsMainWidget::setModel(ISPRModelData *data)
 {
     model = (SPRSettingsMainModel*)data;
@@ -9,6 +11,7 @@ ISPRModelData *SPRSettingsMainWidget::setModel(ISPRModelData *data)
         ui.leName->setText(model->name->getData());
         ui.leAddress->setText(model->ipAddress->getData());
         ui.lePort->setText(model->ipPort->toString());
+        ui.leSpectrumsFName->setText(model->spectrumFileName->getData());
 
         const QString strs[] = {
             tr("1 ручей"), tr("2 ручья"), tr("3 ручья"), tr("4 ручья"),
@@ -73,6 +76,8 @@ SPRSettingsMainWidget::SPRSettingsMainWidget(QWidget *parent) :
     connect(ui.cbIMCount, SIGNAL(currentIndexChanged(int)), SLOT(viewChange(int)));
     connect(ui.cbThreads, SIGNAL(currentIndexChanged(int)), SLOT(viewChange(int)));
 
+    connect(ui.bFNameSelect, SIGNAL(clicked(bool)), this, SLOT(viewChange(bool)));
+    connect(ui.bSpectrumFNameSelect, SIGNAL(clicked(bool)), this, SLOT(viewChange(bool)));
 }
 
 
@@ -173,6 +178,38 @@ void SPRSettingsMainWidget::viewChange()
             model->ipPort->setData(QString(ui.lePort->text()).toInt());
             return;
         }
+    }
+}
+
+void SPRSettingsMainWidget::viewChange(bool value)
+{
+    if(sender() == ui.bFNameSelect){
+        QString fName = model->getName()->getData()+".xml";
+        QString fileName = QFileDialog::getOpenFileName(this, tr("Открыть файл..."), "",
+            tr("Файлы настроек (*.xml)"));
+        if(!fileName.isEmpty()){
+            QFile f(fileName);
+            if(f.open(QIODevice::ReadWrite)){
+                if(fName != fileName){
+                    emit changeFileSettinds(fileName);
+                }
+            }
+        }
+        return;
+    }
+    if(sender() == ui.bSpectrumFNameSelect){
+        QString fName = model->getSpectrumFileName()->getData()+".xml";
+        QString fileName = QFileDialog::getOpenFileName(this, tr("Открыть файл..."), "",
+            tr("Файлы настроек (*.xml)"));
+        if(!fileName.isEmpty()){
+            QFile f(fileName);
+            if(f.open(QIODevice::ReadWrite)){
+                if(fName != fileName){
+                    emit changeFileSpectrum(fileName);
+                }
+            }
+        }
+        return;
     }
 }
 

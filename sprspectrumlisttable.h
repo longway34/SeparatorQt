@@ -29,7 +29,7 @@ protected:
 public:
     explicit SPRSpectrumListTable(QWidget *parent = 0);
 
-    ISPRModelData *setModel(QFile *inp, SPRSpectrumRangesTableModel *ranges);
+    ISPRModelData *setModel(QFile *inp, SPRSpectrumZonesTableModel *ranges);
     // ISPRWidget interface
     QVector<SPRSpectrumItemModel*> *getModels(){ return &model; }
     SPRSpectrumItemModel *getModel(int index){
@@ -70,7 +70,7 @@ public:
         QLabel* lth = (QLabel*)cellWidget(row, 2);
         return lth->text();
     }
-    ISPRModelData *setModel(uint8_t *inp, SPRSpectrumRangesTableModel *ranges);
+    ISPRModelData *setModel(uint8_t *inp, SPRSpectrumZonesTableModel *ranges);
 public slots:
     virtual void widgetsShow();
     virtual ISPRModelData *getModel();

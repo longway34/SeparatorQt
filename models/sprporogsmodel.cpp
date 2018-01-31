@@ -42,8 +42,8 @@ SPRPorogsModel::SPRPorogsModel(QObject *parent)
     setProperty("delete_threads", QVariant(false));
 }
 
-SPRPorogsModel::SPRPorogsModel(QDomDocument *_doc, QObject *parent):
-    ISPRModelData(_doc)
+SPRPorogsModel::SPRPorogsModel(QDomDocument *_doc, ISPRModelData *parent):
+    ISPRModelData(_doc, parent)
 {
     porogs = (SPRVariable<double>***)malloc(sizeof(SPRVariable<double>**) * MAX_SPR_MAIN_THREADS);
     for(int th=0; th<MAX_SPR_MAIN_THREADS;th++){

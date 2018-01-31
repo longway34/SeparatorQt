@@ -1,11 +1,11 @@
-#include "sprspectrumrangestablemodel.h"
+#include "sprspectrumzonestablemodel.h"
 
-SPRVariable<uint> *SPRSpectrumRangesTableModel::getThreads() const
+SPRVariable<uint> *SPRSpectrumZonesTableModel::getThreads() const
 {
     return threads;
 }
 
-void SPRSpectrumRangesTableModel::setThreads(SPRVariable<uint> *value)
+void SPRSpectrumZonesTableModel::setThreads(SPRVariable<uint> *value)
 {
     if(value){
         if(QVariant(property("delete_threads")).toBool()){
@@ -16,24 +16,24 @@ void SPRSpectrumRangesTableModel::setThreads(SPRVariable<uint> *value)
     }
 }
 
-SPRSpectrumRangesTableModel::SPRSpectrumRangesTableModel()
+SPRSpectrumZonesTableModel::SPRSpectrumZonesTableModel()
 {
 
 }
 
-SPRSpectrumRangesTableModel::SPRSpectrumRangesTableModel(QDomDocument *_doc):
-    ISPRModelData(_doc), threads(nullptr)
+SPRSpectrumZonesTableModel::SPRSpectrumZonesTableModel(QDomDocument *_doc, ISPRModelData *parent):
+    ISPRModelData(_doc, parent), threads(nullptr)
 {
 
     threads = new SPRVariable<uint>(doc,SPR_SETTINGS_MAIN_THREADS_XPATH, DEF_SPR_MAIN_THREADS, this);
     setProperty("delete_threads", QVariant(true));
 
     for(int i=0; i<MAX_SPR_MAIN_THREADS; i++){
-        items.push_back(new SPRSpectrumRangesModel(doc, i));
+        items.push_back(new SPRSpectrumZonesModel(doc, i));
     }
 }
 
-SPRSpectrumRangesTableModel::~SPRSpectrumRangesTableModel()
+SPRSpectrumZonesTableModel::~SPRSpectrumZonesTableModel()
 {
     if(threads && QVariant(property("delete_threads")).toBool()){
         delete threads; threads = nullptr;

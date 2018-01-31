@@ -6,7 +6,7 @@ SPRGrSpectrumItemModel *SPRGrSpectrumItemModel::setSpectModel(SPRSpectrumItemMod
     return complite();
 }
 
-SPRGrSpectrumItemModel *SPRGrSpectrumItemModel::setRangesModel(SPRSpectrumRangesModel *_rangesModel)
+SPRGrSpectrumItemModel *SPRGrSpectrumItemModel::setRangesModel(SPRSpectrumZonesModel *_rangesModel)
 {
     rangesModel = _rangesModel;
     return complite();
@@ -48,7 +48,7 @@ SPRGrSpectrumItemModel *SPRGrSpectrumItemModel::complite()
                 if(rawSpect){
                     uint16_t value = rawSpect[i];
                     foreach(EnumElements z, rangesModel->elements.keys()){
-                        SPRSpectrumRangesModel::SpectorRange elData = rangesModel->elements[z];
+                        SPRSpectrumZonesModel::SpectorRange elData = rangesModel->elements[z];
                         int min = elData.min->getData(); int max = elData.max->getData();
                         if(i >= min && i < max){
                             if(zonesGraphData[z][0].value < value){
@@ -69,7 +69,7 @@ SPRGrSpectrumItemModel *SPRGrSpectrumItemModel::complite()
     return isComplite();
 }
 
-SPRGrSpectrumItemModel::SPRGrSpectrumItemModel(SPRSpectrumRangesModel *_ranges, SPRSpectrumItemModel *_spect) :
+SPRGrSpectrumItemModel::SPRGrSpectrumItemModel(SPRSpectrumZonesModel *_ranges, SPRSpectrumItemModel *_spect) :
     rangesModel(_ranges), spectModel(_spect)
 {
     spectGraphData.clear();
