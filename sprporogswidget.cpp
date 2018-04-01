@@ -12,7 +12,7 @@ static SeparatorPorogsData defSeparatorPorogsData = {
 };
 
 SPRPorogsWidget::SPRPorogsWidget(QWidget *parent) :
-    QWidget(parent), ISPRWidget()
+    QWidget(parent)
 {
     ui.setupUi(this);
 }
@@ -51,7 +51,7 @@ void SPRPorogsWidget::widgetsShow()
                 if(!t) vnames.append(names->at(c));
                 QLineEdit *cellValue = new QLineEdit(QString::number(model->porogs[t][c]->getData()),ui.tPorogsValues);
                 cellValue->setFrame(false); cellValue->setAlignment(Qt::AlignCenter);
-                cellValue->setValidator(new QDoubleValidator(0,100,2,cellValue));
+                cellValue->setValidator(new QDoubleValidator(-99,99,2,cellValue));
                 cellValue->setToolTip(tr("Значение для ручья ")+QString::number(t)+tr(" условия ")+names->at(c));
                 cellValue->setProperty("row", c); cellValue->setProperty("col", t); //cellValue->setProperty("parent", QVariant("tPorogsValues"));
                 ui.tPorogsValues->setCellWidget(c, t, cellValue);
@@ -81,6 +81,4 @@ ISPRModelData *SPRPorogsWidget::getModel()
 {
     return model;
 }
-
-
 

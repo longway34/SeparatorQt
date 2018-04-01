@@ -9,10 +9,14 @@
 int main(int argc, char *argv[])
 {
 
+#ifdef WIN32
     bool y = QDir::setCurrent("F:\\Projects\\Separator\\");
-    QDomDocument doc;
+#else
+    bool y = QDir::setCurrent("/home/longway/");
+#endif
 
-    QFile in("СРФ3.xml");
+    QDomDocument doc;
+    QFile in("СРФ1.xml");
     if(in.open(QIODevice::ReadOnly)){
         if(doc.setContent(&in)){
 
@@ -27,7 +31,7 @@ int main(int argc, char *argv[])
 //    MainWindow w(&doc);
 //    w.show();
 
-    MainTabWidget tw(&doc);
+    MainTabWidget tw(QString("СРФ1.xml"), nullptr);
     tw.show();
 
     return a.exec();

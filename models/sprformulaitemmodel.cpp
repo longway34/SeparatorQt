@@ -11,6 +11,18 @@
 //    this->index = _index;
 //}
 
+void SPRFormulaItemModel::setMin(SPRVariable<double> *value)
+{
+    min = value;
+    setProperty("delete_min", QVariant(false));
+}
+
+void SPRFormulaItemModel::setMax(SPRVariable<double> *value)
+{
+    max = value;
+    setProperty("delete_max", QVariant(false));
+}
+
 SPRFormulaItemModel::SPRFormulaItemModel(QObject *parent):
     ISPRModelData()
 {
@@ -42,7 +54,9 @@ SPRFormulaItemModel::SPRFormulaItemModel(QDomDocument *_doc, int _index, ISPRMod
     MulDown = new SPRVariable<double>(doc, xpath, DEF_SPR_FORMULA_MUL, this);
 
     max = new SPRVariable<double>(doc, SPR_FORMULA_MAX_XPATH, DEF_SPR_FORMULA_MAX, this);
+    setProperty("delete_max", QVariant(true));
     min = new SPRVariable<double>(doc, SPR_FORMULA_MIN_XPATH, DEF_SPR_FORMULA_MIN, this);
+    setProperty("delete_min", QVariant(true));
 }
 
 SPRFormulaItemModel::~SPRFormulaItemModel()
@@ -57,6 +71,6 @@ SPRFormulaItemModel::~SPRFormulaItemModel()
     if(MulUp) delete MulUp; MulUp = nullptr;
     if(MulDown) delete MulDown; MulDown = nullptr;
 
-    if(min) delete min; min = nullptr;
-    if(max) delete max; max = nullptr;
+    if(min && property("delete_min").toBool()) delete min; min = nullptr;
+    if(max && property("delete_max").toBool()) delete max; max = nullptr;
 }

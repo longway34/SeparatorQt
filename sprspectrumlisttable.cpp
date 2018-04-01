@@ -5,11 +5,21 @@
 void SPRSpectrumListTable::connectFirstTable(FirstColumn *fc){
     connect(fc, SIGNAL(changeColor(QColor)), this, SLOT(viewChange(QColor)));
     connect(fc, SIGNAL(iAmSelected(int)), this, SLOT(viewChange(int)));
+    connect(fc, SIGNAL(iAmDelete(int)), this, SLOT(onDeleteRow(int)));
     connect(this, SIGNAL(doShow()), fc, SLOT(widgetsShow()));
 
 }
+void SPRSpectrumListTable::onDeleteRow(int row){
+    model->getSpectrumsModel()->remove(row);
+    removeRow(row);
+    storeCheckedRows = getSelectedItems();
+    storeCurrentRow = currentRow();
+    while(rowCount()>0) removeRow(0);
+    widgetsShow();
+    emit modelChanged();
+}
 
-void SPRSpectrumListTable::insertFirstColumn(SpectrumData *data, int row){
+void SPRSpectrumListTable::insertFirstColumn(SpectrumItemData *data, int row){
     FirstColumn *fc = new FirstColumn(this);
     int r = *data->red;
     int g = *data->green;
@@ -24,7 +34,7 @@ void SPRSpectrumListTable::insertFirstColumn(SpectrumData *data, int row){
     setCellWidget(row, 0, fc);
 }
 
-void SPRSpectrumListTable::insertContentColumns(SpectrumData *data, int row){
+void SPRSpectrumListTable::insertContentColumns(SpectrumItemData *data, int row){
     setCellMyWidget(this, row, 1, QString::number(*data->thread), false, tr("Номер ручья"));
     setCellMyWidget(this, row, 2, QString(data->name), true, tr("Номер ручья"));
     setCellMyWidget(this, row, 3, QString::number(*data->summ), false, tr("Номер ручья"));
@@ -49,7 +59,7 @@ void SPRSpectrumListTable::insertContentColumns(SpectrumData *data, int row){
     setCellMyWidget(this, row, 17, QString::number(*data->Mg), false, tr("Значения спектра в зоне марганца"));
 }
 
-void SPRSpectrumListTable::addRowTable(SpectrumData *data, int pastRow)
+void SPRSpectrumListTable::addRowTable(SpectrumItemData *data, int pastRow)
 {
     int row = 0;
     if(pastRow >= 0 && pastRow < rowCount() - 1){
@@ -100,7 +110,7 @@ QLineEdit *SPRSpectrumListTable::setCellMyWidget(QTableWidget *table, int row, i
 //    cellWidget(row, col)->addAction(actHide); cellWidget(row, col)->addAction(actShow);
 }
 
-SPRSpectrumListTable::SPRSpectrumListTable(QWidget *parent): QTableWidget(parent)
+SPRSpectrumListTable::SPRSpectrumListTable(QWidget *parent): QTableWidget(parent), model(nullptr)
 {
     QStringList hTitles;
     hTitles << tr("№") << tr("Ручей") << tr("Имя") << tr("I") << tr("H1") << tr("H2") << tr("H3")
@@ -118,45 +128,65 @@ SPRSpectrumListTable::SPRSpectrumListTable(QWidget *parent): QTableWidget(parent
     QAction *actShow = new QAction(tr("Отобразить все"), this);
     connect(actShow, SIGNAL(triggered(bool)), this, SLOT(showCols(bool)));
 
+    connect(this, SIGNAL(cellClicked(int,int)), this, SLOT(onCurrentPosChanged(int, int)));
+
     this->addAction(actHide); this->addAction(actShow);
     setContextMenuPolicy(Qt::ActionsContextMenu);
+    setSelectionBehavior(QAbstractItemView::SelectRows);
     resizeColumnsToContents();
     resizeRowsToContents();
 }
 
-ISPRModelData *SPRSpectrumListTable::setModel(uint8_t *inp, SPRSpectrumZonesTableModel *ranges){
-    SPRSpectrumItemModel *mod = new SPRSpectrumItemModel(ranges);
-    mod->setSpData(inp);
-    model.push_back(mod);
-    addRowTable(mod->getSpData());
+void SPRSpectrumListTable::onCurrentPosChanged(int row, int col){
+    emit rowSelectedChecked(getSelectedItems(), row);
 }
 
-ISPRModelData *SPRSpectrumListTable::setModel(QFile *inp, SPRSpectrumZonesTableModel *ranges)
+ISPRModelData *SPRSpectrumListTable::setModel(SPRSpectrumListItemsModel *_model, uint8_t *inp)
 {
-    if(inp){
-        uint8_t buf[DEF_SPECTRUM_DATA_BUF_LENGTH];
-        if(!ranges){
-            if(model.size() > 0){
-                ranges = model[0]->getRangesTable();
-            }
-        }
-        if(inp->open(QIODevice::ReadOnly)){
-           char b[2];
-           inp->read(b, 2);
-           while(inp->read((char*)(buf), DEF_SPECTRUM_DATA_BUF_LENGTH)){
-                setModel(buf, ranges);
-           }
+    if(_model){
+        if(model != _model){
+            model = _model;
+            emit modelChanged();
         }
     }
-    resizeColumnsToContents();
-    return ranges;
+    if(inp){
+        addSpectrum(inp);
+    }
 }
 
+ISPRModelData *SPRSpectrumListTable::addSpectrum(uint8_t *_inp, int _bufSize, int _thread)
+{
+    if(_thread < 0 || _thread >= MAX_SPR_MAIN_THREADS){
+        if(_bufSize == DEF_SPECTRUM_DATA_BUF_LENGTH){
+            spectumItemData b;
+            b.setbuf(_inp);
+            _thread = *b.thread;
+        } else {
+            _thread = 0;
+        }
+    }
+    SPRSpectrumItemModel *mod = new SPRSpectrumItemModel(model->getZonesTableModel(), model->getFormulas(), model);
+    mod->setSpectrumData(_inp, _bufSize);
+
+    if(_bufSize == DEF_SPECTRUM_DATA_LENGTH){
+        mod->getSpectrumData()->setThread(_thread);
+        mod->recomplite();
+    }
+    addRowTable(mod->getSpectrumData());
+    model->getSpectrumsModel()->push_back(mod);
+    emit modelChanged();
+}
 
 void SPRSpectrumListTable::widgetsShow()
 {
-    for(int row=0; row < rowCount(); row++){
-        SpectrumData *mod = model[row]->getSpData();
+
+    for(int row=0; row<model->getSpectrumsModel()->size(); row++){
+        SpectrumItemData *mod = model->getSpectrumsModel()->at(row)->getSpectrumData();
+        int rc = rowCount();
+        if(row > rc-1){
+            addRowTable(mod);
+        }
+//    for(int row=0; row < rowCount(); row++){
         FirstColumn *fc = ((FirstColumn*)cellWidget(row, 0));
         QColor col(*mod->red, *mod->green, *mod->blue);
         fc->setData(row, col);
@@ -181,13 +211,21 @@ void SPRSpectrumListTable::widgetsShow()
         ((QLabel*)cellWidget(row, 15))->setText(QString::number(*mod->Mo));
         ((QLabel*)cellWidget(row, 16))->setText(QString::number(*mod->Zn));
         ((QLabel*)cellWidget(row, 17))->setText(QString::number(*mod->Mg));
+        resizeColumnsToContents();
+    }
+    foreach (int srow, storeCheckedRows) {
+        FirstColumn *fc = ((FirstColumn*)cellWidget(srow, 0));
+        fc->ui.cbSelect->setChecked(true);
+    }
+    if(storeCurrentRow >= 0 && storeCurrentRow < rowCount()){
+        setCurrentCell(storeCurrentRow, 4);
     }
 }
 
 ISPRModelData *SPRSpectrumListTable::getModel()
 {
-    if(model.size() > 0){
-        return model[0]->getRangesTable();
+    if(model->getZonesTableModel()->items.size() > 0){
+        return model->getZonesTableModel()->items[0];
     }
     return nullptr;
 }
@@ -197,10 +235,11 @@ void SPRSpectrumListTable::viewChange(QColor color)
     if(sender()->property("tw").value<QTableWidget*>() == this){
         int row = sender()->property("row").toInt();
 
-        *model[row]->getSpData()->red = color.red();
-        *model[row]->getSpData()->green = color.green();
-        *model[row]->getSpData()->blue = color.blue();
-        emit rowChangeColor(row);
+        *model->getSpectrumsModel()->at(row)->getSpectrumData()->red = color.red();
+        *model->getSpectrumsModel()->at(row)->getSpectrumData()->green = color.green();
+        *model->getSpectrumsModel()->at(row)->getSpectrumData()->blue = color.blue();
+//        emit rowChangeColor(row);
+        emit modelChanged();
     }
 }
 
@@ -208,9 +247,10 @@ void SPRSpectrumListTable::viewChange()
 {
     if(sender()->property("tw").value<QTableWidget*>() == this){
         int row = sender()->property("row").toInt();
-        SpectrumData *data = model[row]->getSpData();
+        SpectrumItemData *data = model->getSpectrumsModel()->at(row)->getSpectrumData();
         const char *value = ((QLineEdit*)sender())->text().toStdString().c_str();
         strcpy(data->name, value);
+        emit modelChanged();
     }
 }
 
@@ -229,6 +269,6 @@ void SPRSpectrumListTable::showCols(bool)
 
 void SPRSpectrumListTable::viewChange(int num)
 {
-    emit rowSelected(num);
+    emit rowSelectedChecked(getSelectedItems(), this->currentRow());
 }
 

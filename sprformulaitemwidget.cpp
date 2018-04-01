@@ -29,10 +29,6 @@ ISPRModelData *SPRFormulaItemWidget::setModel(ISPRModelData *value)
     ui.lResult->setText(QString("H")+QString::number(model->index+1));
     widgetsShow();
 
-    connect(ui.leMulUp, SIGNAL(editingFinished()),SLOT(viewChange()));
-    connect(ui.leMulDown, SIGNAL(editingFinished()),SLOT(viewChange()));
-    connect(ui.leMin, SIGNAL(editingFinished()),SLOT(viewChange()));
-    connect(ui.leMax, SIGNAL(editingFinished()),SLOT(viewChange()));
     return model;
 }
 
@@ -49,10 +45,18 @@ void SPRFormulaItemWidget::viewChange()
     }
     if(sender() == ui.leMin){
         model->min->setData(val);
+        if(model->min->getData() > model->max->getData()){
+            model->max->setData(model->min->getData());
+            widgetsShow();
+        }
         return;
     }
     if(sender() == ui.leMax){
         model->max->setData(val);
+        if(model->max->getData()<model->min->getData()){
+            model->min->setData(model->max->getData());
+            widgetsShow();
+        }
         return;
     }
 }
@@ -63,9 +67,13 @@ SPRFormulaItemWidget::SPRFormulaItemWidget(QWidget *parent) :
     ui.setupUi(this);
     setElements(&DEF_SPR_FORMULA_ELEMENTS_PROPERTY);
 
+    connect(ui.leMulUp, SIGNAL(editingFinished()),SLOT(viewChange()));
+    connect(ui.leMulDown, SIGNAL(editingFinished()),SLOT(viewChange()));
+    connect(ui.leMin, SIGNAL(editingFinished()),SLOT(viewChange()));
+    connect(ui.leMax, SIGNAL(editingFinished()),SLOT(viewChange()));
 }
 
-void SPRFormulaItemWidget::setElements(const MapElements *elements)
+void SPRFormulaItemWidget::setElements(const DefaultMapElements *elements)
 {
     QList<SPRFormulaElement*> list =
             QList<SPRFormulaElement*>({
@@ -103,4 +111,3 @@ ISPRModelData *SPRFormulaItemWidget::getModel()
 {
     return model;
 }
-

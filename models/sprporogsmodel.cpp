@@ -42,15 +42,19 @@ SPRPorogsModel::SPRPorogsModel(QObject *parent)
     setProperty("delete_threads", QVariant(false));
 }
 
-SPRPorogsModel::SPRPorogsModel(QDomDocument *_doc, ISPRModelData *parent):
-    ISPRModelData(_doc, parent)
+SPRPorogsModel::SPRPorogsModel(QDomDocument *_doc, uint _row, ISPRModelData *parent):
+    row(_row), ISPRModelData(_doc, parent)
 {
     porogs = (SPRVariable<double>***)malloc(sizeof(SPRVariable<double>**) * MAX_SPR_MAIN_THREADS);
+    QString indexRow = "";
+    if(row > 0){
+        indexRow = QString::number(row);
+    }
     for(int th=0; th<MAX_SPR_MAIN_THREADS;th++){
         porogs[th] = (SPRVariable<double>**)malloc(sizeof(SPRVariable<double>*) * MAX_SPR_FORMULA_CONDITION);
         QString xpath = "SEPARATOR/SEPARATE_SETUP/Prg/CHANNEL[@INDEX="+QString::number(th)+"]";
         for(uint cond=0; cond < MAX_SPR_FORMULA_CONDITION; cond++){
-            QString xxpath = xpath + "[p"+QString::number(cond)+"]";
+            QString xxpath = xpath + "[p"+indexRow+QString::number(cond)+"]";
             double defValue;
             if(cond == 0){
                 defValue = 1;

@@ -23,6 +23,19 @@
         <file>icons/Settings_tab_no_color_icon_90.png</file>
         <file>icons/Spector_tab_icons_no_color_icon_90.png</file>
         <file>icons/Separate_tab_bo_colors_icon_90.png</file>
+        <file>icons/b_Down.png</file>
+        <file>icons/b_Start.png</file>
+        <file>icons/b_stop_passive.png</file>
+        <file>icons/b_Up.png</file>
+        <file>icons/b_Minus.png</file>
+        <file>icons/b_Pause.png</file>
+        <file>icons/b_Plus.png</file>
+        <file>icons/b_down_passive.png</file>
+        <file>icons/b_Flag.png</file>
+        <file>icons/b_Flag_paccive.png</file>
+        <file>icons/b_Start_Passive.png</file>
+        <file>icons/b_Stop_Active.png</file>
+        <file>icons/b_Up_passive.png</file>
     </qresource>
     <qresource prefix="/icons/settings">
         <file>icons/AlgoripmSerrings_tabs/Algoritm_Sittings_Porogs_tab.png</file>
@@ -44,6 +57,7 @@
         <file>icons/AlgoripmSerrings_tabs/Alroritm_Settings_Spector_tab_1.png</file>
         <file>icons/AlgoripmSerrings_tabs/SettingsDevice.png</file>
         <file>icons/Separate_tab_bo_colors_icon_90.png</file>
+        <file>icons/AlgoripmSerrings_tabs/Alroritm_Settings_Rentgen_Menu_2_tab.png</file>
     </qresource>
     <qresource prefix="/icons/algoritmSettings/rentgen">
         <file>icons/AlgoripmSerrings_tabs/Rentgens/Rentgen_Settings_Auto.png</file>

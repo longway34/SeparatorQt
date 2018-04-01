@@ -11,11 +11,12 @@ class SPRPorogsModel : public ISPRModelData
 protected:
     SPRVariable<TypeConditions> *conditions;
     SPRVariable<uint> *threads;
+    uint row;
 public:
     SPRVariable<double> ***porogs;
 
     SPRPorogsModel(QObject *parent);
-    SPRPorogsModel(QDomDocument *_doc, ISPRModelData *parent = nullptr);
+    SPRPorogsModel(QDomDocument *_doc, uint _row, ISPRModelData *parent = nullptr);
     virtual ~SPRPorogsModel();
     void setThreads(SPRVariable<uint> *value);
     void setConditions(SPRVariable<TypeConditions> *value);

@@ -41,6 +41,11 @@ protected slots:
     virtual void widgetsShow();
 
 
+
+    // ISPRWidget interface
+public:
 };
+
+
 
 #endif // SPRSETTINGSRENTGENCONTROLWIDGET_H

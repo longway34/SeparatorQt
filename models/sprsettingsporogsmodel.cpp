@@ -41,6 +41,31 @@ SPRVariable<double> *SPRSettingsPorogsModel::getPorog(int thr, int condNum) cons
     }
 }
 
+SPRVariable<uint> *SPRSettingsPorogsModel::getTMeteringMinStone() const
+{
+    return tMeteringMinStone;
+}
+
+void SPRSettingsPorogsModel::setTMeteringMinStone(SPRVariable<uint> *value)
+{
+    tMeteringMinStone = value;
+}
+
+SPRVariable<uint> *SPRSettingsPorogsModel::getTMeteringMaxStone() const
+{
+    return tMeteringMaxStone;
+}
+
+void SPRSettingsPorogsModel::setTMeteringMaxStone(SPRVariable<uint> *value)
+{
+    tMeteringMaxStone = value;
+}
+
+SPRPorogsModel *SPRSettingsPorogsModel::getPorogs2() const
+{
+    return porogs2;
+}
+
 SPRSettingsPorogsModel::SPRSettingsPorogsModel(QObject *parent)
 {
     typeSelection = nullptr;
@@ -49,6 +74,9 @@ SPRSettingsPorogsModel::SPRSettingsPorogsModel(QObject *parent)
     forMaxStone = nullptr;
     xRayCorrection = nullptr;
     porogs = nullptr;
+    invertSelection = nullptr;
+    porogs2 = nullptr;
+    invertSelection2 = nullptr;
     threads = nullptr;
     setProperty("delete_threads", QVariant(false));
 
@@ -67,9 +95,15 @@ SPRSettingsPorogsModel::SPRSettingsPorogsModel(QDomDocument *_doc, ISPRModelData
     conditions = new SPRVariable<TypeConditions>(doc, SPR_POROGS_CONDITION_XPATH, DEF_SPR_FORMULA_CONDITION, this);
     threads = new SPRVariable<uint>(doc, SPR_SETTINGS_MAIN_THREADS_XPATH, DEF_SPR_MAIN_THREADS, this);
     setProperty("delete_threads", QVariant(true));
-    porogs = new SPRPorogsModel(_doc, parent);
+    porogs = new SPRPorogsModel(_doc, 0, parent);
     porogs->setConditions(conditions);
     porogs->setThreads(threads);
+    invertSelection = new SPRVariable<bool>(doc, SPR_POROGS_INVERT_SELECTION, DEF_SPR_POROGS_INVERT_SELECTION, this);
+
+    porogs2 = new SPRPorogsModel(_doc, 2, parent);
+    porogs2->setConditions(conditions);
+    porogs2->setThreads(threads);
+    invertSelection2 = new SPRVariable<bool>(doc, SPR_POROGS_INVERT_SELECTION2, DEF_SPR_POROGS_INVERT_SELECTION, this);
 }
 
 SPRSettingsPorogsModel::~SPRSettingsPorogsModel()
@@ -90,6 +124,9 @@ SPRSettingsPorogsModel::~SPRSettingsPorogsModel()
         setProperty("delete_threads", QVariant(false));
     }
     if(porogs)delete porogs; porogs = nullptr;
+    if(invertSelection) delete invertSelection; invertSelection = nullptr;
+    if(porogs2) delete porogs2; porogs2 = nullptr;
+    if(invertSelection2) delete invertSelection2; invertSelection2 = nullptr;
 
 }
 

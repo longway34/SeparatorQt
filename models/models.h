@@ -14,6 +14,7 @@
 #include "models/sprsettingsrmtautosetmodel.h"
 #include "models/sprsettingsspectrumrangesmodel.h"
 #include "models/sprspectrumitemmodel.h"
+#include "models/sprspectrumlistitemsmodel.h"
 #include "models/sprspectrumzonesmodel.h"
 #include "models/sprspectrumzonestablemodel.h"
 

@@ -16,19 +16,29 @@ protected:
     SPRVariable<TypeConditions> *conditions;
 public:
     QVector<SPRFormulaItemModel*> itemsModel;
+    SPRVariable<double> *min, *max;
 
     SPRSettingsFormulaModel(QObject *parent = nullptr)
     {
         conditions = nullptr;
         setProperty("delete_conditions", QVariant(false));
+
+        min = nullptr;
+        max = nullptr;
+
         itemsModel.clear();
     }
     SPRSettingsFormulaModel(QDomDocument *doc, ISPRModelData *parent = nullptr):
         ISPRModelData(doc, parent)
     {
 
-        for(int i=0; i<DEF_SPR_FORMULA_NUMBER; i++){
+        max = new SPRVariable<double>(doc, SPR_FORMULA_MAX_XPATH, DEF_SPR_FORMULA_MAX, this);
+        min = new SPRVariable<double>(doc, SPR_FORMULA_MIN_XPATH, DEF_SPR_FORMULA_MIN, this);
+
+        for(int i=0; i<MAX_SPR_FORMULA_NUMBER; i++){
             SPRFormulaItemModel *mod = new SPRFormulaItemModel(doc, i, parent);
+            mod->setMin(min);
+            mod->setMax(max);
             itemsModel.push_back(mod);
             connect(this, SIGNAL(goStore()), itemsModel[i], SLOT(store()));
         }

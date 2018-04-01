@@ -45,6 +45,15 @@ public slots:
     {
         IModelVariable::setData(QString(data));
     }
+
+    // ISPRVariable interface
+public:
+    virtual QByteArray toByteArray()
+    {
+        QByteArray::fromRawData(data.toStdString().c_str(), sizeof(data.length()));
+    }
 };
+
+
 
 #endif // SPRQSTRINGVARIABLE_H

@@ -8,7 +8,7 @@
 #include <QVector>
 #include <QLabel>
 
-#include "models/sprspectrumitemmodel.h"
+#include "models/sprspectrumlistitemsmodel.h"
 #include "isprwidget.h"
 #include "firstcolumn.h"
 
@@ -18,27 +18,32 @@ class SPRSpectrumListTable : public QTableWidget, public ISPRWidget
 
 
 protected:
-    QVector<SPRSpectrumItemModel*> model;
+    SPRSpectrumListItemsModel* model;
+
+    QList<int> storeCheckedRows;
+    int storeCurrentRow;
 
     QLineEdit *setCellMyWidget(QTableWidget *table, int row, int col, QString value, bool editable=false, QString tt="");
 
-    virtual void insertFirstColumn(SpectrumData *data, int row);
-    virtual void addRowTable(SpectrumData *data, int pastRow = -1);
+    virtual void insertFirstColumn(SpectrumItemData *data, int row);
+    virtual void addRowTable(SpectrumItemData *data, int pastRow = -1);
     virtual void connectFirstTable(FirstColumn *fc);
-    virtual void insertContentColumns(SpectrumData *data, int row);
+    virtual void insertContentColumns(SpectrumItemData *data, int row);
 public:
     explicit SPRSpectrumListTable(QWidget *parent = 0);
 
-    ISPRModelData *setModel(QFile *inp, SPRSpectrumZonesTableModel *ranges);
+    ISPRModelData *setModel(SPRSpectrumListItemsModel *_model, uint8_t *inp = nullptr);
     // ISPRWidget interface
-    QVector<SPRSpectrumItemModel*> *getModels(){ return &model; }
+    SPRSpectrumListItemsModel *getModels(){ return model; }
     SPRSpectrumItemModel *getModel(int index){
-        if(index < model.size()){
-            return model[index];
+        if(index < model->getSpectrumsModel()->size()){
+            return model->getSpectrumsModel()->at(index);
         } else {
             return nullptr;
         }
     }
+    ISPRModelData *addSpectrum(uint8_t *_inp, int _bufSize = DEF_SPECTRUM_DATA_BUF_LENGTH, int _thread = -1);
+//    ISPRModelData *setZonesTableModel(SPRSpectrumZonesTableModel *ranges);
 
     QList<int> getSelectedItems(){
         QList<int> res;
@@ -50,13 +55,19 @@ public:
         }
         return res;
     }
+
     bool isSelectedItem(int row){
         FirstColumn *fc = (FirstColumn*)cellWidget(row, 0);
         return fc->isRowChecked();
     }
     QColor getColorSpectrum(int row){
-        FirstColumn *fc = (FirstColumn*)cellWidget(row, 0);
-        return fc->getMyColor();
+
+        SPRSpectrumItemModel *mod = model->getSpectrumItem(row);
+        if(mod){
+            QColor ret = mod->getSpectrumColor();
+            return ret;
+        }
+        return QColor(Qt::black);
     }
     int getThread(int row){
         QLabel* lth = (QLabel*)cellWidget(row, 1);
@@ -70,7 +81,6 @@ public:
         QLabel* lth = (QLabel*)cellWidget(row, 2);
         return lth->text();
     }
-    ISPRModelData *setModel(uint8_t *inp, SPRSpectrumZonesTableModel *ranges);
 public slots:
     virtual void widgetsShow();
     virtual ISPRModelData *getModel();
@@ -79,11 +89,14 @@ public slots:
     virtual void viewChange(int num);
     void hideCol(bool);
     void showCols(bool);
+    void onCurrentPosChanged(int row, int col);
+    void onDeleteRow(int row);
 signals:
     void doShow();
-    void rowSelected(int num);
+    void rowSelectedChecked(QList<int>, int);
     void rowChangeColor(int num);
-
+    void rowDeleted(int row);
+    void modelChanged();
 };
 
 #endif // SPRSPECTRUMLISTTABLE_H

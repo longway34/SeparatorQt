@@ -18,7 +18,7 @@ SPRSpectrumBasedListTable::SPRSpectrumBasedListTable(QWidget *parent)
 void SPRSpectrumBasedListTable::widgetsShow()
 {
     for(int row=0; row < rowCount(); row++){
-        SpectrumData *mod = model[row]->getSpData();
+        SpectrumItemData *mod = model->getSpectrumsModel()->at(row)->getSpectrumData();
         FirstColumn *fc = ((FirstColumn*)cellWidget(row, 0));
         QColor col(*mod->red, *mod->green, *mod->blue);
         fc->setData(row, col);
@@ -32,7 +32,7 @@ void SPRSpectrumBasedListTable::widgetsShow()
     resizeColumnsToContents();
 }
 
-void SPRSpectrumBasedListTable::insertFirstColumn(SpectrumData *data, int row)
+void SPRSpectrumBasedListTable::insertFirstColumn(SpectrumItemData *data, int row)
 {
     SPRSpectrumListTable::insertFirstColumn(data, row);
     FirstColumn *fc = (FirstColumn*)cellWidget(row, 0);
@@ -47,7 +47,7 @@ void SPRSpectrumBasedListTable::connectFirstTable(FirstColumn *fc)
     connect(fc, SIGNAL(iAmSelected(int)), this, SLOT(viewChange(int)));
 }
 
-void SPRSpectrumBasedListTable::insertContentColumns(SpectrumData *data, int row)
+void SPRSpectrumBasedListTable::insertContentColumns(SpectrumItemData *data, int row)
 {
     setCellMyWidget(this, row, 1, QString::number(*data->thread), false, tr("Номер ручья"));
     setCellMyWidget(this, row, 2, QString::number(*data->summ), false, tr("Сумма значений в зонах"));

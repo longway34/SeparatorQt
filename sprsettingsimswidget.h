@@ -11,11 +11,14 @@
 #include <qwt_plot_barchart.h>
 #include <qwt_plot_zoomer.h>
 #include <qwt_legend.h>
+#include <qwt_plot_picker.h>
 
 class SPRSettingsIMSWidget : public QWidget, public ISPRWidget
 {
     Q_OBJECT
     SPRSettingsIMSModel *model;
+
+    QwtPlotPicker *pickter;
 public:
     explicit SPRSettingsIMSWidget(QWidget *parent = 0);
 
@@ -44,6 +47,9 @@ public slots:
     virtual void viewChange();
     virtual void viewChange(bool val);
     virtual void widgetsShow();
+    void onMouseMoved(QPointF point);
+signals:
+    void doShow();
 };
 
 #endif // SPRSETTINGSIMSWIDGET_H

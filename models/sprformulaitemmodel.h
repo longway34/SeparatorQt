@@ -11,7 +11,7 @@ class SPRFormulaItemModel :public ISPRModelData
 
 {
 public:
-
+// H(index) = (ElementUp1 + ElementUp2 * MulUp)/(ElementDown1 + MupDown * ElementDown2 * ElementDown3 / ElementDown4)
     SPRElementVariable *ElementUp1;
     SPRElementVariable *ElementUp2;
     SPRVariable<double> *MulUp;
@@ -27,6 +27,8 @@ public:
     SPRFormulaItemModel(QObject *parent=nullptr);
     SPRFormulaItemModel(QDomDocument *_doc, int _index = 0, ISPRModelData *parent = nullptr);
     virtual ~SPRFormulaItemModel();
+    void setMin(SPRVariable<double> *value);
+    void setMax(SPRVariable<double> *value);
 };
 
 #endif // SPRFORMULAITEMMODEL_H

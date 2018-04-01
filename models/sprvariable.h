@@ -57,6 +57,12 @@ public:
         QVariant ret = static_cast<QVariant>(value);
         return ret.toString();
     }
+    // ISPRVariable interface
+public:
+    virtual QByteArray toByteArray()
+    {
+        return QByteArray::fromRawData((char *)&data, sizeof(data));
+    }
 public slots:
     virtual void setData(){ // установить в xml елементе
         if(mTypeVariables[typeid(data).name()] == realVariable) {
@@ -111,7 +117,10 @@ public slots:
             return;
         }
     }
+
 };
+
+
 
 
 #endif // SPRVARIABLE_H

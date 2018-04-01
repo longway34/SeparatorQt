@@ -20,7 +20,7 @@ SPRFormulaElement::SPRFormulaElement(QWidget *parent):
 //    setElements(&MapElementsProperty);
 //    setCurrentElement(element);
     setToolTip(tr("Для смены элемента нажми правую кнопку мыши..."));
-    elements = new MapElements();
+    elements = new DefaultMapElements();
 }
 
 SPRFormulaElement::~SPRFormulaElement()
@@ -28,7 +28,7 @@ SPRFormulaElement::~SPRFormulaElement()
     delete elements;
 }
 
-void SPRFormulaElement::setElements(const MapElements *elements)
+void SPRFormulaElement::setElements(const DefaultMapElements *elements)
 {
 //    this->elements = elements; // this->elementsNumber = elementsNumber;
 //    if(contextMenu) delete contextMenu;
@@ -38,7 +38,7 @@ void SPRFormulaElement::setElements(const MapElements *elements)
         EnumElements key = it.next();
         if(!this->elements->contains(key)){
             this->elements->insert(key, (*elements)[key]);
-            ElementsProperty prop = (*elements)[key];
+            DefaultElementsProperty prop = (*elements)[key];
             QAction *act = new QAction(prop.name+"("+prop.sname+")", this);
             act->setData(key);
 

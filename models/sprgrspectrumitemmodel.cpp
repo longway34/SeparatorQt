@@ -44,11 +44,11 @@ SPRGrSpectrumItemModel *SPRGrSpectrumItemModel::complite()
         spectGraphData.clear();
         for(int i=0; i < DEF_SPECTRUM_DATA_LENGTH / sizeof(uint16_t); i++){
             if(spectModel){
-                uint16_t *rawSpect = spectModel->getSpData()->spect;
+                uint16_t *rawSpect = spectModel->getSpectrumData()->spect;
                 if(rawSpect){
                     uint16_t value = rawSpect[i];
                     foreach(EnumElements z, rangesModel->elements.keys()){
-                        SPRSpectrumZonesModel::SpectorRange elData = rangesModel->elements[z];
+                        SpectorRange elData = rangesModel->elements[z];
                         int min = elData.min->getData(); int max = elData.max->getData();
                         if(i >= min && i < max){
                             if(zonesGraphData[z][0].value < value){

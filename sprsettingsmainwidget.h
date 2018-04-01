@@ -27,7 +27,7 @@ public slots:
 protected slots:
     virtual void viewChange(int);
     virtual void viewChange();
-    virtual void viewChange(bool value);
+    virtual void viewChange(bool);
 signals:
     void doShow();
     void changeFileSettinds(QString);

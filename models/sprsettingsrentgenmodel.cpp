@@ -126,13 +126,13 @@ SPRSettingsRentgenModel::~SPRSettingsRentgenModel()
     }
     if(deuCodes){
         for(int i=0; i< MAX_SPR_MAIN_THREADS; i++){
-            if(deuCodes[i]) delete deuCodes[i]; deuCodes = nullptr;
+            if(deuCodes[i]) delete deuCodes[i]; deuCodes[i] = nullptr;
         }
         delete deuCodes;
     }
     if(cpCodes){
         for(int i=0; i< MAX_SPR_MAIN_THREADS; i++){
-            if(cpCodes[i]) delete cpCodes[i]; cpCodes = nullptr;
+            if(cpCodes[i]) delete cpCodes[i]; cpCodes[i] = nullptr;
         }
         delete cpCodes;
     }

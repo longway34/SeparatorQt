@@ -73,22 +73,24 @@ ISPRModelData *SPRSettingsIMSWidget::setModel(SPRSettingsIMSModel *value)
 
 void SPRSettingsIMSWidget::repaintGraphicSetts(double)
 {
+    double grAdd = (model->timesMettering[model->timesMettering.size()-1]->getData()/2) * 1.05;
     QVector<QPointF> grDataRed = {
-        {0, ((QLineEdit*)(ui.tMinMaxParams->cellWidget(1,0)))->text().toInt()},
-        {15, ((QLineEdit*)(ui.tMinMaxParams->cellWidget(1,0)))->text().toInt()},
-        {100, ((QLineEdit*)(ui.tMinMaxParams->cellWidget(1,1)))->text().toInt()},
-        {115, ((QLineEdit*)(ui.tMinMaxParams->cellWidget(1,1)))->text().toInt()}
+        {0, (double)model->tDelayMinStone->getData()},
+        {(double)model->timesMettering[0]->getData(), (double)model->tDelayMinStone->getData()},
+        {(double)model->timesMettering[model->timesMettering.size()-1]->getData()/2, (double)model->tDelayMaxStone->getData()},
+        {grAdd, (double)model->tDelayMaxStone->getData()}
     };
 
     QVector<QPointF> grDataGreen = {
-        {0, ((QLineEdit*)(ui.tMinMaxParams->cellWidget(2,0)))->text().toInt()},
-        {15, ((QLineEdit*)(ui.tMinMaxParams->cellWidget(2,0)))->text().toInt()},
-        {100, ((QLineEdit*)(ui.tMinMaxParams->cellWidget(2,1)))->text().toInt()},
-        {115, ((QLineEdit*)(ui.tMinMaxParams->cellWidget(2,1)))->text().toInt()}
+        {0, (double)model->tDurationMinStone->getData()},
+        {(double)model->timesMettering[0]->getData(),(double)model->tDurationMinStone->getData()},
+        {(double)model->timesMettering[model->timesMettering.size()-1]->getData()/2, (double)model->tDurationMaxStone->getData()},
+        {grAdd, (double)model->tDurationMaxStone->getData()}
     };
 
     curveRed->setSamples(grDataRed);
     curveGreen->setSamples(grDataGreen);
+    ui.plotParams->setAxisScale(QwtPlot::xBottom, 0, grAdd);
     ui.plotParams->replot();
 
 
@@ -137,12 +139,19 @@ SPRSettingsIMSWidget::SPRSettingsIMSWidget(QWidget *parent) :
 
     legend = new QwtLegend();
     ui.plotParams->insertLegend(legend, QwtPlot::TopLegend);
+
+    pickter = new QwtPlotPicker(QwtPlot::xBottom, QwtPlot::yLeft, QwtPicker::CrossRubberBand, QwtPicker::AlwaysOn, ui.plotParams->canvas());
 }
 
 
 void SPRSettingsIMSWidget::widgetsShow()
 {
     repaintGraphicSetts(0);
+}
+
+void SPRSettingsIMSWidget::onMouseMoved(QPointF point)
+{
+    int x = 0;
 }
 
 void SPRSettingsIMSWidget::viewChange()
@@ -172,52 +181,46 @@ void SPRSettingsIMSWidget::viewChange()
         if(row == 0){
             if(col == 0){
                 model->tMeteringMinStone->setData(le->text().toInt());
-                return;
+                if(model->tMeteringMinStone->getData() > model->tMeteringMaxStone->getData()){
+                    model->tMeteringMaxStone->setData(model->tMeteringMinStone->getData());
+                }
             }
             if(col == 1){
                 model->tMeteringMaxStone->setData(le->text().toInt());
-                return;
+                if(model->tMeteringMinStone->getData() > model->tMeteringMaxStone->getData()){
+                    model->tDurationMinStone->setData(model->tMeteringMinStone->getData());
+                }
             }
             if(col == 2){
                 model->tMeteringMaxMaxStone->setData(le->text().toInt());
-                return;
             }
-            return;
         }
         if(row == 1){
             if(col == 0){
                 model->tDelayMinStone->setData(le->text().toInt());
-                repaintGraphicSetts(0);
-                return;
             }
             if(col == 1){
                 model->tDelayMaxStone->setData(le->text().toInt());
-                repaintGraphicSetts(0);
-                return;
             }
             if(col == 2){
                 model->tDelayMaxMaxStone->setData(le->text().toInt());
-                return;
             }
-            return;
         }
         if(row == 2){
             if(col == 0){
                 model->tDurationMinStone->setData(le->text().toInt());
-                repaintGraphicSetts(0);
-                return;
             }
             if(col == 1){
                 model->tDurationMaxStone->setData(le->text().toInt());
-                repaintGraphicSetts(0);
-                return;
             }
             if(col == 2){
                 model->tDurationMaxMaxStone->setData(le->text().toInt());
-                return;
             }
-            return;
         }
+        model->setTimesMeassureDelayDuration();
+        emit doShow();
+
+        repaintGraphicSetts(0);
     }
 }
 

@@ -19,6 +19,9 @@ public:
     virtual QString toString(){
         return DEF_SPR_FORMULA_ELEMENTS_PROPERTY[data].sname;
     }
+    qint16 getIndex(){
+        return DEF_SPR_FORMULA_ELEMENTS_PROPERTY[data].index;
+    }
 };
 
 #endif // SPRELEMENTVARIABLE_H

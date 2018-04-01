@@ -17,7 +17,7 @@ class ISPRModelData : public QObject
 protected:
     QDomDocument document;
     QDomDocument *doc;
-    QDomElement root;
+//    QDomElement root;
 
 public:
     ISPRModelData(){}

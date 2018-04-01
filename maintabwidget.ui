@@ -9,9 +9,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>996</width>
-    <height>762</height>
+    <width>1166</width>
+    <height>726</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="font">
    <font>
@@ -33,7 +39,7 @@
    <enum>QTabWidget::Rounded</enum>
   </property>
   <property name="currentIndex">
-   <number>4</number>
+   <number>0</number>
   </property>
   <property name="iconSize">
    <size>
@@ -61,8 +67,41 @@
    <attribute name="title">
     <string>История</string>
    </attribute>
+   <widget class="testTableWidget" name="wTest" native="true">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>20</y>
+      <width>891</width>
+      <height>651</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPlainTextEdit" name="teResult">
+    <property name="geometry">
+     <rect>
+      <x>920</x>
+      <y>230</y>
+      <width>191</width>
+      <height>301</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="bSetSeparate">
+    <property name="geometry">
+     <rect>
+      <x>940</x>
+      <y>20</y>
+      <width>161</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>set separate</string>
+    </property>
+   </widget>
   </widget>
-  <widget class="QWidget" name="tabSpectrum">
+  <widget class="SPRSpectrumListTableWidget" name="tabSpectrum">
    <attribute name="icon">
     <iconset resource="icons.qrc">
      <normaloff>:/icons/icons/Spector_tab_icons_no_color_icon_90.png</normaloff>:/icons/icons/Spector_tab_icons_no_color_icon_90.png</iconset>
@@ -70,13 +109,9 @@
    <attribute name="title">
     <string>Спектор</string>
    </attribute>
-   <layout class="QVBoxLayout" name="verticalLayout_2">
-    <item>
-     <widget class="SPRSpectrumListTableWidget" name="widget" native="true"/>
-    </item>
-   </layout>
+   <layout class="QVBoxLayout" name="verticalLayout_2"/>
   </widget>
-  <widget class="QWidget" name="tabSeparate">
+  <widget class="SPRSeparateWidget" name="tabSeparate">
    <attribute name="icon">
     <iconset resource="icons.qrc">
      <normaloff>:/icons/icons/Separate_tab_bo_colors_icon_90.png</normaloff>:/icons/icons/Separate_tab_bo_colors_icon_90.png</iconset>
@@ -85,7 +120,7 @@
     <string>Сепарация</string>
    </attribute>
   </widget>
-  <widget class="QWidget" name="tabTest">
+  <widget class="SPRTestIMSWidget" name="tabTest">
    <attribute name="icon">
     <iconset resource="icons.qrc">
      <normaloff>:/icons/icons/Settings_tab_no_color_icon_90.png</normaloff>:/icons/icons/Settings_tab_no_color_icon_90.png</iconset>
@@ -116,6 +151,24 @@
    <class>SPRSettingsWidget</class>
    <extends>QWidget</extends>
    <header>sprsettingswidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>testTableWidget</class>
+   <extends>QWidget</extends>
+   <header>testtablewidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SPRTestIMSWidget</class>
+   <extends>QWidget</extends>
+   <header>sprtestimswidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SPRSeparateWidget</class>
+   <extends>QWidget</extends>
+   <header>sprseparatewidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

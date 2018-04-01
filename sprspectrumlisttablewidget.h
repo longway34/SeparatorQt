@@ -39,11 +39,6 @@ typedef struct graphItem{
             }
         }
     }
-//    ~graphItem(){
-//        if(spect)
-//            delete spect;
-//        if(zones)
-//            delete zones;}
 } GraphItem;
 
 
@@ -67,7 +62,8 @@ class SPRSpectrumListTableWidget : public QWidget, public ISPRWidget
 public:
     explicit SPRSpectrumListTableWidget(QWidget *parent = 0);
 
-    ISPRModelData *setModel(SPRSpectrumZonesTableModel *_rangesModel, QFile *inp = nullptr);
+    ISPRModelData *setModel(SPRSpectrumListItemsModel *spectrumListItems, QFile *inp = nullptr);
+    ISPRModelData *setModel(SPRSpectrumListItemsModel *spectrumListItems, QString fName);
     void setSpectrumsData(QFile *inp);
 
 public slots:
@@ -96,7 +92,6 @@ private:
     // ISPRWidget interface
 public:
     virtual SPRSpectrumZonesTableModel *getModel();
-
 signals:
     void doShow();
 

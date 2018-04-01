@@ -11,19 +11,23 @@
 #define SPR_SETTINGS_SPECTRUM_RANGES_XPATH_MIN_AGRUMENT "[Ls]"
 #define SPR_SETTINGS_SPECTRUM_RANGES_XPATH_MAX_ARGUMENT "[Rs]"
 
+typedef struct {
+    SPRVariable<uint> *min;
+    SPRVariable<uint> *max;
+    QColor color;
+    int elIndex;
+} SpectorRange;
+
+typedef QMap<EnumElements, SpectorRange> ElementsProperty;
+
 class SPRSpectrumZonesModel : public ISPRModelData
 {
 public:
-    typedef struct {
-        SPRVariable<uint> *min;
-        SPRVariable<uint> *max;
-        QColor color;
-    } SpectorRange;
     int tIndex;
-    QMap<EnumElements, SpectorRange> elements;
+    ElementsProperty elements;
 
     SPRSpectrumZonesModel(){}
-    SPRSpectrumZonesModel(QDomDocument *doc, int indexThread, const MapElements *_elProperty = nullptr);
+    SPRSpectrumZonesModel(QDomDocument *doc, int indexThread, const DefaultMapElements *_elProperty = nullptr);
     virtual ~SPRSpectrumZonesModel();
 };
 

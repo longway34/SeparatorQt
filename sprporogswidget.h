@@ -39,6 +39,7 @@ public slots:
 
     // ISPRWidget interface
     void viewChange();
+
 };
 
 #endif // SPRPOROGSWIDGET_H

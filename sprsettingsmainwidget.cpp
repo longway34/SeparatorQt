@@ -84,6 +84,30 @@ SPRSettingsMainWidget::SPRSettingsMainWidget(QWidget *parent) :
 void SPRSettingsMainWidget::widgetsShow()
 {
     if(model){
+//        QString name = model->name->getData();
+//        if(!docFileName.isEmpty()){
+//            name += QString("(")+docFileName+QString(")");
+//        }
+//        ui.leName->blockSignals(true);
+//        ui.leName->setText(model->name->getData());
+//        ui.leName->blockSignals(false);
+
+//        ui.leAddress->blockSignals(true);
+//        ui.leAddress->setText(model->ipAddress->getData());
+//        ui.leAddress->blockSignals(false);
+
+//        ui.lePort->blockSignals(true);
+//        ui.lePort->setText(model->ipPort->toString());
+//        ui.lePort->blockSignals(false);
+
+//        ui.leSpectrumsFName->blockSignals(true);
+//        ui.leSpectrumsFName->setText(model->spectrumFileName->getData());
+//        ui.leSpectrumsFName->blockSignals(false);
+
+//        ui.cbThreads->blockSignals(true);
+//        int index = ui.cbThreads->findData(model->getThreads()->getData());
+//        ui.cbThreads->setCurrentIndex(model->getThreads()->getData());
+
         ui.cbIMCount->blockSignals(true);
         ui.cbIMCount->clear();
         switch (model->threads->getData()) {
@@ -181,7 +205,7 @@ void SPRSettingsMainWidget::viewChange()
     }
 }
 
-void SPRSettingsMainWidget::viewChange(bool value)
+void SPRSettingsMainWidget::viewChange(bool)
 {
     if(sender() == ui.bFNameSelect){
         QString fName = model->getName()->getData()+".xml";
@@ -191,6 +215,7 @@ void SPRSettingsMainWidget::viewChange(bool value)
             QFile f(fileName);
             if(f.open(QIODevice::ReadWrite)){
                 if(fName != fileName){
+//                    model->getName()->setData(fileNa);
                     emit changeFileSettinds(fileName);
                 }
             }
@@ -198,13 +223,14 @@ void SPRSettingsMainWidget::viewChange(bool value)
         return;
     }
     if(sender() == ui.bSpectrumFNameSelect){
-        QString fName = model->getSpectrumFileName()->getData()+".xml";
+        QString fName = model->getSpectrumFileName()->getData()+".spc";
         QString fileName = QFileDialog::getOpenFileName(this, tr("Открыть файл..."), "",
-            tr("Файлы настроек (*.xml)"));
+            tr("Файлы сохраненных спектров (*.spc)"));
         if(!fileName.isEmpty()){
             QFile f(fileName);
             if(f.open(QIODevice::ReadWrite)){
                 if(fName != fileName){
+                    model->getSpectrumFileName()->setData(fileName);
                     emit changeFileSpectrum(fileName);
                 }
             }

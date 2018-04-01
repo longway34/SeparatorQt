@@ -10,6 +10,7 @@
 #include <qwt_legend.h>
 #include <qwt_plot_grid.h>
 #include <qwt_plot_curve.h>
+#include <qwt_plot_picker.h>
 #include <qwt_symbol.h>
 #include <QDomDocument>
 #include <QButtonGroup>
@@ -20,6 +21,7 @@ class SPRSettingsPorogsWidget : public QWidget, public ISPRWidget
 
 protected:
     SPRSettingsPorogsModel *model;
+    QwtPlotPicker *pickter;
 public:
     explicit SPRSettingsPorogsWidget(QWidget *parent = 0);
     Ui::SPRSettingsPorogsWidget ui;
@@ -55,6 +57,7 @@ public slots:
     virtual ISPRModelData *getModel();
     virtual void widgetsShow();
     virtual void viewChange(int data);
+    virtual void viewChange(bool data);
     virtual void viewChange(double data);
     virtual void viewChange(QAbstractButton *btn);
 

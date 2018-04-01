@@ -14,11 +14,12 @@ class SPRSettingsWidget : public QWidget, public ISPRWidget
 
     QDomDocument document;
     QDomDocument *doc;
+    QString docFName;
 
     SPRMainModel *model;
 public:
     explicit SPRSettingsWidget(QWidget *parent = 0);
-    explicit SPRSettingsWidget(QDomDocument *_doc, QWidget *parent = 0);
+    explicit SPRSettingsWidget(QDomDocument *_doc, QString fName = "", QWidget *parent = 0);
     Ui::SPRSettingsWidget ui;
 
     void setDoc(QDomDocument *_doc);
@@ -27,6 +28,8 @@ public:
 signals:
     void doStore();
     void doShow();
+    void changeFileSettinds(QString);
+    void changeFileSpectrum(QString);
 
     // ISPRWidget interface
 public:
@@ -38,7 +41,8 @@ public slots:
     virtual void widgetsShow(){
         emit doShow();
     }
-
+    void onChangeFileSpectrum(QString fName);
+    void onChangeFileSettinds(QString fName);
 };
 
 #endif // SPRSETTINGSWIDGET_H

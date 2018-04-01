@@ -1,7 +1,7 @@
 #include "sprsettingsformulawidget.h"
 
 SPRSettingsFormulaWidget::SPRSettingsFormulaWidget(QWidget *parent) :
-    QWidget(parent)
+    QWidget(parent), ISPRWidget()
 {
     ui.setupUi(this);
 
@@ -16,6 +16,7 @@ SPRSettingsFormulaWidget::SPRSettingsFormulaWidget(QWidget *parent) :
     connect(this, SIGNAL(doShow()), ui.wFormula1, SLOT(widgetsShow()));
     connect(this, SIGNAL(doShow()), ui.wFormula2, SLOT(widgetsShow()));
     connect(this, SIGNAL(doShow()), ui.wFormula3, SLOT(widgetsShow()));
+
 
 }
 
@@ -39,7 +40,7 @@ ISPRModelData *SPRSettingsFormulaWidget::setItemModel(ISPRModelData *model)
     widgets[fim->index]->setModel(model);
 }
 
-void SPRSettingsFormulaWidget::setElements(const MapElements *elements)
+void SPRSettingsFormulaWidget::setElements(const DefaultMapElements *elements)
 {
     QList<SPRFormulaItemWidget*> list = QList<SPRFormulaItemWidget*>({
                                    ui.wFormula1, ui.wFormula2, ui.wFormula3

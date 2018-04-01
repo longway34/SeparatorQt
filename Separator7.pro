@@ -15,6 +15,9 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = Separator7
 TEMPLATE = app
 
+#QMAKE_CXXFLAGS_DEBUG += -g3 -pg
+#QMAKE_LFLAGS_DEBUG += -pg -lgmon
+
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the
@@ -71,11 +74,7 @@ SOURCES += \
     models/sprsettingsrentgenmodel.cpp \
     models/sprsettingsrmtautosetmodel.cpp \
     models/sprsettingsspectrumrangesmodel.cpp \
-    models/sprspectrumitemmodel.cpp \
     models/sprvariable.cpp \
-    tcp/tcpcommand.cpp \
-    tcp/tcpcommandset.cpp \
-    tcp/tcpgetstatecommand.cpp \
     verticallabel.cpp \
     maintabwidget.cpp \
     sprsettingswidget.cpp \
@@ -83,7 +82,34 @@ SOURCES += \
     models/sprspectrumzonestablemodel.cpp \
     sprspectrumzonestablewidget.cpp \
     models/sprspectrumzonesmodel.cpp \
-    sprspectrumzonestable.cpp
+    sprspectrumzonestable.cpp \
+    models/sprspectrumitemmodel.cpp \
+    models/sprspectrumlistitemsmodel.cpp \
+    testtablewidget.cpp \
+    sprspectrumgraphicswidget.cpp \
+    sprtestimswidget.cpp \
+    tcp/ITCPCommand.cpp \
+    tcp/ServerConnect.cpp \
+    tcp/TCPTimeOutCommand.cpp \
+    tcp/TCPCommand.cpp \
+    tcp/tcptimeoutwigget.cpp \
+    tcp/TCPCommandSet.cpp \
+    tcp/tcplogswigtets.cpp \
+    tcp/tcpcommandrguup.cpp \
+    tcp/tcpcommandrguupdown.cpp \
+    tcp/tcpcommandrentgeron.cpp \
+    tcp/tcpcommandseparatoron.cpp \
+    tcp/tcpcommandgetspectrums.cpp \
+    tcp/tcpstartsoptestimscommand.cpp \
+    tcp/tcpcommandstartpitatel.cpp \
+    tcp/tcpstartrudospuskcommand.cpp \
+    tcp/tcpstoprudostuskcommand.cpp \
+    tcp/tcpcommandstoppitatel.cpp \
+    models/sprseparatemodel.cpp \
+    sprseparatewidget.cpp \
+    tcp/tcpgetkspectrums.cpp \
+    tcp/tcpgetgistogramms.cpp \
+    tcp/tcpstartseparate.cpp
 
 HEADERS += \
     _types.h \
@@ -128,14 +154,8 @@ HEADERS += \
     models/sprsettingsrentgenmodel.h \
     models/sprsettingsrmtautosetmodel.h \
     models/sprsettingsspectrumrangesmodel.h \
-    models/sprspectrumitemmodel.h \
     models/sprvariable.h \
-    tcp/itcpcommand.h \
-    tcp/tcpcommand.h \
-    tcp/tcpsenddatacommand.h \
-    tcp/tcptimeoutcommand.h \
-    tcp/tcpcommandset.h \
-    tcp/tcpgetstatecommand.h \
+    tcp/TCPCommandSet.h \
     verticallabel.h \
     maintabwidget.h \
     sprsettingswidget.h \
@@ -143,7 +163,33 @@ HEADERS += \
     models/sprspectrumzonestablemodel.h \
     sprspectrumzonestablewidget.h \
     models/sprspectrumzonesmodel.h \
-    sprspectrumzonestable.h
+    sprspectrumzonestable.h \
+    models/sprspectrumitemmodel.h \
+    models/sprspectrumlistitemsmodel.h \
+    testtablewidget.h \
+    sprspectrumgraphicswidget.h \
+    sprtestimswidget.h \
+    tcp/ServerConnect.h \
+    tcp/ITCPCommand.h \
+    tcp/TCPCommand.h \
+    tcp/TCPTimeOutCommand.h \
+    tcp/tcptimeoutwigget.h \
+    tcp/tcplogswigtets.h \
+    tcp/tcpcommandrguup.h \
+    tcp/tcpcommandrguupdown.h \
+    tcp/tcpcommandrentgeron.h \
+    tcp/tcpcommandseparatoron.h \
+    tcp/tcpcommandgetspectrums.h \
+    tcp/tcpstartsoptestimscommand.h \
+    tcp/tcpcommandstartpitatel.h \
+    tcp/tcpstartrudospuskcommand.h \
+    tcp/tcpstoprudostuskcommand.h \
+    tcp/tcpcommandstoppitatel.h \
+    models/sprseparatemodel.h \
+    sprseparatewidget.h \
+    tcp/tcpgetkspectrums.h \
+    tcp/tcpgetgistogramms.h \
+    tcp/tcpstartseparate.h
 
 FORMS += \
     sprsettingsrentgenmainwidget.ui \
@@ -161,7 +207,13 @@ FORMS += \
     firstcolumn.ui \
     maintabwidget.ui \
     sprsettingswidget.ui \
-    sprspectrumzonestablewidget.ui
+    sprspectrumzonestablewidget.ui \
+    testtablewidget.ui \
+    sprspectrumgraphicswidget.ui \
+    sprtestimswidget.ui \
+    tcp/tcptimeoutwigget.ui \
+    tcp/tcplogswigtets.ui \
+    sprseparatewidget.ui
 
 RESOURCES += \
     icons.qrc
@@ -169,6 +221,18 @@ RESOURCES += \
 #DISTFILES += \
 #    models.pri
 
-
 #include(models/models.pri)
 #include(tcp/tcp.pri)
+
+
+unix:INCLUDEPATH += /usr/local/qwt-6.1.3/include
+unix:LIBS += -L/usr/local/qwt-6.1.3/lib
+#unix:LIBS += -l/usr/local/qwt-6.1.3/lib/libqwt.so
+
+#unix: CONFIG += link_pkgconfig
+#unix: PKGCONFIG += qwt
+
+unix:!macx: LIBS += -L$$PWD/../../../../../../usr/local/qwt-6.1.3/lib/ -lqwt
+
+INCLUDEPATH += $$PWD/../../../../../../usr/local/qwt-6.1.3/include
+DEPENDPATH += $$PWD/../../../../../../usr/local/qwt-6.1.3/include

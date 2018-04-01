@@ -15,9 +15,9 @@ void SPRSettingsPorogsWidget::repaintGraphic(double)
 {
     QVector<QPointF> grData = {
         {0, ui.leMinStone->value() * 10},
-        {15, ui.leMinStone->value() * 10},
-        {100, ui.leMaxStone->value() * 10},
-        {115, ui.leMaxStone->value() * 10}
+        {model->getTMeteringMinStone()->getData(), ui.leMinStone->value() * 10},
+        {model->getTMeteringMaxStone()->getData(), ui.leMaxStone->value() * 10},
+        {model->getTMeteringMaxStone()->getData() * 1.05, ui.leMaxStone->value() * 10}
     };
 
 //    double x[] = {0, 15, 100, 115};
@@ -28,6 +28,7 @@ void SPRSettingsPorogsWidget::repaintGraphic(double)
 
 
     curve->setSamples(grData);
+    ui.plotKoeffLengths->setAxisScale(QwtPlot::xBottom, 0, model->getTMeteringMaxStone()->getData() * 1.05);
     ui.plotKoeffLengths->replot();
 }
 
@@ -63,6 +64,8 @@ SPRSettingsPorogsWidget::SPRSettingsPorogsWidget(QWidget *parent) :
     grid->setMinorPen(QColor(Qt::gray), 0.1, Qt::DotLine);
     grid->attach(ui.plotKoeffLengths);
 
+    pickter = new QwtPlotPicker(QwtPlot::xBottom, QwtPlot::yLeft, QwtPicker::CrossRubberBand, QwtPicker::AlwaysOn, ui.plotKoeffLengths->canvas());
+
     connect(ui.leMaxStone, SIGNAL(valueChanged(double)), SLOT(repaintGraphic(double)));
     connect(ui.leMaxStone, SIGNAL(valueChanged(double)), SLOT(viewChange(double)));
     connect(ui.leMinStone, SIGNAL(valueChanged(double)), SLOT(repaintGraphic(double)));
@@ -70,6 +73,8 @@ SPRSettingsPorogsWidget::SPRSettingsPorogsWidget(QWidget *parent) :
 
     connect(bgTypeSelection, SIGNAL(buttonClicked(int)), SLOT(viewChange(int)));
     connect(ui.leXRayCorrection, SIGNAL(valueChanged(double)), SLOT(viewChange(double)));
+
+    connect(ui.cbInvert, SIGNAL(toggled(bool)), SLOT(viewChange(bool)));
 
 }
 
@@ -112,6 +117,14 @@ ISPRModelData *SPRSettingsPorogsWidget::getModel()
 
 void SPRSettingsPorogsWidget::viewChange(int data)
 {
+}
+
+void SPRSettingsPorogsWidget::viewChange(bool data)
+{
+    if(sender() == ui.cbInvert){ // изменили инверсию отбора
+        model->invertSelection->setData(data);
+        return;
+    }
 }
 
 void SPRSettingsPorogsWidget::viewChange(double data)

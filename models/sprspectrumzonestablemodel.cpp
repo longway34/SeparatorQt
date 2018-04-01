@@ -22,7 +22,7 @@ SPRSpectrumZonesTableModel::SPRSpectrumZonesTableModel()
 }
 
 SPRSpectrumZonesTableModel::SPRSpectrumZonesTableModel(QDomDocument *_doc, ISPRModelData *parent):
-    ISPRModelData(_doc, parent), threads(nullptr)
+    ISPRModelData(_doc, parent), threads(nullptr), items()
 {
 
     threads = new SPRVariable<uint>(doc,SPR_SETTINGS_MAIN_THREADS_XPATH, DEF_SPR_MAIN_THREADS, this);

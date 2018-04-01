@@ -1,6 +1,6 @@
 #include "sprspectrumzonesmodel.h"
 
-SPRSpectrumZonesModel::SPRSpectrumZonesModel(QDomDocument *doc, int indexThread, const MapElements *_elProperty):
+SPRSpectrumZonesModel::SPRSpectrumZonesModel(QDomDocument *doc, int indexThread, const DefaultMapElements *_elProperty):
     ISPRModelData(doc)
 {
     tIndex = indexThread;
@@ -22,6 +22,8 @@ SPRSpectrumZonesModel::SPRSpectrumZonesModel(QDomDocument *doc, int indexThread,
         def = (*_elProperty)[element].min;
         this->elements[element].min = new SPRVariable<uint>(doc, xpath, def, this);
         this->elements[element].color = (*_elProperty)[element].color;
+
+        this->elements[element].elIndex = (*_elProperty)[element].index;
     }
 
 }

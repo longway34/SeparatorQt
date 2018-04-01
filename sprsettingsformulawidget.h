@@ -24,7 +24,7 @@ public:
     ISPRModelData *setModel(ISPRModelData *model);
     ISPRModelData *setItemModel(ISPRModelData *model);
 public slots:
-    void setElements(const MapElements *elements);
+    void setElements(const DefaultMapElements *elements);
     void setConditions(SPRVariable<TypeConditions>* cond){this->model->setCondition(cond);}
 
     // ISPRWidget interface
@@ -36,6 +36,7 @@ signals:
     void doShow();
 
     // ISPRWidget interface
+
 };
 
 #endif // SPRSETTINGSFORMULAWIDGET_H

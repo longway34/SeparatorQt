@@ -9,11 +9,20 @@
 
 class ISPRWidget
 {
-public:
-    ISPRWidget();
+protected:
+    QString docFileName;
+    QString docFilePath;
+
+    QDomDocument document;
+    QDomDocument *doc;
 
 public:
+    ISPRWidget();
+    virtual void setDoc(QString _fName);
+    virtual void setDoc(QDomDocument *_doc);
+
     virtual void widgetsShow()=0;
+
 //    virtual void doShow(){}
     virtual ISPRModelData *setModel(ISPRModelData* data=nullptr);
     virtual ISPRModelData *getModel()=0;

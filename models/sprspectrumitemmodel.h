@@ -2,13 +2,20 @@
 #define SPRSPECTRUMITEMMODEL_H
 
 #include <QObject>
+#include <QPolygonF>
+#include <QByteArray>
+
 #include "models/isprmodeldata.h"
 #include "models/sprspectrumzonestablemodel.h"
+#include "models/sprsettingsformulamodel.h"
+
+#include "qwt_interval.h"
+#include "qwt_plot_histogram.h"
 
 #define DEF_SPECTRUM_DATA_BUF_LENGTH    708
 #define DEF_SPECTRUM_DATA_LENGTH        512
 
-typedef class spectumData{
+typedef class spectumItemData{
     uint16_t bufLength;
     uint8_t  *buf;
 public:
@@ -20,60 +27,93 @@ public:
     uint32_t *peak_value;
     uint32_t *peak;
     double *Rs;
+    QMap<EnumElements, uint32_t*> elementsSumm;
     uint32_t  *Ns, *Fe, *Cu, *Mo, *Zn, *Mg;
     double *H1, *H2, *H3;
     double *time, *center;
     uint32_t *year, *month, *day, *hours, *min, *sec;
 
-    spectumData(): buf(nullptr){
+    spectumItemData(): buf(nullptr){
         setData();
     }
-    ~spectumData(){
-        free(buf);
+    ~spectumItemData(){
+//        if(buf) free(buf);
     }
     void setData(uint8_t* inp = nullptr, uint16_t inplength = DEF_SPECTRUM_DATA_BUF_LENGTH);
-    void recomplite();
+    void setData(QByteArray inp);
+    void setThread(int _thread){*thread = _thread;}
+    uint8_t *getBuf(){ return buf;}
+    void setbuf(uint8_t* _buf){ buf = _buf;}
 
-} SpectrumData;
+} SpectrumItemData;
 
-Q_DECLARE_METATYPE(SpectrumData)
+Q_DECLARE_METATYPE(SpectrumItemData)
 
 class SPRSpectrumItemModel : public ISPRModelData
 {
-    SPRSpectrumZonesTableModel *rangesTable;
-    SpectrumData spData;
+    SPRSettingsFormulaModel *formulas;
+    SPRSpectrumZonesTableModel *zones;
+    SpectrumItemData spectrumData;
+    QPolygonF spectGraphData;
+    QMap<EnumElements, QVector<QwtIntervalSample>> zonesGraphData;
+
 
 public:
-    SPRSpectrumItemModel(QDomDocument *_doc);
-    SPRSpectrumItemModel(SPRSpectrumZonesTableModel *_rangesTable);
+    SPRSpectrumItemModel();
+    SPRSpectrumItemModel(QDomDocument *_doc, int _index, ISPRModelData *parent = nullptr);
+    SPRSpectrumItemModel(SPRSpectrumZonesTableModel *_ranges, SPRSettingsFormulaModel *_formulas, ISPRModelData *parent = nullptr);
 
     virtual ~SPRSpectrumItemModel(){
-        if(QVariant(property("delete_ranges")).toBool()){
-            delete rangesTable; rangesTable = nullptr;
+        if(zones != nullptr && QVariant(property("delete_ranges")).toBool()){
+            delete zones; zones = nullptr;
             setProperty("delete_ranges", QVariant(false));
         }
-    }
-
-    ISPRModelData *setModel(SPRSpectrumZonesTableModel *_ranges){
-        setRangesTable(_ranges);
-        spData.recomplite();
-        return _ranges;
-    }
-
-    SPRSpectrumZonesTableModel *getRangesTable() const;
-    SPRSpectrumZonesModel *getRanges(){
-        if(spData.thread){
-            if(*spData.thread > 0 && *spData.thread < MAX_SPR_MAIN_THREADS){
-                if(rangesTable){
-                    return rangesTable->items[*spData.thread];
-                }
-            }
+        if(formulas != nullptr && QVariant(property("delete_formulas")).toBool()){
+            delete formulas; formulas = nullptr;
+            setProperty("delete_formulas", QVariant(false));
         }
     }
-    void setRangesTable(SPRSpectrumZonesTableModel *value);
-    SpectrumData *getSpData();
-    void setSpData(uint8_t *buf, uint16_t len = DEF_SPECTRUM_DATA_BUF_LENGTH);
 
+    ISPRModelData *setModel(SPRSpectrumZonesTableModel *_ranges, SPRSettingsFormulaModel *_formulas){
+        setZonesTable(_ranges);
+        setFormulas(_formulas);
+        recomplite();
+        return this;
+    }
+
+    QColor getSpectrumColor(){
+        QColor ret(int(*spectrumData.red), int(*spectrumData.green), int(*spectrumData.blue));
+        return ret;
+    }
+
+    void setSpectrumColor(QColor color){
+        *spectrumData.red = (uint8_t)color.red();
+        *spectrumData.green = (uint8_t)color.green();
+        *spectrumData.blue = (uint8_t)color.blue();
+    }
+
+    QString getSpectrumName(){
+        return QString(spectrumData.name);
+    }
+
+    void setSpectrumName(QString name){
+        memcpy(spectrumData.name, name.toStdString().c_str(), name.length());
+    }
+
+    SPRSpectrumZonesModel *getZones(){
+        uint th = *spectrumData.thread;
+        return zones->items[*spectrumData.thread];
+    }
+    void recomplite();
+    void setZonesTable(SPRSpectrumZonesTableModel *value);
+    void setFormulas(SPRSettingsFormulaModel *value);
+    SpectrumItemData *getSpectrumData();
+    void setSpectrumData(uint8_t *buf, uint16_t len = DEF_SPECTRUM_DATA_BUF_LENGTH);
+
+    QMap<EnumElements, QVector<QwtIntervalSample>> getZonesGaphics();
+    QPolygonF getSpectrumGraphics();
+
+protected:
 };
 
 #endif // SPRSPECTRUMITEMMODEL_H

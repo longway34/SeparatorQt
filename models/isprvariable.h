@@ -66,6 +66,7 @@ public:
 
 
     virtual QString toString()=0;
+    virtual QByteArray toByteArray()=0;
 signals:
 
 public slots:

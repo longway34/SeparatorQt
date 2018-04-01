@@ -1,11 +1,33 @@
 #include <QLineEdit>
 #include <QTableWidget>
+#include <QFileInfo>
+#include <QFile>
 
 #include "isprwidget.h"
 
+
 ISPRWidget::ISPRWidget()
 {
+}
 
+void ISPRWidget::setDoc(QString _fName)
+{
+    QFile in(_fName);
+    if(in.open(QIODevice::ReadOnly)){
+        if(document.setContent(&in)){
+            QFileInfo fi(_fName);
+            docFileName = fi.absoluteFilePath();
+            docFilePath = fi.absolutePath();
+            doc = &document;
+            setDoc(doc);
+        }
+        in.close();
+    }
+}
+
+void ISPRWidget::setDoc(QDomDocument *_doc)
+{
+    doc = _doc;
 }
 
 ISPRModelData *ISPRWidget::setModel(ISPRModelData *data)

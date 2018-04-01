@@ -15,7 +15,7 @@ class SPRFormulaElement : public QLabel
     Q_OBJECT
 
 //    quint16 elementsNumber;
-    MapElements *elements;
+    DefaultMapElements *elements;
     SPRElementVariable *element;
 //    QMenu *contextMenu;
 
@@ -26,7 +26,7 @@ public:
     void setElement(SPRElementVariable *value);
 
 public slots:
-    void setElements(const MapElements *elements);
+    void setElements(const DefaultMapElements *elements);
     void setCurrentElement(EnumElements element);
     void setCurrentElement(bool trigger);
 signals:

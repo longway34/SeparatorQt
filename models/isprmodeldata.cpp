@@ -10,7 +10,6 @@ QDomDocument *ISPRModelData::getDoc() const
 void ISPRModelData::setDoc(QDomDocument *_doc, ISPRModelData *parent)
 {
     doc = _doc;
-    root = doc->documentElement();
     if(parent){
         connect(parent, SIGNAL(goStore()), this, SLOT(store()));
     }

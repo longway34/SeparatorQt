@@ -2,7 +2,7 @@
 
 static const EnumElements elementsValue[MAX_SPR_SPECTOR_ELEMENTS] = {Ns, Fe, Cu, Mo, Zn, Mg};
 
-static const ElementsProperty elementsProperty[MAX_SPR_SPECTOR_ELEMENTS] = {
+static const DefaultElementsProperty elementsProperty[MAX_SPR_SPECTOR_ELEMENTS] = {
     {"Ns", "Рассеенка", QColor(255,0,255,100), 0, 80, 256},
     {"Fe", "Железо", QColor(255, 0, 0, 100), 1, 20, 40},
     {"Cu", "Медь", QColor(0,255,0,100), 40, 2, 60},

@@ -225,3 +225,4 @@ void SPRSettingsControlWidget::viewChange(int index)
         model->controlArea->setData(el);
     }
 }
+

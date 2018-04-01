@@ -28,6 +28,7 @@ public slots:
     virtual void widgetsShow();
     virtual void viewChange(int index);
 
+
 };
 
 #endif // SPRSETTINGSCONTROLWIDGET_H
